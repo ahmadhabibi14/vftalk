@@ -1,54 +1,52 @@
 package main
 
 import (
-	"flag"
-	"fmt"
 	"log"
-	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/websocket/v2"
 )
 
 func main() {
-	addr := flag.String("addr", ":8080", "http service address")
-	debug := flag.Bool("debug", false, "run in debug mode")
-	flag.Parse()
+	app := fiber.New()
 
-	fiberConf := fiber.Config{
-		Prefork: true,
-	}
+	app.Use("/ws", func(c *fiber.Ctx) error {
+		// IsWebSocketUpgrade returns true if the client
+		// requested upgrade to the WebSocket protocol.
+		if websocket.IsWebSocketUpgrade(c) {
+			c.Locals("allowed", true)
+			return c.Next()
+		}
+		return fiber.ErrUpgradeRequired
+	})
 
-	wsConf := websocket.Config{
-		HandshakeTimeout: 100 * time.Second,
-		Origins: []string{
-			fmt.Sprintf("http://localhost%s", *addr),
-			fmt.Sprintf("http://127.0.0.1%s", *addr),
-		},
-	}
+	app.Get("/ws/:id", websocket.New(func(c *websocket.Conn) {
+		// c.Locals is added to the *websocket.Conn
+		log.Println(c.Locals("allowed"))
+		log.Println(c.Params("id"))
+		log.Println(c.Query("v"))
+		log.Println(c.Cookies("session"))
 
-	if *debug {
-		fiberConf.Prefork = false
-		wsConf.Origins = []string{"*"}
-	}
+		var (
+			mt  int
+			msg []byte
+			err error
+		)
+		for {
+			if mt, msg, err = c.ReadMessage(); err != nil {
+				log.Println("read:", err)
+				break
+			}
+			log.Printf("recv: %s", msg)
 
-	app := fiber.New(fiberConf)
+			if err = c.WriteMessage(mt, msg); err != nil {
+				log.Println("write:", err)
+				break
+			}
+		}
+	}))
 
-	hub := NewHub()
-	hub.Defaults()
-
-	app.Use("/ws/chat", hub.Upgrade)
-
-	app.Get("/ws/chat", websocket.New(hub.Handler, wsConf))
-
-	// app.Static("/", "./client/dist", fiber.Static{
-	// 	Compress: true,
-	// })
-	// app.Get("/*", func(ctx *fiber.Ctx) error {
-	// 	return ctx.SendFile("./client/dist/index.html", true)
-	// })
-
-	go hub.Run()
-
-	log.Fatal(app.Listen(*addr))
+	log.Fatal(app.Listen(":3000"))
+	// Access the websocket server: ws://localhost:3000/ws/123?v=1.0
+	// https://www.websocket.org/echo.html
 }
