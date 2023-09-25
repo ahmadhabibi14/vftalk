@@ -46,6 +46,7 @@ func main() {
 		fmt.Fprintf(w, "%s", content)
 	})
 
+	// websocket handler
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		currentGorillaConn, err := websocket.Upgrade(w, r, w.Header(), 1024, 1024)
 		if err != nil {
