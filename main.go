@@ -16,15 +16,15 @@ func main() {
 	})
 
 	wsConf := websocket.Config{
-		HandshakeTimeout: 100 * time.Second,
+		HandshakeTimeout: 800 * time.Second,
 		ReadBufferSize:   1824,
 		WriteBufferSize:  256,
 	}
 
-	// room := domain.NewRoom()
+	room := domain.NewRoom()
 	app.Use("/room", domain.RoomUpgrade)
-	app.Get("/room", websocket.New(domain.RoomHandler, wsConf))
+	app.Get("/room", websocket.New(room.RoomHandler, wsConf))
 
-	// go room.Run()
+	go room.Run()
 	log.Fatal(app.Listen(":8080"))
 }
