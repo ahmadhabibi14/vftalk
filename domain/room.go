@@ -1,15 +1,12 @@
 package domain
 
 import (
-	"sync"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/websocket/v2"
 	"github.com/google/uuid"
 )
 
 type Room struct {
-	sync.Mutex
 	Clients map[*Client]bool
 	Join    chan *Client
 	Leave   chan *Client
@@ -18,7 +15,6 @@ type Room struct {
 
 func NewRoom() *Room {
 	return &Room{
-		Mutex:   sync.Mutex{},
 		Forward: make(chan []byte),
 		Join:    make(chan *Client),
 		Leave:   make(chan *Client),
@@ -42,19 +38,13 @@ func (r *Room) Run() {
 	for {
 		select {
 		case client := <-r.Join:
-			r.Lock()
 			r.Clients[client] = true
-			r.Unlock()
 		case client := <-r.Leave:
-			r.Lock()
 			delete(r.Clients, client)
 			close(client.Receive)
-			r.Unlock()
 		case msg := <-r.Forward:
 			for client := range r.Clients {
-				r.Lock()
 				client.Receive <- msg
-				r.Unlock()
 			}
 		}
 	}
@@ -66,9 +56,7 @@ func (r *Room) RoomHandler(conn *websocket.Conn) {
 		Receive: make(chan []byte, 256),
 		Room:    r,
 	}
-	r.Lock()
 	r.Join <- client
-	r.Unlock()
 
 	go client.Write()
 	client.Read()
