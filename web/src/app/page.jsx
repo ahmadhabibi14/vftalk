@@ -31,8 +31,8 @@ export default function Home() {
   return (
     <div className="mx-auto mt-20 bg-zinc-950 shadow-lg rounded-xl p-6 w-[450px] text-zinc-100">
       <div className="flex flex-col">
-        {messages.map((msg) => (
-          <p key={msg}>{msg}</p>
+        {messages.map((msg, i) => (
+          <p key={i}>{msg}</p>
         ))}
       </div>
       <form className="flex flex-col gap-5">
