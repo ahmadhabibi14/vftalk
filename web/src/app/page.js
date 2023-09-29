@@ -1,11 +1,10 @@
 "use client";
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  let inputMsg = "";
+  const [inputMsg, setInputMsg] = useState("");
+  const [messages, setMessages] = useState([]);
   let socket = null;
-  let messages = [];
 
   useEffect(() => {
     socket = new WebSocket("ws://localhost:8080/room");
@@ -13,13 +12,19 @@ export default function Home() {
       console.log("closed");
     };
     socket.onmessage = function (e) {
-      messages.push(e.data);
+      setMessages([...messages, e.data]);
+      console.log(e.data)
     };
   });
 
+  const inputMsgChange = e => {
+    setInputMsg(e.target.value);
+  }
   
-  function handleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault();
     socket.send(inputMsg);
+    setInputMsg("");
     return;
   }
 
@@ -27,13 +32,13 @@ export default function Home() {
     <div className="mx-auto mt-20 bg-zinc-950 shadow-lg rounded-xl p-6 w-[450px] text-zinc-100">
       <div className="flex flex-col">
         {messages.map((msg) => (
-          <p>{msg}</p>
+          <p key={msg}>{msg}</p>
         ))}
       </div>
       <form className="flex flex-col gap-5">
         <textarea
           value={inputMsg}
-          onChange={(e) => (inputMsg = e.target.value)}
+          onChange={inputMsgChange}
           name="post"
           id="post"
           placeholder="What's your feeling..."
