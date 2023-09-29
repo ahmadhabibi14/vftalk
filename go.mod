@@ -5,12 +5,12 @@ go 1.20
 require (
 	github.com/gofiber/fiber/v2 v2.49.2
 	github.com/gofiber/websocket/v2 v2.2.1
+	github.com/google/uuid v1.3.1
 )
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/fasthttp/websocket v1.5.4 // indirect
-	github.com/google/uuid v1.3.1 // indirect
 	github.com/klauspost/compress v1.17.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
