@@ -3,7 +3,8 @@ package domain
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/websocket/v2"
-	"github.com/google/uuid"
+
+	"chat-app/utils"
 )
 
 type Room struct {
@@ -24,11 +25,7 @@ func NewRoom() *Room {
 
 func RoomUpgrade(c *fiber.Ctx) error {
 	if websocket.IsWebSocketUpgrade(c) {
-		uuid, err := uuid.NewRandom()
-		if err != nil {
-			return fiber.ErrInternalServerError
-		}
-		c.Locals("ClientID", uuid.String())
+		c.Locals("ClientID", utils.GenerateRandomID(10))
 		return c.Next()
 	}
 	return fiber.ErrUpgradeRequired
