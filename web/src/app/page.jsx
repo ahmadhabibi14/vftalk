@@ -13,7 +13,7 @@ export default function Home() {
     };
     socket.onmessage = function (e) {
       setMessages([...messages, e.data]);
-      console.log(e.data)
+      console.log(messages);
     };
   });
 

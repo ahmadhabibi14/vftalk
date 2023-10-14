@@ -1,6 +1,8 @@
 package domain
 
 import (
+	"sync"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/websocket/v2"
 
@@ -8,6 +10,7 @@ import (
 )
 
 type Room struct {
+	sync.RWMutex
 	Clients map[*Client]bool
 	Join    chan *Client
 	Leave   chan *Client

@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"runtime"
 	"time"
 
 	"chat-app/domain"
@@ -10,6 +11,11 @@ import (
 	"github.com/gofiber/template/django/v3"
 	"github.com/gofiber/websocket/v2"
 )
+
+func init() {
+	cpu := runtime.NumCPU()
+	runtime.GOMAXPROCS(cpu)
+}
 
 func main() {
 	engine := django.New("./views", ".django")
@@ -24,6 +30,7 @@ func main() {
 		WriteBufferSize:  256,
 	}
 	app.Static("/static", "./views/static")
+
 	room := domain.NewRoom()
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.Render("index", fiber.Map{
