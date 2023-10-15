@@ -1,17 +1,9 @@
 let socket = null;
 
-document.addEventListener("DOMContentLoaded", function () {
-  const msgForm = document.getElementById("message_form");
-  const msgInput = document.getElementById("msg_input");
-  msgForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    socket.send(msgInput.value);
-  });
-});
-
-(() => {
+window.onload = function () {
   socket = new WebSocket("ws://localhost:8080/room");
   socket.onmessage = function (e) {
+    console.log(e.data);
     var msgElement = document.createElement("chat");
     msgElement.className = "chat";
     msgElement.textContent = e.data;
@@ -21,4 +13,12 @@ document.addEventListener("DOMContentLoaded", function () {
   socket.onclose = function () {
     console.log("closed");
   };
-})();
+
+  const msgForm = document.getElementById("message_form");
+  const msgInput = document.getElementById("msg_input");
+  msgForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    socket.send(msgInput.value);
+  });
+};
+  

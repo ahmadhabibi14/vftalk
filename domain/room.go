@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"fmt"
 	"sync"
 
 	"github.com/gofiber/fiber/v2"
@@ -18,12 +19,14 @@ type Room struct {
 }
 
 func NewRoom() *Room {
-	return &Room{
+	r := &Room{
 		Forward: make(chan []byte),
 		Join:    make(chan *Client),
 		Leave:   make(chan *Client),
 		Clients: make(map[*Client]bool),
 	}
+	go r.Run()
+	return r
 }
 
 func RoomUpgrade(c *fiber.Ctx) error {
@@ -38,12 +41,15 @@ func (r *Room) Run() {
 	for {
 		select {
 		case client := <-r.Join:
+			fmt.Println("Join")
 			r.Clients[client] = true
 		case client := <-r.Leave:
+			fmt.Println("Leave")
 			delete(r.Clients, client)
 			close(client.Receive)
 		case msg := <-r.Forward:
 			for client := range r.Clients {
+				fmt.Println("Broadcast")
 				client.Receive <- msg
 			}
 		}

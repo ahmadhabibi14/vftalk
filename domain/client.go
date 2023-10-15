@@ -1,6 +1,11 @@
 package domain
 
-import "github.com/gofiber/websocket/v2"
+import (
+	"fmt"
+	"log"
+
+	"github.com/gofiber/websocket/v2"
+)
 
 type Client struct {
 	Socket  *websocket.Conn
@@ -15,16 +20,25 @@ func (c *Client) Read() {
 		if err != nil {
 			return
 		}
+		fmt.Println(string(msg))
 		c.Room.Forward <- msg
 	}
 }
 
 func (c *Client) Write() {
 	defer c.Socket.Close()
-	for msg := range c.Receive {
-		err := c.Socket.WriteMessage(websocket.TextMessage, msg)
-		if err != nil {
-			return
+	for {
+		select {
+		case msg, ok := <-c.Receive:
+			if !ok {
+				if err := c.Socket.WriteMessage(websocket.CloseMessage, nil); err != nil {
+					log.Println("Connection closed: ", err)
+				}
+				return
+			}
+			if err := c.Socket.WriteMessage(websocket.TextMessage, msg); err != nil {
+				log.Println(err)
+			}
 		}
 	}
 }

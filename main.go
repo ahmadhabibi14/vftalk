@@ -39,6 +39,5 @@ func main() {
 	})
 	app.Use("/room", domain.RoomUpgrade)
 	app.Get("/room", websocket.New(room.RoomHandler, wsConf))
-	go room.Run()
 	log.Fatal(app.Listen(":8080"))
 }
