@@ -4,7 +4,7 @@ tmp_dir = "tmp"
 [build]
   include_ext = ['go']
   exclude_regex = ['_test.go']
-  exclude_dir = ['tmp', 'web']
+  exclude_dir = ['tmp']
   delay = 500
   kill_delay = "0s"
 
