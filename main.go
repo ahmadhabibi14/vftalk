@@ -37,7 +37,6 @@ func HandleClients(conn *websocket.Conn) {
 	for {
 		var message Message
 		err := conn.ReadJSON(&message)
-		log.Printf("Msg: %v\n", string(message.Message))
 		if err != nil {
 			log.Printf("error occurred while reading message : %v", err)
 			delete(clients, conn)
@@ -52,7 +51,7 @@ func main() {
 	app := fiber.New(fiber.Config{
 		AppName: "Habi Chat App",
 		Views:   engine,
-		Prefork: true,
+		Prefork: false,
 	})
 	app.Use(requestid.New())
 	app.Use(logger.New(logger.Config{
@@ -85,7 +84,7 @@ func main() {
 		return fiber.ErrUpgradeRequired
 	})
 	app.Get("/room", websocket.New(HandleClients, wsConf))
-	app.Listen(":8080")
+	log.Fatal(app.Listen(":8080"))
 }
 
 func broadcastMessagesToClients() {
@@ -94,7 +93,7 @@ func broadcastMessagesToClients() {
 		for client := range clients {
 			err := client.WriteJSON(message)
 			if err != nil {
-				log.Printf("error occurred while writing message to client: %v", err)
+				log.Printf("Error occured: %v", err)
 				client.Close()
 				delete(clients, client)
 			}
