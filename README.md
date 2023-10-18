@@ -1,6 +1,5 @@
-## A chat app with single room
+## A chat app
 
 ### Tech stack:
 - [Go Fiber](https://gofiber.io)
-- [Django](https://docs.gofiber.io/template/django/)
-- [Tailwindcss](https://tailwindcss.com)
+- [Handlebars](https://handlebarsjs.com/)
