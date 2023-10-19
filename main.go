@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 	"runtime"
 	"time"
 
@@ -10,9 +11,14 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/gofiber/template/handlebars/v2"
 	"github.com/gofiber/websocket/v2"
+	"github.com/joho/godotenv"
 )
 
 func init() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 	cpu := runtime.NumCPU()
 	log.Println(cpu)
 	runtime.GOMAXPROCS(cpu)
@@ -65,6 +71,7 @@ func main() {
 		WriteBufferSize:  256,
 	}
 	app.Static("/static", "./views/static")
+	app.Static("/public", "./views/public")
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.Render("index", fiber.Map{
@@ -84,7 +91,7 @@ func main() {
 		return fiber.ErrUpgradeRequired
 	})
 	app.Get("/room", websocket.New(HandleClients, wsConf))
-	log.Fatal(app.Listen(":8080"))
+	log.Fatal(app.Listen(os.Getenv("PORT")))
 }
 
 func broadcastMessagesToClients() {
