@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"runtime"
@@ -75,7 +76,7 @@ func main() {
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.Render("index", fiber.Map{
-			"Title": "Habi Chat App",
+			"Title": "VFtalk",
 		})
 	})
 	app.Get("/login", func(c *fiber.Ctx) error {
@@ -91,7 +92,8 @@ func main() {
 		return fiber.ErrUpgradeRequired
 	})
 	app.Get("/room", websocket.New(HandleClients, wsConf))
-	log.Fatal(app.Listen(os.Getenv("PORT")))
+	addr := fmt.Sprintf("localhost:%s", os.Getenv("PORT"))
+	log.Fatal(app.Listen(addr))
 }
 
 func broadcastMessagesToClients() {
