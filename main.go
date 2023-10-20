@@ -56,7 +56,7 @@ func HandleClients(conn *websocket.Conn) {
 func main() {
 	engine := handlebars.New("./views/routes", ".hbs")
 	app := fiber.New(fiber.Config{
-		AppName: "Habi Chat App",
+		AppName: "VFtalk - Chat App",
 		Views:   engine,
 		Prefork: false,
 	})
