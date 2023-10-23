@@ -8,24 +8,39 @@
   </head>
   <body>
     <div class="w-full bg-black h-screen text-[#ADDEBE]">
-      <div class="w-8/12 h-full mx-auto flex flex-col border-x border-[#161616]">
+      <div class="w-8/12 h-full mx-auto flex flex-col border-x border-[#333]">
         <div class="grow flex flex-col gap-2 px-5">
-          <div class="py-5 border-b border-[#161616]">
-            <img src="/public/icons/vftalk_2.svg" alt="Logo" class="w-[120px] h-auto"/>
+          <header class="flex flex-row justify-between items-center text-xl font-medium w-full py-5 border-b border-[#333]">
+            <picture>
+              <img
+                src="/public/icons/vftalk_2.svg"
+                alt="Logo"
+                title="VFtalk"
+                class="w-[120px] h-auto"
+              />
+            </picture>
+            <span class="bg-emerald-400/10 py-1 px-5 rounded-full border border-[#ADDEBE]/20">
+              Ahmad Habibi
+            </span>
+          </header>
+          <div>
+            {{> 'partials/chats'}}
           </div>
-          <div>isi</div>
         </div>
-        <div class="bg-black h-fit py-6 px-5 flex flex-row items-center gap-4 border-t border-[#161616]">
+        <div class="bg-black h-fit py-6 px-5 flex flex-row items-center gap-4 border-t border-[#333]">
           <div class="grow relative">
             <input
               type="text"
-              id="input"
-              class="rounded-2xl w-full bg-transparent border border-[#161616] py-4 pl-4 pr-12 focus:outline-2 focus:outline-[#2B874A] focus:border-[#2B874A] caret-[#ADDEBE] focus:ring-0 focus:ring-red-50"
+              id="chatInputElm"
+              class="rounded-2xl w-full bg-[#0a0a0a] border border-[#333] py-4 pl-4 pr-12 focus:outline-2 focus:outline-[#2B874A] focus:border-[#2B874A] caret-[#ADDEBE] focus:ring-0"
             />
-            <button class="absolute right-3 top-0 bottom-0 group" title="Select emoji">
+            <button
+              class="absolute right-3 top-0 bottom-0 group"
+              title="Select emoji"
+            >
               <svg
                 viewBox="0 0 24 24"
-                class="w-[23px] h-auto fill-none stroke-[#2e2e2e] group-hover:stroke-[#ADDEBE]"
+                class="w-[23px] h-auto fill-none stroke-[#555555] group-hover:stroke-[#ADDEBE]"
               >
                 <path
                   d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
@@ -58,7 +73,7 @@
             </button>
           </div>
           <button
-            onclick="send()"
+            id="sendChatBtnElm"
             class="bg-[#115A2A] hover:bg-[#2B874A] py-auto h-full px-7 rounded-full"
           >
             <svg viewBox="0 0 24 24" class="w-[23px] h-auto fill-[#ADDEBE]">
@@ -74,6 +89,6 @@
         </div>
       </div>
     </div>
-    {{! <script src="/static/js/main.js"></script> }}
+    <script src="/static/js/main.js"></script>
   </body>
 </html>

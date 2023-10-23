@@ -5,3 +5,7 @@
 html {
   font-size: 12px;
 }
+
+.chat_item {
+  @apply bg-emerald-400/10 py-1 px-5 rounded-full border border-[#ADDEBE]/20 w-fit;
+}

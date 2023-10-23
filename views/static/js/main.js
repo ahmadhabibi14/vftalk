@@ -1,20 +1,39 @@
-let input = document.getElementById("input");
-let output = document.getElementById("output");
-let socket = new WebSocket("ws://" + window.location.host + "/room");
+let chatInputElm = document.getElementById("chatInputElm");
+let chatContainer = document.getElementById("chatContainer");
+let sendChatBtnElm = document.getElementById("sendChatBtnElm");
+let socket = new WebSocket("ws://localhost:8080/room");
 
 socket.onopen = () => {
-  output.innerHTML += "Status: connected \n";
-};
-socket.onmessage = (e) => {
-  console.log("Message: ", e.data);
-  output.innerHTML += "Message from server: " + e.data + "\n";
+  console.log("Connected");
 };
 
-function send() {
+socket.onmessage = (e) => {
+  let data = JSON.parse(e.data);
+  let msgElement = document.createElement("chat");
+  msgElement.className = "chat_item";
+  msgElement.textContent = data.message;
+  chatContainer.appendChild(msgElement);
+};
+
+sendChatBtnElm.addEventListener("click", () => {
+  if (chatInputElm.value === "") {
+    return;
+  }
   socket.send(
     JSON.stringify({
-      message: input.value,
+      message: chatInputElm.value,
     })
   );
-  input.value = "";
-}
+  chatInputElm.value = "";
+});
+
+chatInputElm.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    socket.send(
+      JSON.stringify({
+        message: chatInputElm.value,
+      })
+    );
+    chatInputElm.value = "";
+  }
+});
