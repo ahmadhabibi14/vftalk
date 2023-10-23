@@ -1,4 +1,4 @@
-## A chat app
+## A Chat App
 
 ### Tech stack:
 - [Go Fiber](https://gofiber.io)
@@ -12,3 +12,5 @@
 - [ ] API rate limit
 - [ ] Login page
 - [ ] Fix layout to not overflow
+- [ ] Responsive to mobile device
+- [ ] Turn to Progressive Web App (PWA)
