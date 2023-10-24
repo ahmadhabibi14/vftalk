@@ -15,6 +15,7 @@ socket.onmessage = (e) => {
   msgElement.className = "chat_item";
   msgElement.textContent = data.message;
   chatContainer.appendChild(msgElement);
+  msgElement.scrollIntoView( {behavior: 'smooth'} );
 };
 
 sendChatBtnElm.addEventListener("click", () => {
@@ -34,6 +35,9 @@ sendChatBtnElm.addEventListener("click", () => {
 });
 
 chatInputElm.addEventListener("keydown", (e) => {
+  if (chatInputElm.value === "") {
+    return;
+  }
   if (e.key === "Enter") {
     sendChatIcon.style.display = "none";
     loadingIcon.style.display = "block";
