@@ -12,5 +12,5 @@
 - [ ] API rate limit
 - [ ] Login page
 - [ ] Fix layout to not overflow
-- [ ] Responsive to mobile device
+- [x] Responsive to mobile device
 - [ ] Turn to Progressive Web App (PWA)
