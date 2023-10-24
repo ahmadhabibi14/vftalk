@@ -49,6 +49,9 @@ func HandleClients(conn *websocket.Conn) {
 			delete(clients, conn)
 			break
 		}
+		if message.Message == `` {
+			break
+		}
 		broadcast <- message
 	}
 }
