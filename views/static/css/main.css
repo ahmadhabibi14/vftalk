@@ -6,6 +6,10 @@ html {
   font-size: 12px;
 }
 
+.turbo-progress-bar {
+  @apply h-1 bg-[#115A2A];
+}
+
 .chat_item {
   @apply bg-emerald-400/10 py-3 px-5 rounded-2xl border border-[#ADDEBE]/20 w-fit;
 }
