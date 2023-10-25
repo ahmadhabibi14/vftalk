@@ -52,6 +52,7 @@ func HandleClients(conn *websocket.Conn) {
 		if message.Message == `` {
 			break
 		}
+		log.Println("Message : ", message)
 		broadcast <- message
 	}
 }

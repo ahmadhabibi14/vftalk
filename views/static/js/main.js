@@ -18,10 +18,16 @@ socket.onmessage = (e) => {
   msgElement.scrollIntoView( {behavior: 'smooth'} );
 };
 
+socket.onerror = (e) => {
+  alert("Error WebSocket connection: ", e);
+  console.error("Error WebSocket connection: ", e);
+}
+
 sendChatBtnElm.addEventListener("click", () => {
   if (chatInputElm.value === "") {
     return;
   }
+  sendChatBtnElm.disabled = true;
   sendChatIcon.style.display = "none";
   loadingIcon.style.display = "block";
   socket.send(
@@ -32,6 +38,7 @@ sendChatBtnElm.addEventListener("click", () => {
   chatInputElm.value = "";
   sendChatIcon.style.display = "block";
   loadingIcon.style.display = "none";
+  sendChatBtnElm.disabled = false;
 });
 
 chatInputElm.addEventListener("keydown", (e) => {
@@ -39,6 +46,7 @@ chatInputElm.addEventListener("keydown", (e) => {
     return;
   }
   if (e.key === "Enter") {
+    sendChatBtnElm.disabled = true;
     sendChatIcon.style.display = "none";
     loadingIcon.style.display = "block";
     socket.send(
@@ -49,5 +57,6 @@ chatInputElm.addEventListener("keydown", (e) => {
     chatInputElm.value = "";
     sendChatIcon.style.display = "block";
     loadingIcon.style.display = "none";
+    sendChatBtnElm.disabled = false;
   }
 });
