@@ -13,9 +13,9 @@
 <body>
   <div class="w-full bg-black max-h-screen h-screen text-[#ADDEBE]">
     <div class="w-full md:w-8/12 h-full mx-auto flex flex-col border-x border-[#333]">
-      <div class="grow flex flex-col px-5">
+      <div class="grow flex flex-col relative">
         <header
-          class="flex flex-row justify-between items-center text-xl font-medium w-full py-5 border-b border-[#333]">
+          class="absolute top-0 right-0 left-0 bg-black bg-opacity-40 backdrop-blur flex flex-row justify-between items-center text-xl font-medium px-5 py-5 border-b border-[#333]">
           <picture>
             <img src="/public/icons/vftalk_2.svg" alt="Logo" title="VFtalk" class="w-[120px] h-auto" />
           </picture>
@@ -23,7 +23,7 @@
             Ahmad Habibi
           </span>
         </header>
-        <div class="flex-auto overflow-y-auto h-[0px] grow" id="chatPartialContainer">
+        <div class="flex-auto overflow-y-auto h-[0px] grow px-5 mt-24" id="chatPartialContainer">
           {{> 'partials/chats'}}
         </div>
       </div>
