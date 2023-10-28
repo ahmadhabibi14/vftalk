@@ -21,17 +21,23 @@ func init() {
 		log.Fatal("Error loading .env file")
 	}
 	cpu := runtime.NumCPU()
-	log.Println(cpu)
+	log.Println("Total CPU Cores : ", cpu)
 	runtime.GOMAXPROCS(cpu)
 }
 
-type Message struct {
-	Message string `json:"message"`
-}
+type (
+	MessageIn struct {
+		Message string `json:"message"`
+	}
+	MessageOut struct {
+		Username string `json:"username"`
+		Message  string `json:"message"`
+	}
+)
 
 var (
 	clients   = make(map[*websocket.Conn]bool)
-	broadcast = make(chan Message)
+	broadcast = make(chan MessageOut)
 )
 
 func HandleClients(conn *websocket.Conn) {
@@ -42,18 +48,22 @@ func HandleClients(conn *websocket.Conn) {
 
 	clients[conn] = true
 	for {
-		var message Message
-		err := conn.ReadJSON(&message)
+		var messageIn MessageIn
+		err := conn.ReadJSON(&messageIn)
 		if err != nil {
 			log.Printf("error occurred while reading message : %v", err)
 			delete(clients, conn)
 			break
 		}
-		if message.Message == `` {
+		if messageIn.Message == `` {
 			break
 		}
-		log.Println("Message : ", message)
-		broadcast <- message
+
+		messageOut := MessageOut{
+			Username: "Ahmad Habibi",
+			Message:  messageIn.Message,
+		}
+		broadcast <- messageOut
 	}
 }
 

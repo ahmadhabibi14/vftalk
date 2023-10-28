@@ -11,11 +11,20 @@ socket.onopen = () => {
 
 socket.onmessage = (e) => {
   let data = JSON.parse(e.data);
-  let msgElement = document.createElement("chat");
-  msgElement.className = "chat_item";
-  msgElement.textContent = data.message;
-  chatContainer.appendChild(msgElement);
-  msgElement.scrollIntoView( {behavior: 'smooth'} );
+  let msgContainer = document.createElement("chat");
+  let unameElm = document.createElement("span");
+  let msgElm = document.createElement("span");
+
+  msgContainer.className = "chat_item";
+  unameElm.className = "chat_username";
+  unameElm.textContent = data.username;
+  msgElm.className = "chat_message";
+  msgElm.textContent = data.message;
+
+  chatContainer.appendChild(msgContainer);
+  msgContainer.appendChild(unameElm);
+  msgContainer.appendChild(msgElm);
+  msgContainer.scrollIntoView( {behavior: 'smooth'} );
 };
 
 socket.onerror = (e) => {
