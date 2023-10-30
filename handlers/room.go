@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"vftalk/conf"
 
-	"github.com/gofiber/websocket/v2"
+	"github.com/gofiber/contrib/websocket"
 )
 
 type (
