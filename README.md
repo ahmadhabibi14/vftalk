@@ -1,4 +1,4 @@
-## A Chat App
+## An implementation of Go, Fiber, Handlebars, with WebSocket connection
 
 ### Tech stack:
 - [Go Fiber](https://gofiber.io)
@@ -22,7 +22,6 @@ go run main.go
 # start nodejs for build javascript or css stuff
 bun dev
 ```
-
 
 ### TODO:
 - [ ] User management

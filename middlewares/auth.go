@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"log"
 	"vftalk/conf"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,7 +9,6 @@ import (
 func AuthJWT(c *fiber.Ctx) error {
 	err := conf.TokenValid(c)
 	httpMethod := string(c.Request().Header.Method())
-	log.Println("HTTP Method =", string(httpMethod))
 	if err != nil {
 		if string(httpMethod) == fiber.MethodGet {
 			return c.Redirect("/login", fiber.StatusTemporaryRedirect)
@@ -23,6 +21,7 @@ func AuthJWT(c *fiber.Ctx) error {
 	return c.Next()
 }
 
+// Only use in login handler, don't use in other places
 func IsLoggedIn(c *fiber.Ctx) error {
 	err := conf.TokenValid(c)
 	if err != nil {

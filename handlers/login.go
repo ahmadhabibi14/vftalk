@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"log"
 	"time"
 	"vftalk/conf"
 
@@ -37,8 +36,6 @@ func Login(c *fiber.Ctx) error {
 		errorResp, _ := json.Marshal(errmsg)
 		return c.Status(fiber.StatusBadRequest).JSON(string(errorResp))
 	}
-
-	log.Println("login username = ", in.Username)
 
 	token, err := conf.GenerateJWT(in.Username, time.Now().AddDate(0, 2, 0))
 	if err != nil {
