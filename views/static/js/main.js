@@ -7,6 +7,25 @@ let socket = new WebSocket("ws://localhost:8080/api/room");
 
 const username = localStorage.getItem("username");
 
+function SendMessage() {
+  if (chatInputElm.value === "") {
+    return;
+  }
+  sendChatBtnElm.disabled = true;
+  sendChatIcon.style.display = "none";
+  loadingIcon.style.display = "block";
+  socket.send(
+    JSON.stringify({
+      message: chatInputElm.value,
+    })
+  );
+  chatInputElm.value = "";
+  sendChatIcon.style.display = "block";
+  loadingIcon.style.display = "none";
+  sendChatBtnElm.disabled = false;
+  return;
+}
+
 socket.onopen = () => {
   console.log("Connected");
 };
@@ -44,39 +63,21 @@ socket.onerror = (e) => {
 }
 
 sendChatBtnElm.addEventListener("click", () => {
-  if (chatInputElm.value === "") {
+  if (chatInputElm.value === "/clear") {
+    chatInputElm.value = "";
+    chatContainer.innerHTML = "";
     return;
   }
-  sendChatBtnElm.disabled = true;
-  sendChatIcon.style.display = "none";
-  loadingIcon.style.display = "block";
-  socket.send(
-    JSON.stringify({
-      message: chatInputElm.value,
-    })
-  );
-  chatInputElm.value = "";
-  sendChatIcon.style.display = "block";
-  loadingIcon.style.display = "none";
-  sendChatBtnElm.disabled = false;
+  SendMessage();
 });
 
 chatInputElm.addEventListener("keydown", (e) => {
-  if (chatInputElm.value === "") {
+  if (chatInputElm.value === "/clear") {
+    chatInputElm.value = "";
+    chatContainer.innerHTML = "";
     return;
   }
   if (e.key === "Enter") {
-    sendChatBtnElm.disabled = true;
-    sendChatIcon.style.display = "none";
-    loadingIcon.style.display = "block";
-    socket.send(
-      JSON.stringify({
-        message: chatInputElm.value,
-      })
-    );
-    chatInputElm.value = "";
-    sendChatIcon.style.display = "block";
-    loadingIcon.style.display = "none";
-    sendChatBtnElm.disabled = false;
+    SendMessage();
   }
 });

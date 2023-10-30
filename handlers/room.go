@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"fmt"
-	"log"
 	"vftalk/conf"
 
 	"github.com/gofiber/websocket/v2"
@@ -38,7 +37,6 @@ func HandleClients(conn *websocket.Conn) {
 		var messageIn MessageIn
 		err := conn.ReadJSON(&messageIn)
 		if err != nil {
-			log.Printf("error occurred while reading message : %v", err)
 			delete(clients, conn)
 			break
 		}
@@ -60,7 +58,6 @@ func broadcastMessagesToClients() {
 		for client := range clients {
 			err := client.WriteJSON(message)
 			if err != nil {
-				log.Printf("Error occured: %v", err)
 				client.Close()
 				delete(clients, client)
 			}

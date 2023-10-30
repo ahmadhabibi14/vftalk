@@ -8,8 +8,8 @@ import (
 )
 
 var Limiter = limiter.Config{
-	Max:        10000,
-	Expiration: 1 * time.Minute,
+	Max:        300,
+	Expiration: 30 * time.Second,
 	KeyGenerator: func(c *fiber.Ctx) string {
 		return c.IP()
 	},
