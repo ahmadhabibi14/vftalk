@@ -1,4 +1,4 @@
-module chat-app
+module vftalk
 
 go 1.20
 
