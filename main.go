@@ -60,7 +60,7 @@ func HandleClients(conn *websocket.Conn) {
 		}
 
 		messageOut := MessageOut{
-			Username: "Ahmad Habibi",
+			Username: "Habi",
 			Message:  messageIn.Message,
 		}
 		broadcast <- messageOut
@@ -96,7 +96,7 @@ func main() {
 	app.Get("/login", func(c *fiber.Ctx) error {
 		return c.Render("login/index", fiber.Map{
 			"Title": "Login",
-			"Desc":  "Welcome back, please enter your creds",
+			"Desc":  "Welcome, please use your username",
 		})
 	})
 	app.Use("/room", func(c *fiber.Ctx) error {
