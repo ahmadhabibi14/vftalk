@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"vftalk/handlers"
+	"vftalk/middlewares"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/websocket/v2"
@@ -18,11 +19,13 @@ func ApiRoutes(app *fiber.App) {
 
 	api := app.Group("/api")
 
-	api.Use("/room", func(c *fiber.Ctx) error {
+	api.Use("/room", middlewares.AuthJWT, func(c *fiber.Ctx) error {
 		if websocket.IsWebSocketUpgrade(c) {
 			return c.Next()
 		}
 		return fiber.ErrUpgradeRequired
 	})
 	api.Get("/room", websocket.New(handlers.HandleClients, wsConf))
+
+	api.Post("/login", handlers.Login)
 }

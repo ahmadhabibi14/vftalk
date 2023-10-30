@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"fmt"
 	"log"
+	"vftalk/conf"
 
 	"github.com/gofiber/websocket/v2"
 )
@@ -28,6 +30,10 @@ func HandleClients(conn *websocket.Conn) {
 	}()
 
 	clients[conn] = true
+
+	u, _ := conf.WsGetUsernameFromJWT(conn)
+	username := fmt.Sprintf("%v", u)
+
 	for {
 		var messageIn MessageIn
 		err := conn.ReadJSON(&messageIn)
@@ -41,7 +47,7 @@ func HandleClients(conn *websocket.Conn) {
 		}
 
 		messageOut := MessageOut{
-			Username: "Habi",
+			Username: username,
 			Message:  messageIn.Message,
 		}
 		broadcast <- messageOut

@@ -14,6 +14,7 @@ loginBtn.addEventListener("click", async () => {
   loginLoadingIcon.style.display = "block";
 
   try {
+    console.log("Login username = ", username.value);
     const resp = await fetch("/api/login", {
       method: "POST",
       headers: {
@@ -29,9 +30,7 @@ loginBtn.addEventListener("click", async () => {
       loginTxt.style.display = "block";
       loginLoadingIcon.style.display = "none";
       loginBtn.disabled = false;
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 1400);
+      window.location.href = "/";
     } else {
       alert("Login failed");
       loginBtn.disabled = false;
