@@ -68,8 +68,8 @@ func GetUsernameFromJWT(c *fiber.Ctx) (interface{}, error) {
 	}
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if ok && token.Valid {
-		uid := claims["username"]
-		return uid, nil
+		uname := claims["username"]
+		return uname, nil
 	}
 	return "", nil
 }
@@ -87,8 +87,8 @@ func WsGetUsernameFromJWT(c *websocket.Conn) (interface{}, error) {
 	}
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if ok && token.Valid {
-		uid := claims["username"]
-		return uid, nil
+		uname := claims["username"]
+		return uname, nil
 	}
 	return "", nil
 }

@@ -10,6 +10,14 @@ html {
   @apply h-1 bg-[#115A2A];
 }
 
+.chat_root {
+  @apply flex flex-row justify-start;
+}
+
+.chat_root.owned {
+  @apply flex flex-row justify-end;
+}
+
 .chat_item {
   @apply bg-emerald-400/10 p-3 rounded-2xl border border-[#ADDEBE]/20 w-fit max-w-[70%] flex flex-col gap-1;
 }
@@ -19,7 +27,7 @@ html {
 }
 
 .chat_item .chat_message {
-  @apply text-lg
+  @apply text-lg text-ellipsis break-all;
 }
 
 #chatPartialContainer::-webkit-scrollbar {

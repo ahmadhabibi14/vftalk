@@ -27,9 +27,13 @@ loginBtn.addEventListener("click", async () => {
     });
 
     if (resp.ok) {
+      const creds = await resp.json();
+			const successResp = await JSON.parse(creds);
+      
       loginTxt.style.display = "block";
       loginLoadingIcon.style.display = "none";
       loginBtn.disabled = false;
+      localStorage.setItem("username", successResp["username"]);
       window.location.href = "/";
     } else {
       alert("Login failed");

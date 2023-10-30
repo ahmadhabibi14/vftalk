@@ -5,23 +5,34 @@ let sendChatIcon = document.getElementById("sendChatIcon");
 let loadingIcon = document.getElementById("loadingIcon");
 let socket = new WebSocket("ws://localhost:8080/api/room");
 
+const username = localStorage.getItem("username");
+
 socket.onopen = () => {
   console.log("Connected");
 };
 
 socket.onmessage = (e) => {
   let data = JSON.parse(e.data);
+  let rootMsg = document.createElement("chatroot")
   let msgContainer = document.createElement("chat");
   let unameElm = document.createElement("span");
-  let msgElm = document.createElement("span");
+  let msgElm = document.createElement("p");
 
+  if (username === data.username) {
+    rootMsg.className = "chat_root owned"
+  } else {
+    rootMsg.className = "chat_root"
+  }
+ 
   msgContainer.className = "chat_item";
   unameElm.className = "chat_username";
   unameElm.textContent = data.username;
   msgElm.className = "chat_message";
   msgElm.textContent = data.message;
 
-  chatContainer.appendChild(msgContainer);
+
+  chatContainer.appendChild(rootMsg);
+  rootMsg.appendChild(msgContainer)
   msgContainer.appendChild(unameElm);
   msgContainer.appendChild(msgElm);
   msgContainer.scrollIntoView( {behavior: 'smooth'} );
