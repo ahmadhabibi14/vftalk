@@ -4,8 +4,11 @@ import (
 	"log"
 
 	"vftalk/conf"
+	"vftalk/middlewares"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/gofiber/template/handlebars/v2"
@@ -24,11 +27,9 @@ func (w *WebServer) Start() {
 		Prefork: false,
 	})
 	app.Use(requestid.New())
-	app.Use(logger.New(logger.Config{
-		Format:     "${time} | ${status} | ${latency} | ${method} | ${path}\n",
-		TimeFormat: "2006-01-02 03:04 PM",
-		TimeZone:   "Asia/Makassar",
-	}))
+	app.Use(logger.New(middlewares.LoggerConfig))
+	app.Use(limiter.New(middlewares.Limiter))
+	app.Use(cors.New(middlewares.CORSConfig))
 
 	app.Static("/static", "./views/static")
 	app.Static("/public", "./views/public")

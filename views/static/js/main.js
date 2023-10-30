@@ -3,7 +3,7 @@ let chatContainer = document.getElementById("chatContainer");
 let sendChatBtnElm = document.getElementById("sendChatBtnElm");
 let sendChatIcon = document.getElementById("sendChatIcon");
 let loadingIcon = document.getElementById("loadingIcon");
-let socket = new WebSocket("ws://" + window.location.host + "/api/room");
+let socket = new WebSocket("ws://localhost:8080/api/room");
 
 socket.onopen = () => {
   console.log("Connected");
