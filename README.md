@@ -34,3 +34,4 @@ bun dev
 - [ ] Turn to Progressive Web App (PWA)
 - [ ] Add Database to store user data and chats
 - [ ] User Info
+- [ ] Add Tenor API
