@@ -32,3 +32,5 @@ bun dev
 - [x] Fix layout to not overflow
 - [x] Responsive to mobile device
 - [ ] Turn to Progressive Web App (PWA)
+- [ ] Add Database to store user data and chats
+- [ ] User Info
