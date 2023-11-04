@@ -9,6 +9,7 @@ require (
 	github.com/gofiber/template/handlebars/v2 v2.1.6
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/joho/godotenv v1.5.1
+	github.com/wneessen/go-mail v0.4.0
 )
 
 require (
