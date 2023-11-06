@@ -33,6 +33,7 @@ func (w *WebServer) Start() {
 
 	app.Static("/static", "./views/static")
 	app.Static("/public", "./views/public")
+	app.Static("/files", "./uploads")
 
 	WebViews(app)
 	ApiRoutes(app)

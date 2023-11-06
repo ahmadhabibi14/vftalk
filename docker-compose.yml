@@ -5,12 +5,13 @@ services:
   mysql:
     image: mariadb
     container_name: db
-    restart: always
     environment:
       MARIADB_DATABASE: "vftalk"
       MARIADB_USER: "habi"
       MARIADB_PASSWORD: "habi123"
       MARIADB_ROOT_PASSWORD: "root"
+      MARIADB_TZ: "Asia/Makassar"
+    command: "--default-time-zone=+08:00"
     ports:
       - "3306:3306"
     volumes:

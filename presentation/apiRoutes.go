@@ -27,6 +27,6 @@ func ApiRoutes(app *fiber.App) {
 	})
 	api.Get("/room", websocket.New(handlers.HandleClients, wsConf))
 
-	api.Post("/login", middlewares.IsLoggedIn, handlers.Login)
-	api.Post("/register", middlewares.IsLoggedIn, handlers.Register)
+	api.Post("/login", handlers.Login)
+	api.Post("/register", handlers.Register)
 }

@@ -27,7 +27,7 @@ func AuthJWT(c *fiber.Ctx) error {
 	return c.Next()
 }
 
-// Only use in login handler, don't use in other places
+// Only use in login and register handler, don't use in other places
 func IsLoggedIn(c *fiber.Ctx) error {
 	err := conf.TokenValid(c)
 	if err != nil {
