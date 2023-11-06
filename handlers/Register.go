@@ -88,7 +88,7 @@ func Register(c *fiber.Ctx) error {
 
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(REQ_IN.Password), bcrypt.DefaultCost)
 	userData := sqlc.CreateNewUserParams{
-		UserID:   utils.GenerateRandomID(10),
+		UserID:   utils.GenerateRandomID(20),
 		Username: REQ_IN.Username,
 		FullName: REQ_IN.Fullname,
 		Email:    REQ_IN.Email,

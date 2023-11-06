@@ -7,7 +7,6 @@ package sqlc
 
 import (
 	"context"
-	"database/sql"
 	"time"
 )
 
@@ -66,11 +65,11 @@ WHERE user_id = ?
 `
 
 type GetUserDataByUserIdRow struct {
-	Username string         `db:"username" json:"username"`
-	FullName string         `db:"full_name" json:"full_name"`
-	Email    string         `db:"email" json:"email"`
-	Avatar   sql.NullString `db:"avatar" json:"avatar"`
-	JoinAt   time.Time      `db:"join_at" json:"join_at"`
+	Username string    `db:"username" json:"username"`
+	FullName string    `db:"full_name" json:"full_name"`
+	Email    string    `db:"email" json:"email"`
+	Avatar   string    `db:"avatar" json:"avatar"`
+	JoinAt   time.Time `db:"join_at" json:"join_at"`
 }
 
 func (q *Queries) GetUserDataByUserId(ctx context.Context, userID string) (GetUserDataByUserIdRow, error) {
@@ -92,11 +91,11 @@ ORDER BY join_at DESC
 `
 
 type ListUsersRow struct {
-	Username string         `db:"username" json:"username"`
-	FullName string         `db:"full_name" json:"full_name"`
-	Email    string         `db:"email" json:"email"`
-	Avatar   sql.NullString `db:"avatar" json:"avatar"`
-	JoinAt   time.Time      `db:"join_at" json:"join_at"`
+	Username string    `db:"username" json:"username"`
+	FullName string    `db:"full_name" json:"full_name"`
+	Email    string    `db:"email" json:"email"`
+	Avatar   string    `db:"avatar" json:"avatar"`
+	JoinAt   time.Time `db:"join_at" json:"join_at"`
 }
 
 func (q *Queries) ListUsers(ctx context.Context) ([]ListUsersRow, error) {
