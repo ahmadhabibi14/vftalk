@@ -23,6 +23,12 @@ go run main.go
 bun dev
 ```
 
+### MariaDB
+
+```shell
+docker exec -it db mariadb -u root -p
+```
+
 ### TODO:
 - [ ] User management
 - [ ] Limit online users to only 20

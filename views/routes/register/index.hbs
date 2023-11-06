@@ -1,0 +1,89 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/public/favicons/favicon.svg" />
+    <title>{{Title}}</title>
+
+    <link rel="stylesheet" href="/static/css/main.tmp.css" />
+    <link
+      rel="preload"
+      href="static/js/alpine.js"
+      as="script"
+      fetchpriority="high"
+    />
+    <script
+      type="text/javascript"
+      src="/static/js/alpine.js"
+      integrity
+      data-turbo-track="reload"
+      defer
+    ></script>
+  </head>
+  <body>
+    <main class="w-full bg-black max-h-screen h-screen text-[#ADDEBE] pt-16">
+      <div
+        class="flex flex-row justify-center items-center w-full h-fit mx-auto"
+      >
+        <div class="w-full mx-[20px] md:w-[440px] flex flex-col gap-8 p-5 md:p-8 border border-[#333]">
+          <h1 class="text-4xl capitalize font-bold">{{Desc}}</h1>
+          <div class="flex flex-col gap-3">
+            <div class="flex flex-col gap-2">
+              <label
+                for="username"
+                class="ml-3 text-base font-medium text-[#ADDEBE]"
+              >Username</label>
+              <input
+                type="text"
+                name="username"
+                id="username"
+                class="login-input-elm"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label
+                for="password"
+                class="ml-3 text-base font-medium text-[#ADDEBE]"
+              >Password</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                class="login-input-elm"
+              />
+            </div>
+            <div>
+              <p class="ml-3 mt-3 text-base">
+                <span class="text-red-500">*</span>
+                You don't need to register at first, just write username and password, and then you will be redirect to the main page afterward
+              </p>
+            </div>
+            <div>
+              <button id="loginBtn" class="flex flex-row justify-center items-center w-full bg-[#115A2A] hover:bg-[#2B874A] py-3 h-fit px-7 rounded-2xl mt-6 disabled:bg-[#115A2A]">
+                <span id="loginTxt" class="text-xl font-bold">Login</span>
+                <svg
+                  id="loginLoadingIcon"
+                  viewBox="0 0 24 24"
+                  class="w-[23px] h-auto stroke-[#ADDEBE] fill-none animate-spin hidden"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="12" y1="2" x2="12" y2="6"></line>
+                  <line x1="12" y1="18" x2="12" y2="22"></line>
+                  <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+                  <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+                  <line x1="2" y1="12" x2="6" y2="12"></line>
+                  <line x1="18" y1="12" x2="22" y2="12"></line>
+                  <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+                  <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="/static/js/auth.js"></script>
+  </body>
+</html>

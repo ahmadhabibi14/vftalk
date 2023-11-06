@@ -6,7 +6,7 @@ import (
 	"github.com/wneessen/go-mail"
 )
 
-func SendMail() {
+func SendUserRegisterMail() {
 	m := mail.NewMsg()
 	if err := m.From("ahmadhabibi04@proton.me"); err != nil {
 		log.Fatalf("Failed to set From address: %s", err)

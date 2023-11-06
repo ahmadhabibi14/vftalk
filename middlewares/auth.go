@@ -11,7 +11,13 @@ func AuthJWT(c *fiber.Ctx) error {
 	httpMethod := string(c.Request().Header.Method())
 	if err != nil {
 		if string(httpMethod) == fiber.MethodGet {
-			return c.Redirect("/login", fiber.StatusTemporaryRedirect)
+			if c.Route().Path == "/login" {
+				return c.Next()
+			} else if c.Route().Path == "/register" {
+				return c.Next()
+			} else {
+				return c.Redirect("/login", fiber.StatusTemporaryRedirect)
+			}
 		} else {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 				"error": "Unauthorized Access",
@@ -25,9 +31,7 @@ func AuthJWT(c *fiber.Ctx) error {
 func IsLoggedIn(c *fiber.Ctx) error {
 	err := conf.TokenValid(c)
 	if err != nil {
-		if c.Route().Path == "/login" {
-			return c.Next()
-		}
+		return c.Next()
 	}
 	return c.Redirect("/", fiber.StatusPermanentRedirect)
 }

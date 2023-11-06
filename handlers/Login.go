@@ -3,7 +3,6 @@ package handlers
 import (
 	"time"
 	"vftalk/conf"
-	"vftalk/models/mail"
 
 	json "github.com/goccy/go-json"
 
@@ -52,8 +51,6 @@ func Login(c *fiber.Ctx) error {
 	}
 	successResp, _ := json.Marshal(out)
 	conf.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
-
-	mail.SendMail()
 
 	return c.Status(fiber.StatusOK).JSON(string(successResp))
 }

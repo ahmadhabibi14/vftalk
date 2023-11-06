@@ -1,5 +1,6 @@
 .env
 tmp/main
+_tmpdb
 main
 node_modules
 views/static/css/main.tmp.css

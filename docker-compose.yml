@@ -1,7 +1,24 @@
 version: "3"
+
 services:
+
+  mysql:
+    image: mariadb
+    container_name: db
+    restart: always
+    environment:
+      MARIADB_DATABASE: "vftalk"
+      MARIADB_USER: "habi"
+      MARIADB_PASSWORD: "habi123"
+      MARIADB_ROOT_PASSWORD: "root"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./_tmpdb/mariadb:/var/lib/mysql
+
   mailhog:
     image: mailhog/mailhog
+    container_name: mailhog
     ports:
       - 1025:1025
       - 8025:8025
