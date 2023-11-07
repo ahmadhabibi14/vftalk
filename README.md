@@ -38,6 +38,12 @@ docker exec -it db mariadb -u root -p
 - [x] Fix layout to not overflow
 - [x] Responsive to mobile device
 - [ ] Turn to Progressive Web App (PWA)
-- [ ] Add Database to store user data and chats
+- [x] Add Database to store user data
+- [ ] Add Database to store chats
 - [ ] User Info
-- [ ] Add Tenor API
+- [ ] Add Tenor API for stickers and GIFs
+- [ ] Upload picture in chats, and sticker from Tenor
+- [x] Use mailhog for SMTP in development, add to docker
+- [ ] Deploy to server
+- [ ] Add MariaDB to docker-compose
+- [ ] Use docker-mailserver for SMTP in production
