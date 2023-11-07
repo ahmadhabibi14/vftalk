@@ -128,19 +128,19 @@ func (q *Queries) ListUsers(ctx context.Context) ([]ListUsersRow, error) {
 }
 
 const userLogin = `-- name: UserLogin :one
-SELECT user_id, email, password FROM Users
-WHERE email = ?
+SELECT user_id, username, password FROM Users
+WHERE username = ?
 `
 
 type UserLoginRow struct {
 	UserID   string `db:"user_id" json:"user_id"`
-	Email    string `db:"email" json:"email"`
+	Username string `db:"username" json:"username"`
 	Password string `db:"password" json:"password"`
 }
 
-func (q *Queries) UserLogin(ctx context.Context, email string) (UserLoginRow, error) {
-	row := q.db.QueryRowContext(ctx, userLogin, email)
+func (q *Queries) UserLogin(ctx context.Context, username string) (UserLoginRow, error) {
+	row := q.db.QueryRowContext(ctx, userLogin, username)
 	var i UserLoginRow
-	err := row.Scan(&i.UserID, &i.Email, &i.Password)
+	err := row.Scan(&i.UserID, &i.Username, &i.Password)
 	return i, err
 }

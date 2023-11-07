@@ -18,8 +18,8 @@ SELECT username, full_name, email, avatar, join_at FROM Users
 ORDER BY join_at DESC;
 
 -- name: UserLogin :one
-SELECT user_id, email, password FROM Users
-WHERE email = ?;
+SELECT user_id, username, password FROM Users
+WHERE username = ?;
 
 -- name: GetUserDataByUserId :one
 SELECT username, full_name, email, avatar, join_at FROM Users

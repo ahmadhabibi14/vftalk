@@ -14,7 +14,7 @@ type Querier interface {
 	GetUserByUsername(ctx context.Context, username string) (string, error)
 	GetUserDataByUserId(ctx context.Context, userID string) (GetUserDataByUserIdRow, error)
 	ListUsers(ctx context.Context) ([]ListUsersRow, error)
-	UserLogin(ctx context.Context, email string) (UserLoginRow, error)
+	UserLogin(ctx context.Context, username string) (UserLoginRow, error)
 }
 
 var _ Querier = (*Queries)(nil)
