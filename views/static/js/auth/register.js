@@ -39,7 +39,9 @@ registerBtn.addEventListener("click", async () => {
       localStorage.setItem("username", successResp["username"]);
       window.location.href = "/";
     } else {
-      alert("Login failed");
+      const creds = await resp.json();
+      const errResp = await JSON.parse(creds);
+      alert(errResp["error"]);
       registerBtn.disabled = false;
       registerTxt.style.display = "block";
       registerLoadingIcon.style.display = "none";
