@@ -6,6 +6,7 @@ import (
 	"time"
 	"vftalk/conf"
 	"vftalk/database/sqlc"
+	"vftalk/utils"
 
 	json "github.com/goccy/go-json"
 
@@ -15,8 +16,8 @@ import (
 
 type (
 	loginIn struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
+		Username string `json:"username" validate:"required,omitempty,min=4"`
+		Password string `json:"password" validate:"required,min=8,containsany=!@#?*%&>_<}-{+"`
 	}
 	loginOut struct {
 		Ok       bool   `json:"ok"`
@@ -51,6 +52,14 @@ func Login(c *fiber.Ctx) error {
 	if err := c.BodyParser(&REQ_IN); err != nil {
 		RESP_ERR.Ok = false
 		RESP_ERR.ErrorMsg = ErrLoginInvalidInput
+		errResp, _ := json.Marshal(RESP_ERR)
+		return c.Status(fiber.StatusBadRequest).JSON(string(errResp))
+	}
+
+	isValid := utils.ValidateStruct(REQ_IN)
+	if isValid != nil {
+		RESP_ERR.Ok = false
+		RESP_ERR.ErrorMsg = isValid.Error()
 		errResp, _ := json.Marshal(RESP_ERR)
 		return c.Status(fiber.StatusBadRequest).JSON(string(errResp))
 	}

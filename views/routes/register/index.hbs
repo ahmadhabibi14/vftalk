@@ -30,6 +30,19 @@
           <div class="flex flex-col gap-3">
             <div class="flex flex-col gap-2">
               <label
+                for="email"
+                class="ml-3 text-base font-medium text-[#ADDEBE]"
+              >Email</label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder="user@example.com"
+                class="auth-input-elm"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label
                 for="username"
                 class="ml-3 text-base font-medium text-[#ADDEBE]"
               >Username</label>
@@ -37,7 +50,21 @@
                 type="text"
                 name="username"
                 id="username"
-                class="login-input-elm"
+                placeholder="johndoe123"
+                class="auth-input-elm"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <label
+                for="fullname"
+                class="ml-3 text-base font-medium text-[#ADDEBE]"
+              >fullname</label>
+              <input
+                type="text"
+                name="fullname"
+                id="fullname"
+                placeholder="John Doe"
+                class="auth-input-elm"
               />
             </div>
             <div class="flex flex-col gap-2">
@@ -49,20 +76,15 @@
                 type="password"
                 name="password"
                 id="password"
-                class="login-input-elm"
+                placeholder="yourpasssword123"
+                class="auth-input-elm"
               />
             </div>
             <div>
-              <p class="ml-3 mt-3 text-base">
-                <span class="text-red-500">*</span>
-                You don't need to register at first, just write username and password, and then you will be redirect to the main page afterward
-              </p>
-            </div>
-            <div>
-              <button id="loginBtn" class="flex flex-row justify-center items-center w-full bg-[#115A2A] hover:bg-[#2B874A] py-3 h-fit px-7 rounded-2xl mt-6 disabled:bg-[#115A2A]">
-                <span id="loginTxt" class="text-xl font-bold">Login</span>
+              <button id="registerBtn" class="flex flex-row justify-center items-center w-full bg-[#115A2A] hover:bg-[#2B874A] py-3 h-fit px-7 rounded-2xl mt-6 disabled:bg-[#115A2A]">
+                <span id="registerTxt" class="text-xl font-bold">Register</span>
                 <svg
-                  id="loginLoadingIcon"
+                  id="registerLoadingIcon"
                   viewBox="0 0 24 24"
                   class="w-[23px] h-auto stroke-[#ADDEBE] fill-none animate-spin hidden"
                   stroke-width="2"
@@ -79,6 +101,9 @@
                   <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
                 </svg>
               </button>
+            </div>
+            <div class="text-center mt-5">
+              <p>Already have an account? <a href="/login" class="text-[#2B874A] font-semibold underline cursor-pointer">Login here</a></p>
             </div>
           </div>
         </div>

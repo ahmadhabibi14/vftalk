@@ -14,7 +14,6 @@ loginBtn.addEventListener("click", async () => {
   loginLoadingIcon.style.display = "block";
 
   try {
-    console.log("Login username = ", username.value);
     const resp = await fetch("/api/login", {
       method: "POST",
       headers: {

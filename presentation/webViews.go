@@ -20,13 +20,13 @@ func WebViews(app *fiber.App) {
 	app.Get("/login", middlewares.IsLoggedIn, func(c *fiber.Ctx) error {
 		return c.Render("login/index", fiber.Map{
 			"Title": "Login",
-			"Desc":  "Welcome, please use your username",
+			"Desc":  "Hi, Welcome back 👋",
 		})
 	})
 	app.Get("/register", middlewares.IsLoggedIn, func(c *fiber.Ctx) error {
 		return c.Render("register/index", fiber.Map{
 			"Title": "Register",
-			"Desc":  "Welcome, please use your username",
+			"Desc":  "Welcome, please create your account",
 		})
 	})
 }

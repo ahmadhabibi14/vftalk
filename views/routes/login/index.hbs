@@ -37,7 +37,8 @@
                 type="text"
                 name="username"
                 id="username"
-                class="login-input-elm"
+                placeholder="johndoe123"
+                class="auth-input-elm"
               />
             </div>
             <div class="flex flex-col gap-2">
@@ -49,7 +50,8 @@
                 type="password"
                 name="password"
                 id="password"
-                class="login-input-elm"
+                placeholder="yourpasssword123"
+                class="auth-input-elm"
               />
             </div>
             <div>
@@ -74,10 +76,13 @@
                 </svg>
               </button>
             </div>
+            <div class="text-center mt-5">
+              <p>Not registered yet? <a href="/register" class="text-[#2B874A] font-semibold underline cursor-pointer">Create an account</a></p>
+            </div>
           </div>
         </div>
       </div>
     </main>
-    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/auth/login.js"></script>
   </body>
 </html>
