@@ -19,11 +19,18 @@
             <picture>
               <img src="/public/icons/vftalk_2.svg" alt="Logo" title="VFtalk" class="w-[120px] h-auto" />
             </picture>
-            <span class="bg-emerald-400/10 py-1 px-5 rounded-full border border-[#ADDEBE]/20">
-              {{Username}}
-            </span>
+            <div class="flex flex-row items-center gap-3">
+              <button class="bg-[#115A2A] hover:bg-[#2B874A] p-3 rounded-xl" id="menuBtn">
+                <svg fill="none" viewBox="0 0 24 24" style="width: 20px; height: auto">
+                  <path stroke="#ADDEBE" d="M5 10H7C9 10 10 9 10 7V5C10 3 9 2 7 2H5C3 2 2 3 2 5V7C2 9 3 10 5 10Z" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path stroke="#ADDEBE" d="M19 2H17C15 2 14 3 14 5V7C14 9 15 10 17 10H19C21 10 22 9 22 7V5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path stroke="#ADDEBE" d="M17 22H19C21 22 22 21 22 19V17C22 15 21 14 19 14H17C15 14 14 15 14 17V19C14 21 15 22 17 22Z" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path stroke="#ADDEBE" d="M5 22H7C9 22 10 21 10 19V17C10 15 9 14 7 14H5C3 14 2 15 2 17V19" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
           </header>
-          <div class="flex-auto overflow-y-auto h-[0px] grow px-5 mt-24" id="chatPartialContainer">
+          <div class="flex-auto overflow-y-auto h-[0px] grow px-5 mt-24 bg-[#0a0a0a]" id="chatPartialContainer">
             {{> 'partials/chats'}}
           </div>
         </div>
