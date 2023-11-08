@@ -24,3 +24,7 @@ WHERE username = ?;
 -- name: GetUserDataByUserId :one
 SELECT username, full_name, email, avatar, join_at FROM Users
 WHERE user_id = ?;
+
+-- name: GetUserDataByUsername :one
+SELECT username, full_name, email, avatar, join_at FROM Users
+WHERE username = ?;

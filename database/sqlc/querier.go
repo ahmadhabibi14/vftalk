@@ -13,6 +13,7 @@ type Querier interface {
 	GetUserByEmail(ctx context.Context, email string) (string, error)
 	GetUserByUsername(ctx context.Context, username string) (string, error)
 	GetUserDataByUserId(ctx context.Context, userID string) (GetUserDataByUserIdRow, error)
+	GetUserDataByUsername(ctx context.Context, username string) (GetUserDataByUsernameRow, error)
 	ListUsers(ctx context.Context) ([]ListUsersRow, error)
 	UserLogin(ctx context.Context, username string) (UserLoginRow, error)
 }

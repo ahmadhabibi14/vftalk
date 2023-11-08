@@ -85,6 +85,32 @@ func (q *Queries) GetUserDataByUserId(ctx context.Context, userID string) (GetUs
 	return i, err
 }
 
+const getUserDataByUsername = `-- name: GetUserDataByUsername :one
+SELECT username, full_name, email, avatar, join_at FROM Users
+WHERE username = ?
+`
+
+type GetUserDataByUsernameRow struct {
+	Username string    `db:"username" json:"username"`
+	FullName string    `db:"full_name" json:"full_name"`
+	Email    string    `db:"email" json:"email"`
+	Avatar   string    `db:"avatar" json:"avatar"`
+	JoinAt   time.Time `db:"join_at" json:"join_at"`
+}
+
+func (q *Queries) GetUserDataByUsername(ctx context.Context, username string) (GetUserDataByUsernameRow, error) {
+	row := q.db.QueryRowContext(ctx, getUserDataByUsername, username)
+	var i GetUserDataByUsernameRow
+	err := row.Scan(
+		&i.Username,
+		&i.FullName,
+		&i.Email,
+		&i.Avatar,
+		&i.JoinAt,
+	)
+	return i, err
+}
+
 const listUsers = `-- name: ListUsers :many
 SELECT username, full_name, email, avatar, join_at FROM Users
 ORDER BY join_at DESC

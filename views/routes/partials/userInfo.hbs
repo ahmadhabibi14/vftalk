@@ -1,3 +1,26 @@
-<div class="h-[400px] w-[300px] bg-[#0a0a0a] rounded-xl border border-[#333] p-5">
-  {{Username}}
+<div class="flex flex-col gap-5 h-fit w-[370px] ">
+
+  <div id="globalInfo" class="w-full">
+    <div class="relative">
+      <div class="relative rounded-t-2xl overflow-hidden">
+        <img class="object-cover" alt="Cover" src="/files/img/cover/default.png">
+      </div>
+      <div class="absolute top-20 z-50 right-7 flex">
+        <img class="border-[4px] border-[#0a0a0a] w-[80px] h-auto rounded-full" alt="Avatar" src="/files/img/avatars/default.png">
+      </div>
+    </div>
+  </div>
+
+  <div id="userData"></div>
+  
+  <script>
+    function unescapeHtmlEntities(text) {
+      const element = document.createElement('div');
+      element.innerHTML = text;
+      return element.textContent;
+    }
+    let userData = `{{UserData}}`;
+    userData = unescapeHtmlEntities(userData);
+    console.log("User data = ", userData);
+  </script>
 </div>
