@@ -1,26 +1,103 @@
 <div class="flex flex-col gap-5 h-fit w-[370px] ">
 
-  <div id="globalInfo" class="w-full">
-    <div class="relative">
-      <div class="relative rounded-t-2xl overflow-hidden">
-        <img class="object-cover" alt="Cover" src="/files/img/cover/default.png">
+  <div id="userData" class="w-full bg-[#0a0a0a] p-5 border border-[#333] rounded-2xl">
+    <div class="flex flex-row justify-start gap-4">
+      <div class="shrink-0">
+        <img id="userAvatar" class="border-[4px] border-[#0a0a0a] w-[60px] h-auto rounded-full" alt="Avatar">
       </div>
-      <div class="absolute top-20 z-50 right-7 flex">
-        <img class="border-[4px] border-[#0a0a0a] w-[80px] h-auto rounded-full" alt="Avatar" src="/files/img/avatars/default.png">
+      <div class="flex flex-col gap-2 shrink">
+        <h2 id="userFullName" class="mt-2 text-2xl font-bold"></h2>
+        <p class="text-[#ADDEBE]/60">Join on <span id="userJoinedDate"></span></p>
       </div>
     </div>
   </div>
 
-  <div id="userData"></div>
-  
+  <div id="stats" class="w-full bg-[#0a0a0a] border border-[#333] rounded-2xl">
+    <div id="chart" class="w-full h-fit rounded-2xl">
+      {{!-- Charts will be render here --}}
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script>
+    // Stats
+    document.addEventListener('DOMContentLoaded', async function () {
+      var options = {
+        series: [
+          {
+            name: 'User Active',
+            data: [31, 40, 28, 51]
+          }, {
+            name: 'Chats Record',
+            data: [11, 32, 70, 32]
+          }
+        ],
+        grid: {
+          show: true,
+          borderColor: '#333',
+        },
+        chart: {
+          height: 350,
+          type: 'area',
+          toolbar: {
+            show: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          curve: 'smooth',
+          lineCap: 'butt',
+          width: 2,
+          dashArray: 0, 
+        },
+        xaxis: {
+          type: 'datetime',
+          categories: ["2023-11-19T00:00:00.000Z", "2023-11-19T01:30:00.000Z", "2023-11-19T02:30:00.000Z", "2023-11-19T03:30:00.000Z"]
+        },
+        tooltip: {
+          x: {
+            format: 'dddd, d MMMM yyyy HH:mm'
+          },
+          theme: 'dark',
+        }
+      };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    });
+
+    // Utility functions
     function unescapeHtmlEntities(text) {
       const element = document.createElement('div');
       element.innerHTML = text;
       return element.textContent;
     }
+    function formatDatetime( dateData ) {
+      if( !dateData ) return '';
+      const dt = new Date( dateData );
+      // const date = dt.getDate();
+      const month = dt.toLocaleDateString( 'default', {month: 'long'} );
+      const year = dt.getFullYear();
+      const formattedDate = `${month} ${year}`;
+      return formattedDate;
+    }
+
+    // Declare variables
+    let userAvatar = document.getElementById('userAvatar');
+    let userFullName = document.getElementById('userFullName');
+    let userJoinedDate = document.getElementById('userJoinedDate');
     let userData = `{{UserData}}`;
     userData = unescapeHtmlEntities(userData);
+    userData = JSON.parse(userData);
+
+    // Operations
+    userAvatar.src = `/files${userData.avatar}` || "/files/img/avatars/default.png";
+    userFullName.innerText = `${userData.full_name}` || "John Doe";
+    userJoinedDate.innerText = formatDatetime( userData.join_at );
+
     console.log("User data = ", userData);
   </script>
 </div>

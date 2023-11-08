@@ -32,6 +32,7 @@ loginBtn.addEventListener("click", async () => {
       loginTxt.style.display = "block";
       loginLoadingIcon.style.display = "none";
       loginBtn.disabled = false;
+      localStorage.setItem("username", successResp["username"]);
       window.location.href = "/";
     } else {
       const creds = await resp.json();
