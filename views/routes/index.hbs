@@ -20,7 +20,7 @@
               <img src="/public/icons/vftalk_2.svg" alt="Logo" title="VFtalk" class="w-[120px] h-auto" />
             </picture>
             <div class="flex flex-row items-center gap-3">
-              <button class="bg-[#115A2A] hover:bg-[#2B874A] p-3 rounded-xl" id="menuBtn">
+              <button id="menuBtn" class="bg-[#115A2A] hover:bg-[#2B874A] p-3 rounded-xl" id="menuBtn">
                 <svg fill="none" viewBox="0 0 24 24" style="width: 20px; height: auto">
                   <path stroke="#ADDEBE" d="M5 10H7C9 10 10 9 10 7V5C10 3 9 2 7 2H5C3 2 2 3 2 5V7C2 9 3 10 5 10Z" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                   <path stroke="#ADDEBE" d="M19 2H17C15 2 14 3 14 5V7C14 9 15 10 17 10H19C21 10 22 9 22 7V5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
@@ -29,6 +29,7 @@
                 </svg>
               </button>
             </div>
+            {{> 'partials/components/mainDropdownHeader'}}
           </header>
           <div class="flex-auto overflow-y-auto h-[0px] grow px-5 mt-24 bg-[#0a0a0a]" id="chatPartialContainer">
             {{> 'partials/chats'}}
@@ -80,6 +81,7 @@
     </div>
   </div>
   <script src="/static/js/chats/main.js"></script>
+  <script src="/static/js/main.js"></script>
 </body>
 
 </html>
