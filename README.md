@@ -13,6 +13,11 @@ go get
 
 bun install
 
+docker-compose up -d
+
+# Create a new docker network
+docker network create vftalk-network
+
 # use Air live reload to start web server
 air
 

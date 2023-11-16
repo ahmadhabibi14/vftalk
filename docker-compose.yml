@@ -2,9 +2,9 @@ version: "3"
 
 services:
 
-  mysql:
+  db:
     image: mariadb
-    container_name: db
+    container_name: vftalk-db
     environment:
       MARIADB_DATABASE: "vftalk"
       MARIADB_USER: "habi"
@@ -16,10 +16,37 @@ services:
       - "3306:3306"
     volumes:
       - ./_tmpdb/mariadb:/var/lib/mysql
+    networks:
+      - vftalk-network
+  
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-vftalk
+    restart: always
+    ports:
+      - 8081:81
+    links:
+      - db:mysql
+    environment:
+      PMA_HOST: db
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: rootpass
+      PMA_ARBITRARY: 1
+    volumes:
+      - ./_tmpdb/phpmyadmin:/etc/phpmyadmin
+    networks:
+      - vftalk-network
 
   mailhog:
     image: mailhog/mailhog
-    container_name: mailhog
+    container_name: mailhog-vftalk
     ports:
       - 1025:1025
       - 8025:8025
+
+networks:
+  vftalk-network:
+    external: true
+    name: vftalk-network

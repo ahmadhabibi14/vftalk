@@ -10,6 +10,8 @@ import (
 
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 )
 
 func WebViews(app *fiber.App) {
@@ -29,6 +31,9 @@ func WebViews(app *fiber.App) {
 		}
 
 		ud, _ := json.Marshal(userData)
+
+		zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+		log.Print("Home Page")
 		return c.Render("index", fiber.Map{
 			"Title":    "VFtalk",
 			"Username": username,
