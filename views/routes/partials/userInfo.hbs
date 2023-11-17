@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-5 h-fit w-[370px] ">
+<div class="flex flex-col gap-6 h-fit w-[320px] ">
 
   <div id="userData" class="w-full bg-[#0a0a0a] p-5 border border-[#333] rounded-2xl">
     <div class="flex flex-row justify-start gap-4">
@@ -21,24 +21,24 @@
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script>
     // Stats
-    document.addEventListener('DOMContentLoaded', async function () {
+    document.addEventListener("DOMContentLoaded", async function () {
       var options = {
         series: [
           {
-            name: 'User Active',
+            name: "User Active",
             data: [31, 40, 28, 51]
           }, {
-            name: 'Chats Record',
+            name: "Chats Record",
             data: [11, 32, 70, 32]
           }
         ],
         grid: {
           show: true,
-          borderColor: '#333',
+          borderColor: "#333",
         },
         chart: {
           height: 350,
-          type: 'area',
+          type: "area",
           toolbar: {
             show: false
           }
@@ -48,20 +48,20 @@
         },
         stroke: {
           show: true,
-          curve: 'smooth',
-          lineCap: 'butt',
+          curve: "smooth",
+          lineCap: "butt",
           width: 2,
           dashArray: 0, 
         },
         xaxis: {
-          type: 'datetime',
+          type: "datetime",
           categories: ["2023-11-19T00:00:00.000Z", "2023-11-19T01:30:00.000Z", "2023-11-19T02:30:00.000Z", "2023-11-19T03:30:00.000Z"]
         },
         tooltip: {
           x: {
-            format: 'dddd, d MMMM yyyy HH:mm'
+            format: "dddd, d MMMM yyyy HH:mm"
           },
-          theme: 'dark',
+          theme: "dark",
         }
       };
 
@@ -71,24 +71,24 @@
 
     // Utility functions
     function unescapeHtmlEntities(text) {
-      const element = document.createElement('div');
+      const element = document.createElement("div");
       element.innerHTML = text;
       return element.textContent;
     }
     function formatDatetime( dateData ) {
-      if( !dateData ) return '';
+      if( !dateData ) return "";
       const dt = new Date( dateData );
       // const date = dt.getDate();
-      const month = dt.toLocaleDateString( 'default', {month: 'long'} );
+      const month = dt.toLocaleDateString( "default", {month: "long"} );
       const year = dt.getFullYear();
       const formattedDate = `${month} ${year}`;
       return formattedDate;
     }
 
     // Declare variables
-    let userAvatar = document.getElementById('userAvatar');
-    let userFullName = document.getElementById('userFullName');
-    let userJoinedDate = document.getElementById('userJoinedDate');
+    let userAvatar = document.getElementById("userAvatar");
+    let userFullName = document.getElementById("userFullName");
+    let userJoinedDate = document.getElementById("userJoinedDate");
     let userData = `{{UserData}}`;
     userData = unescapeHtmlEntities(userData);
     userData = JSON.parse(userData);

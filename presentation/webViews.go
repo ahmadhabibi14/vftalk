@@ -10,8 +10,6 @@ import (
 
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
-	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/log"
 )
 
 func WebViews(app *fiber.App) {
@@ -31,23 +29,28 @@ func WebViews(app *fiber.App) {
 		}
 
 		ud, _ := json.Marshal(userData)
-
-		zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
-		log.Print("Home Page")
 		return c.Render("index", fiber.Map{
 			"Title":    "VFtalk",
 			"Username": username,
 			"UserData": string(ud),
+		}, "layouts/main")
+	})
+
+	app.Get("/profile", middlewares.AuthJWT, func(c *fiber.Ctx) error {
+		return c.Render("profile", fiber.Map{
+			"Title": "Profile",
 		})
 	})
+
 	app.Get("/login", middlewares.IsLoggedIn, func(c *fiber.Ctx) error {
-		return c.Render("login/index", fiber.Map{
+		return c.Render("login", fiber.Map{
 			"Title": "Login",
 			"Desc":  "Hi, Welcome back 👋",
 		})
 	})
+
 	app.Get("/register", middlewares.IsLoggedIn, func(c *fiber.Ctx) error {
-		return c.Render("register/index", fiber.Map{
+		return c.Render("register", fiber.Map{
 			"Title": "Register",
 			"Desc":  "Welcome, please create your account",
 		})

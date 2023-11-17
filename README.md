@@ -31,7 +31,13 @@ bun dev
 ### MariaDB
 
 ```shell
-docker exec -it db mariadb -u root -p
+docker exec -it vftalk-db mariadb -u root -p
+```
+
+### Docker
+```shell
+# Remove all containers
+docker rm -f $(docker ps -aq)
 ```
 
 ### TODO:
