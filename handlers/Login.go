@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"time"
 	"vftalk/conf"
-	"vftalk/database/sqlc"
+	"vftalk/models/database/sqlc"
 	"vftalk/utils"
 
 	json "github.com/goccy/go-json"

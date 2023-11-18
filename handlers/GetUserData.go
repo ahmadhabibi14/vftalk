@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"vftalk/conf"
-	"vftalk/database/sqlc"
+	"vftalk/models/database/sqlc"
 
 	"github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"

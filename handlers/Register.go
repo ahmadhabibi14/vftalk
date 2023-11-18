@@ -9,7 +9,7 @@ import (
 	json "github.com/goccy/go-json"
 
 	"vftalk/conf"
-	"vftalk/database/sqlc"
+	"vftalk/models/database/sqlc"
 	"vftalk/utils"
 
 	"github.com/gofiber/fiber/v2"
