@@ -1,74 +1,70 @@
-<div class="w-full bg-black max-h-screen h-screen text-[#ADDEBE]">
-  <div class="w-full md:w-11/12 h-full mx-auto flex flex-row justify-center gap-7">
-    <div>
-      <p>MEnu</p>
+<div class="grow flex flex-col relative">
+  <header
+    class="absolute top-0 right-0 left-0 bg-black bg-opacity-40 backdrop-blur flex flex-row justify-between items-center text-xl font-medium px-5 py-5 border-b border-[#333]">
+    <picture>
+      <img src="/public/icons/vftalk_2.svg" alt="Logo" title="VFtalk" class="w-[120px] h-auto" />
+    </picture>
+    <div class="flex flex-row items-center gap-3">
+      <button id="menuBtn" class="bg-[#115A2A] hover:bg-[#2B874A] p-3 rounded-xl" id="menuBtn">
+        <svg fill="none" viewBox="0 0 24 24" style="width: 20px; height: auto">
+          <path stroke="#ADDEBE" d="M5 10H7C9 10 10 9 10 7V5C10 3 9 2 7 2H5C3 2 2 3 2 5V7C2 9 3 10 5 10Z"
+            stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+          <path stroke="#ADDEBE" d="M19 2H17C15 2 14 3 14 5V7C14 9 15 10 17 10H19C21 10 22 9 22 7V5" stroke-width="1.5"
+            stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+          <path stroke="#ADDEBE"
+            d="M17 22H19C21 22 22 21 22 19V17C22 15 21 14 19 14H17C15 14 14 15 14 17V19C14 21 15 22 17 22Z"
+            stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+          <path stroke="#ADDEBE" d="M5 22H7C9 22 10 21 10 19V17C10 15 9 14 7 14H5C3 14 2 15 2 17V19" stroke-width="1.5"
+            stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
     </div>
-    <div class="relative w-full md:w-[660px] h-full flex flex-col border-x border-[#333]">
-      <div class="grow flex flex-col relative">
-        <header class="absolute top-0 right-0 left-0 bg-black bg-opacity-40 backdrop-blur flex flex-row justify-between items-center text-xl font-medium px-5 py-5 border-b border-[#333]">
-          <picture>
-            <img src="/public/icons/vftalk_2.svg" alt="Logo" title="VFtalk" class="w-[120px] h-auto" />
-          </picture>
-          <div class="flex flex-row items-center gap-3">
-            <button id="menuBtn" class="bg-[#115A2A] hover:bg-[#2B874A] p-3 rounded-xl" id="menuBtn">
-              <svg fill="none" viewBox="0 0 24 24" style="width: 20px; height: auto">
-                <path stroke="#ADDEBE" d="M5 10H7C9 10 10 9 10 7V5C10 3 9 2 7 2H5C3 2 2 3 2 5V7C2 9 3 10 5 10Z" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                <path stroke="#ADDEBE" d="M19 2H17C15 2 14 3 14 5V7C14 9 15 10 17 10H19C21 10 22 9 22 7V5" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                <path stroke="#ADDEBE" d="M17 22H19C21 22 22 21 22 19V17C22 15 21 14 19 14H17C15 14 14 15 14 17V19C14 21 15 22 17 22Z" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                <path stroke="#ADDEBE" d="M5 22H7C9 22 10 21 10 19V17C10 15 9 14 7 14H5C3 14 2 15 2 17V19" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </div>
-          {{> 'components/mainDropdownHeader'}}
-        </header>
-        <div class="flex-auto overflow-y-auto h-[0px] grow px-5 mt-24 bg-[#0a0a0a]" id="chatPartialContainer">
-          {{> 'partials/chats'}}
-        </div>
-      </div>
-      <div class="bg-black h-fit py-6 px-5 flex flex-row items-center gap-4 border-t border-[#333]">
-        <div class="grow relative">
-          <input type="text" id="chatInputElm" class="chat-input-elm" />
-          <button class="absolute right-3 top-0 bottom-0 group" title="Select emoji">
-            <svg viewBox="0 0 24 24" class="w-[23px] h-auto fill-none stroke-[#555555] group-hover:stroke-[#ADDEBE]">
-              <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke-width="1.1"
-                stroke-linecap="round" stroke-linejoin="round" />
-              <path
-                d="M15.5 9.75C16.3284 9.75 17 9.07843 17 8.25C17 7.42157 16.3284 6.75 15.5 6.75C14.6716 6.75 14 7.42157 14 8.25C14 9.07843 14.6716 9.75 15.5 9.75Z"
-                stroke-width="1.1" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-              <path
-                d="M8.5 9.75C9.32843 9.75 10 9.07843 10 8.25C10 7.42157 9.32843 6.75 8.5 6.75C7.67157 6.75 7 7.42157 7 8.25C7 9.07843 7.67157 9.75 8.5 9.75Z"
-                stroke-width="1.1" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-              <path
-                d="M8.4 13.3H15.6C16.1 13.3 16.5 13.7 16.5 14.2C16.5 16.69 14.49 18.7 12 18.7C9.51 18.7 7.5 16.69 7.5 14.2C7.5 13.7 7.9 13.3 8.4 13.3Z"
-                stroke-width="1.1" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </button>
-        </div>
-        <button id="sendChatBtnElm" class="bg-[#115A2A] hover:bg-[#2B874A] py-auto h-full px-7 rounded-full disabled:bg-[#115A2A]">
-          <svg id="sendChatIcon" viewBox="0 0 24 24" class="w-[23px] h-auto fill-[#ADDEBE]">
-            <path d="M2.70911 17.0192L4.44911 13.5392C4.92911 12.5692 4.92911 11.4392 4.44911 10.4692L2.70911 6.97924C1.21911 3.99924 4.42911 0.849241 7.37911 2.40924L8.91911 3.22924C9.13911 3.33924 9.30911 3.51924 9.39911 3.73924L15.0891 16.3892C15.3191 16.9092 15.1091 17.5192 14.6091 17.7792L7.36911 21.5892C4.42911 23.1492 1.21911 19.9992 2.70911 17.0192Z" />
-            <path d="M16.3093 15.6004L12.5793 7.32045C12.1593 6.39045 13.1593 5.45045 14.0593 5.93045L19.8293 8.97045C22.2793 10.2604 22.2793 13.7604 19.8293 15.0504L17.7893 16.1204C17.2393 16.4004 16.5693 16.1704 16.3093 15.6004Z" />
-          </svg>
-          <svg id="loadingIcon" viewBox="0 0 24 24"
-            class="w-[23px] h-auto stroke-[#ADDEBE] fill-none animate-spin hidden"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          >
-            <line x1="12" y1="2" x2="12" y2="6"></line>
-            <line x1="12" y1="18" x2="12" y2="22"></line>
-            <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
-            <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
-            <line x1="2" y1="12" x2="6" y2="12"></line>
-            <line x1="18" y1="12" x2="22" y2="12"></line>
-            <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
-            <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div class="mt-7">
-      {{> 'partials/userInfo'}}
-    </div>
+    {{> 'components/mainDropdownHeader'}}
+  </header>
+  <div class="flex-auto overflow-y-auto h-[0px] grow px-5 mt-24 bg-[#0a0a0a]" id="chatPartialContainer">
+    {{> 'partials/chats'}}
   </div>
 </div>
+<div class="bg-black h-fit py-6 px-5 flex flex-row items-center gap-4 border-t border-[#333]">
+  <div class="grow relative">
+    <input type="text" id="chatInputElm" class="chat-input-elm" />
+    <button class="absolute right-3 top-0 bottom-0 group" title="Select emoji">
+      <svg viewBox="0 0 24 24" class="w-[23px] h-auto fill-none stroke-[#555555] group-hover:stroke-[#ADDEBE]">
+        <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke-width="1.1"
+          stroke-linecap="round" stroke-linejoin="round" />
+        <path
+          d="M15.5 9.75C16.3284 9.75 17 9.07843 17 8.25C17 7.42157 16.3284 6.75 15.5 6.75C14.6716 6.75 14 7.42157 14 8.25C14 9.07843 14.6716 9.75 15.5 9.75Z"
+          stroke-width="1.1" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        <path
+          d="M8.5 9.75C9.32843 9.75 10 9.07843 10 8.25C10 7.42157 9.32843 6.75 8.5 6.75C7.67157 6.75 7 7.42157 7 8.25C7 9.07843 7.67157 9.75 8.5 9.75Z"
+          stroke-width="1.1" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        <path
+          d="M8.4 13.3H15.6C16.1 13.3 16.5 13.7 16.5 14.2C16.5 16.69 14.49 18.7 12 18.7C9.51 18.7 7.5 16.69 7.5 14.2C7.5 13.7 7.9 13.3 8.4 13.3Z"
+          stroke-width="1.1" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+  </div>
+  <button id="sendChatBtnElm"
+    class="bg-[#115A2A] hover:bg-[#2B874A] py-auto h-full px-7 rounded-full disabled:bg-[#115A2A]">
+    <svg id="sendChatIcon" viewBox="0 0 24 24" class="w-[23px] h-auto fill-[#ADDEBE]">
+      <path
+        d="M2.70911 17.0192L4.44911 13.5392C4.92911 12.5692 4.92911 11.4392 4.44911 10.4692L2.70911 6.97924C1.21911 3.99924 4.42911 0.849241 7.37911 2.40924L8.91911 3.22924C9.13911 3.33924 9.30911 3.51924 9.39911 3.73924L15.0891 16.3892C15.3191 16.9092 15.1091 17.5192 14.6091 17.7792L7.36911 21.5892C4.42911 23.1492 1.21911 19.9992 2.70911 17.0192Z" />
+      <path
+        d="M16.3093 15.6004L12.5793 7.32045C12.1593 6.39045 13.1593 5.45045 14.0593 5.93045L19.8293 8.97045C22.2793 10.2604 22.2793 13.7604 19.8293 15.0504L17.7893 16.1204C17.2393 16.4004 16.5693 16.1704 16.3093 15.6004Z" />
+    </svg>
+    <svg id="loadingIcon" viewBox="0 0 24 24" class="w-[23px] h-auto stroke-[#ADDEBE] fill-none animate-spin hidden"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="2" x2="12" y2="6"></line>
+      <line x1="12" y1="18" x2="12" y2="22"></line>
+      <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+      <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+      <line x1="2" y1="12" x2="6" y2="12"></line>
+      <line x1="18" y1="12" x2="22" y2="12"></line>
+      <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+      <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+    </svg>
+  </button>
+</div>
+
 <script src="/static/js/chats/main.js"></script>
 <script src="/static/js/main.js"></script>

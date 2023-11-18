@@ -29,4 +29,5 @@ func ApiRoutes(app *fiber.App) {
 
 	api.Post("/login", handlers.Login)
 	api.Post("/register", handlers.Register)
+	api.Post("/userdata", handlers.GetUserData)
 }
