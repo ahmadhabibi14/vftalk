@@ -1,17 +1,20 @@
-// Dropdown Menu
-let dropdownMenu = document.getElementById("dropdownMenu");
-let menuBtn = document.getElementById("menuBtn");
-let logoutBtn = document.getElementById("logoutBtn");
+let menuLists = document.querySelectorAll("#menu_list > a");
+let currentPathname = window.location.pathname;
 
-dropdownMenu.style.display = "none";
-menuBtn.addEventListener("click", () => {
-  dropdownMenu.style.display = dropdownMenu.style.display === "none" ? "flex" : "none";
+console.log("Current path name is " + currentPathname);
+
+menuLists.forEach(function(link) {
+  if (link.getAttribute("href") === currentPathname) {
+    link.classList.add("font-bold");
+    link.classList.add("bg-[#0a0a0a]");
+    link.classList.remove("font-semibold");
+    const svgs = link.querySelectorAll('svg');
+    svgs.forEach(function(svg, index) {
+      if (index === 0) {
+        svg.classList.add("hidden");
+      } else if (index === 1) {
+        svg.classList.remove("hidden");
+      }
+    });
+  }
 });
-
-logoutBtn.addEventListener("click", () => {
-  document.cookie = `auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-  localStorage.removeItem('username');
-  setTimeout(() => {
-    window.location.href = "/";
-  }, 1500)
-})

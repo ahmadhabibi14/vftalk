@@ -2,6 +2,7 @@ package presentation
 
 import (
 	"fmt"
+	"time"
 	"vftalk/conf"
 	"vftalk/handlers"
 	"vftalk/middlewares"
@@ -26,9 +27,12 @@ func WebViews(app *fiber.App) {
 				"error": err,
 			})
 		}
+		parsedTime, _ := time.Parse("2006-01-02 15:04:05 -0700 MST", fmt.Sprintf("%v", userData.JoinAt))
+		joinAt := parsedTime.Format("01 January 2006")
 		return c.Render("profile", fiber.Map{
 			"Title":    "Profile",
 			"UserData": userData,
+			"JoinAt":   joinAt,
 		}, "layouts/main")
 	})
 

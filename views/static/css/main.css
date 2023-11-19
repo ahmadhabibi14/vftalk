@@ -47,9 +47,14 @@ html {
 }
 
 .auth-input-elm:focus,
-.chat-input-elm:focus {
+.chat-input-elm:focus,
+.profile-input-elm:focus {
   border: 1px solid #2B874A;
   outline: none;
+}
+
+.profile-input-elm {
+  @apply text-xl font-semibold rounded-2xl w-full bg-[#0a0a0a] border border-[#333] py-4 pl-4 pr-12 caret-[#ADDEBE];
 }
 
 .chat-input-elm {

@@ -1,27 +1,32 @@
 <div class="grow flex flex-col relative">
-  <header
-    class="absolute top-0 right-0 left-0 bg-black bg-opacity-40 backdrop-blur flex flex-row justify-between items-center text-xl font-medium px-5 py-5 border-b border-[#333]">
-    <picture>
-      <img src="/public/icons/vftalk_2.svg" alt="Logo" title="VFtalk" class="w-[120px] h-auto" />
-    </picture>
-    <div class="flex flex-row items-center gap-3">
-      <button id="menuBtn" class="bg-[#115A2A] hover:bg-[#2B874A] p-3 rounded-xl" id="menuBtn">
-        <svg fill="none" viewBox="0 0 24 24" style="width: 20px; height: auto">
-          <path stroke="#ADDEBE" d="M5 10H7C9 10 10 9 10 7V5C10 3 9 2 7 2H5C3 2 2 3 2 5V7C2 9 3 10 5 10Z"
-            stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-          <path stroke="#ADDEBE" d="M19 2H17C15 2 14 3 14 5V7C14 9 15 10 17 10H19C21 10 22 9 22 7V5" stroke-width="1.5"
-            stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-          <path stroke="#ADDEBE"
-            d="M17 22H19C21 22 22 21 22 19V17C22 15 21 14 19 14H17C15 14 14 15 14 17V19C14 21 15 22 17 22Z"
-            stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-          <path stroke="#ADDEBE" d="M5 22H7C9 22 10 21 10 19V17C10 15 9 14 7 14H5C3 14 2 15 2 17V19" stroke-width="1.5"
-            stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+  <header class="text-2xl font-semibold h-20 absolute top-0 right-0 left-0 bg-black/40 backdrop-blur flex flex-row px-16 items-center border-b border-[#333]">
+    <button class="hover:bg-[#131313] flex flex-col justify-between items-center h-full w-full">
+      <div class="grow flex flex-row gap-2 justify-center items-center">
+        <svg viewBox="0 0 24 24" fill="none" class="w-6 h-auto">
+          <path stroke="currentColor" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path stroke="currentColor" d="M7.99998 3H8.99998C7.04998 8.84 7.04998 15.16 8.99998 21H7.99998" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path stroke="currentColor" d="M15 3C16.95 8.84 16.95 15.16 15 21" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path stroke="currentColor" d="M3 16V15C8.84 16.95 15.16 16.95 21 15V16" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path stroke="currentColor" d="M3 9.0001C8.84 7.0501 15.16 7.0501 21 9.0001" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-      </button>
-    </div>
-    {{> 'components/mainDropdownHeader'}}
+        <span>Global</span>
+      </div>
+      <span class="bg-[#2B874A] h-[4px] rounded-full w-20"></span>
+    </button>
+    <button class="hover:bg-[#131313] flex flex-col justify-between items-center h-full w-full">
+      <div class="grow flex flex-row gap-2 justify-center items-center">
+        <svg viewBox="0 0 24 24" fill="none" class="w-6 h-auto">
+          <path stroke="currentColor" d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path stroke="currentColor" d="M2 13H5.76C6.52 13 7.21 13.43 7.55 14.11L8.44 15.9C9 17 10 17 10.24 17H13.77C14.53 17 15.22 16.57 15.56 15.89L16.45 14.1C16.79 13.42 17.48 12.99 18.24 12.99H21.98" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path stroke="currentColor" d="M10.34 7H13.67" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path stroke="currentColor" d="M9.5 10H14.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Direct</span>
+      </div>
+      <span class="bg-transparent h-[4px] rounded-full w-20"></span>
+    </button>
   </header>
-  <div class="flex-auto overflow-y-auto h-[0px] grow px-5 mt-24 bg-[#0a0a0a]" id="chatPartialContainer">
+  <div class="flex-auto overflow-y-auto h-[0px] grow px-5 pt-24 bg-[#0a0a0a]" id="chatPartialContainer">
     {{> 'partials/chats'}}
   </div>
 </div>
@@ -67,4 +72,4 @@
 </div>
 
 <script src="/static/js/chats/main.js"></script>
-<script src="/static/js/main.js"></script>
+<script src="/static/js/home.js"></script>
