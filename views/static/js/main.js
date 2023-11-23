@@ -1,10 +1,9 @@
 let menuLists = document.querySelectorAll("#menu_list > a");
+let logoutBtn = document.getElementById("logoutBtn");
 let currentPathname = window.location.pathname;
 
-console.log("Current path name is " + currentPathname);
-
 menuLists.forEach(function(link) {
-  if (link.getAttribute("href") === currentPathname) {
+  if (link.getAttribute("href") === currentPathname || (link.getAttribute("href") === "/" && currentPathname === "/direct")) {
     link.classList.add("font-bold");
     link.classList.add("bg-[#0a0a0a]");
     link.classList.remove("font-semibold");
@@ -18,3 +17,11 @@ menuLists.forEach(function(link) {
     });
   }
 });
+
+logoutBtn.addEventListener("click", () => {
+  document.cookie = `auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  localStorage.removeItem('username');
+  setTimeout(() => {
+    window.location.href = "/";
+  }, 1500)
+})

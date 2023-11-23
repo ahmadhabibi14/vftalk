@@ -21,6 +21,16 @@ func WebViews(app *fiber.App) {
 		}, "layouts/main")
 	})
 
+	app.Get("/direct", middlewares.AuthJWT, func(c *fiber.Ctx) error {
+		u, _ := conf.GetUsernameFromJWT(c)
+		username := fmt.Sprintf("%v", u)
+		c.Set("Content-Type", "text/html; charset=utf-8")
+		return c.Render("direct", fiber.Map{
+			"Title":    "Direct Messages",
+			"Username": username,
+		}, "layouts/main")
+	})
+
 	app.Get("/profile", middlewares.AuthJWT, func(c *fiber.Ctx) error {
 		userData, err := handlers.GetUserDataByUsername(c)
 		if err != nil {
