@@ -153,6 +153,17 @@ func (q *Queries) ListUsers(ctx context.Context) ([]ListUsersRow, error) {
 	return items, nil
 }
 
+const updateUserLastActive = `-- name: UpdateUserLastActive :exec
+UPDATE Users
+SET last_active = CURRENT_TIMESTAMP + INTERVAL 10 MINUTE
+WHERE user_id = ?
+`
+
+func (q *Queries) UpdateUserLastActive(ctx context.Context, userID string) error {
+	_, err := q.db.ExecContext(ctx, updateUserLastActive, userID)
+	return err
+}
+
 const userLogin = `-- name: UserLogin :one
 SELECT user_id, username, password FROM Users
 WHERE username = ?

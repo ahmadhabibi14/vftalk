@@ -15,6 +15,7 @@ type Querier interface {
 	GetUserDataByUserId(ctx context.Context, userID string) (GetUserDataByUserIdRow, error)
 	GetUserDataByUsername(ctx context.Context, username string) (GetUserDataByUsernameRow, error)
 	ListUsers(ctx context.Context) ([]ListUsersRow, error)
+	UpdateUserLastActive(ctx context.Context, userID string) error
 	UserLogin(ctx context.Context, username string) (UserLoginRow, error)
 }
 

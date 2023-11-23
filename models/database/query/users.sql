@@ -28,3 +28,8 @@ WHERE user_id = ?;
 -- name: GetUserDataByUsername :one
 SELECT username, full_name, email, avatar, join_at FROM Users
 WHERE username = ?;
+
+-- name: UpdateUserLastActive :exec
+UPDATE Users
+SET last_active = CURRENT_TIMESTAMP + INTERVAL 10 MINUTE
+WHERE user_id = ?
