@@ -1,5 +1,6 @@
 let menuLists = document.querySelectorAll("#menu_list > a");
 let logoutBtn = document.getElementById("logoutBtn");
+let logoutLoadingPopup = document.getElementById("logoutLoadingPopup");
 let currentPathname = window.location.pathname;
 
 menuLists.forEach(function(link) {
@@ -19,6 +20,8 @@ menuLists.forEach(function(link) {
 });
 
 logoutBtn.addEventListener("click", () => {
+  logoutLoadingPopup.classList.remove("hidden");
+  logoutLoadingPopup.classList.add("flex");
   document.cookie = `auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   localStorage.removeItem('username');
   setTimeout(() => {
