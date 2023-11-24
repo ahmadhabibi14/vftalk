@@ -60,11 +60,12 @@ func (q *Queries) GetUserByUsername(ctx context.Context, username string) (strin
 }
 
 const getUserDataByUserId = `-- name: GetUserDataByUserId :one
-SELECT username, full_name, email, avatar, join_at FROM Users
+SELECT user_id, username, full_name, email, avatar, join_at FROM Users
 WHERE user_id = ?
 `
 
 type GetUserDataByUserIdRow struct {
+	UserID   string    `db:"user_id" json:"user_id"`
 	Username string    `db:"username" json:"username"`
 	FullName string    `db:"full_name" json:"full_name"`
 	Email    string    `db:"email" json:"email"`
@@ -76,6 +77,7 @@ func (q *Queries) GetUserDataByUserId(ctx context.Context, userID string) (GetUs
 	row := q.db.QueryRowContext(ctx, getUserDataByUserId, userID)
 	var i GetUserDataByUserIdRow
 	err := row.Scan(
+		&i.UserID,
 		&i.Username,
 		&i.FullName,
 		&i.Email,
@@ -111,17 +113,63 @@ func (q *Queries) GetUserDataByUsername(ctx context.Context, username string) (G
 	return i, err
 }
 
+const listUserActive = `-- name: ListUserActive :many
+SELECT username, full_name, email, avatar, join_at, last_active FROM Users
+WHERE last_active > CURRENT_TIMESTAMP - INTERVAL 10 MINUTE
+ORDER BY last_active DESC
+`
+
+type ListUserActiveRow struct {
+	Username   string    `db:"username" json:"username"`
+	FullName   string    `db:"full_name" json:"full_name"`
+	Email      string    `db:"email" json:"email"`
+	Avatar     string    `db:"avatar" json:"avatar"`
+	JoinAt     time.Time `db:"join_at" json:"join_at"`
+	LastActive time.Time `db:"last_active" json:"last_active"`
+}
+
+func (q *Queries) ListUserActive(ctx context.Context) ([]ListUserActiveRow, error) {
+	rows, err := q.db.QueryContext(ctx, listUserActive)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []ListUserActiveRow{}
+	for rows.Next() {
+		var i ListUserActiveRow
+		if err := rows.Scan(
+			&i.Username,
+			&i.FullName,
+			&i.Email,
+			&i.Avatar,
+			&i.JoinAt,
+			&i.LastActive,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const listUsers = `-- name: ListUsers :many
-SELECT username, full_name, email, avatar, join_at FROM Users
+SELECT username, full_name, email, avatar, join_at, last_active FROM Users
 ORDER BY join_at DESC
 `
 
 type ListUsersRow struct {
-	Username string    `db:"username" json:"username"`
-	FullName string    `db:"full_name" json:"full_name"`
-	Email    string    `db:"email" json:"email"`
-	Avatar   string    `db:"avatar" json:"avatar"`
-	JoinAt   time.Time `db:"join_at" json:"join_at"`
+	Username   string    `db:"username" json:"username"`
+	FullName   string    `db:"full_name" json:"full_name"`
+	Email      string    `db:"email" json:"email"`
+	Avatar     string    `db:"avatar" json:"avatar"`
+	JoinAt     time.Time `db:"join_at" json:"join_at"`
+	LastActive time.Time `db:"last_active" json:"last_active"`
 }
 
 func (q *Queries) ListUsers(ctx context.Context) ([]ListUsersRow, error) {
@@ -139,6 +187,7 @@ func (q *Queries) ListUsers(ctx context.Context) ([]ListUsersRow, error) {
 			&i.Email,
 			&i.Avatar,
 			&i.JoinAt,
+			&i.LastActive,
 		); err != nil {
 			return nil, err
 		}

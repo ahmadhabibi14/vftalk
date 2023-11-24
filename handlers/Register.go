@@ -27,6 +27,7 @@ type (
 		Ok       bool   `json:"ok"`
 		Token    string `json:"token"`
 		Username string `json:"username"`
+		UserId   string `json:"user_id"`
 		Message  string `json:"message"`
 	}
 	registerError struct {
@@ -85,9 +86,10 @@ func Register(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(string(errResp))
 	}
 
+	uid := utils.GenerateRandomID(20)
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(REQ_IN.Password), bcrypt.DefaultCost)
 	userData := sqlc.CreateNewUserParams{
-		UserID:   utils.GenerateRandomID(20),
+		UserID:   uid,
 		Username: REQ_IN.Username,
 		FullName: REQ_IN.Fullname,
 		Email:    REQ_IN.Email,
@@ -102,7 +104,7 @@ func Register(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(string(errResp))
 	}
 
-	token, err := conf.GenerateJWT(REQ_IN.Username, time.Now().AddDate(0, 2, 0))
+	token, err := conf.GenerateJWT(REQ_IN.Username, uid, time.Now().AddDate(0, 2, 0))
 	if err != nil {
 		RESP_ERR.Ok = false
 		RESP_ERR.ErrorMsg = ErrRegisterGenerateToken
@@ -114,6 +116,7 @@ func Register(c *fiber.Ctx) error {
 		Ok:       true,
 		Token:    token,
 		Username: REQ_IN.Username,
+		UserId:   uid,
 		Message:  OutRegisterMsg,
 	}
 	outResp, _ := json.Marshal(RESP_OUT)

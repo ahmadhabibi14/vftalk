@@ -3,11 +3,11 @@ package handlers
 import (
 	"context"
 	"database/sql"
-	"encoding/json"
 
 	"vftalk/conf"
 	"vftalk/models/database/sqlc"
 
+	json "github.com/goccy/go-json"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -32,7 +32,7 @@ const (
 	ErrUserLastActive_UserNotFound = "User not found"
 )
 
-func UserLastActives(c *fiber.Ctx) error {
+func UpdateUserLastActive(c *fiber.Ctx) error {
 	var db *sql.DB = conf.ConnectMariaDB()
 	queries := sqlc.New(db)
 	ctx := context.Background()
@@ -49,8 +49,16 @@ func UserLastActives(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(string(errResp))
 	}
 
-	_, isUserIdExist := queries.GetUserDataByUserId(ctx, REQ_IN.UserId)
+	userData, isUserIdExist := queries.GetUserDataByUserId(ctx, REQ_IN.UserId)
 	if isUserIdExist == nil {
+		RESP_ERR.Ok = false
+		RESP_ERR.ErrorMsg = ErrUserLastActive_UserNotFound
+		errResp, _ := json.Marshal(RESP_ERR)
+		return c.Status(fiber.StatusBadRequest).JSON(string(errResp))
+	}
+
+	err := queries.UpdateUserLastActive(ctx, userData.UserID)
+	if err != nil {
 		RESP_ERR.Ok = false
 		RESP_ERR.ErrorMsg = ErrUserLastActive_UserNotFound
 		errResp, _ := json.Marshal(RESP_ERR)

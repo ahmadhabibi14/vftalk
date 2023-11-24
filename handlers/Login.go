@@ -23,6 +23,7 @@ type (
 		Ok       bool   `json:"ok"`
 		Token    string `json:"token"`
 		Username string `json:"username"`
+		UserId   string `json:"user_id"`
 		Message  string `json:"message"`
 	}
 	loginError struct {
@@ -80,7 +81,7 @@ func Login(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(string(errorResp))
 	}
 
-	token, err := conf.GenerateJWT(userLoginRow.Username, time.Now().AddDate(0, 2, 0))
+	token, err := conf.GenerateJWT(userLoginRow.Username, userLoginRow.UserID, time.Now().AddDate(0, 2, 0))
 	if err != nil {
 		RESP_ERR.Ok = false
 		RESP_ERR.ErrorMsg = "Error generate token"
@@ -92,11 +93,13 @@ func Login(c *fiber.Ctx) error {
 		Ok:       true,
 		Token:    token,
 		Username: userLoginRow.Username,
+		UserId:   userLoginRow.UserID,
 		Message:  OutLoginMsg,
 	}
 	successResp, _ := json.Marshal(RESP_OUT)
 	conf.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
 
+	defer db.Close()
 	return c.Status(fiber.StatusOK).JSON(string(successResp))
 }
 

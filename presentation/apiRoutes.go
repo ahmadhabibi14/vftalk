@@ -30,4 +30,6 @@ func ApiRoutes(app *fiber.App) {
 	api.Post("/login", handlers.Login)
 	api.Post("/register", handlers.Register)
 	api.Post("/userdata", handlers.GetUserData)
+	api.Post("/user-active-list", handlers.GetUserActiveLists)
+	api.Post("/user-update-active", handlers.UpdateUserLastActive)
 }
