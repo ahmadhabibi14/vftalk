@@ -1,6 +1,11 @@
 package handlers
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"log"
+	"vftalk/conf"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 type (
 	updateProfileIn struct {
@@ -21,7 +26,10 @@ type (
 	}
 )
 
+// TODO: Make an HTTP handler to update user profile
 func UpdateProfile(c *fiber.Ctx) error {
+	uid, _ := conf.GetUserIdFromJWTfunc(c)
+	log.Println("User ID = ", uid)
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"ok":      true,
 		"message": "profile updated!",

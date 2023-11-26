@@ -37,12 +37,12 @@ type (
 )
 
 const (
-	OutRegisterMsg = "Register successful !"
+	OutRegister_Msg = "Register successful !"
 
-	ErrRegisterInvalidInput  = "The payload or input provided is invalid. Please check your request and try again."
-	ErrRegisterUsernameExist = "Username already exists, try another one"
-	ErrRegisterEmailExist    = "Email already exist, try another one"
-	ErrRegisterGenerateToken = "Error generate session token"
+	ErrRegister_InvalidInput  = "The payload or input provided is invalid. Please check your request and try again."
+	ErrRegister_UsernameExist = "Username already exists, try another one"
+	ErrRegister_EmailExist    = "Email already exist, try another one"
+	ErrRegister_GenerateToken = "Error generate session token"
 )
 
 func Register(c *fiber.Ctx) error {
@@ -57,7 +57,7 @@ func Register(c *fiber.Ctx) error {
 
 	if err := c.BodyParser(&REQ_IN); err != nil {
 		RESP_ERR.Ok = false
-		RESP_ERR.ErrorMsg = ErrRegisterInvalidInput
+		RESP_ERR.ErrorMsg = ErrRegister_InvalidInput
 		errResp, _ := json.Marshal(RESP_ERR)
 		return c.Status(fiber.StatusBadRequest).JSON(string(errResp))
 	}
@@ -73,7 +73,7 @@ func Register(c *fiber.Ctx) error {
 	_, isUsernameExist := queries.GetUserByUsername(ctx, REQ_IN.Username)
 	if isUsernameExist == nil {
 		RESP_ERR.Ok = false
-		RESP_ERR.ErrorMsg = ErrRegisterUsernameExist
+		RESP_ERR.ErrorMsg = ErrRegister_UsernameExist
 		errResp, _ := json.Marshal(RESP_ERR)
 		return c.Status(fiber.StatusBadRequest).JSON(string(errResp))
 	}
@@ -81,7 +81,7 @@ func Register(c *fiber.Ctx) error {
 	_, isEmailExist := queries.GetUserByEmail(ctx, REQ_IN.Email)
 	if isEmailExist == nil {
 		RESP_ERR.Ok = false
-		RESP_ERR.ErrorMsg = ErrRegisterEmailExist
+		RESP_ERR.ErrorMsg = ErrRegister_EmailExist
 		errResp, _ := json.Marshal(RESP_ERR)
 		return c.Status(fiber.StatusBadRequest).JSON(string(errResp))
 	}
@@ -107,7 +107,7 @@ func Register(c *fiber.Ctx) error {
 	token, err := conf.GenerateJWT(REQ_IN.Username, uid, time.Now().AddDate(0, 2, 0))
 	if err != nil {
 		RESP_ERR.Ok = false
-		RESP_ERR.ErrorMsg = ErrRegisterGenerateToken
+		RESP_ERR.ErrorMsg = ErrRegister_GenerateToken
 		errResp, _ := json.Marshal(RESP_ERR)
 		return c.Status(fiber.StatusInternalServerError).JSON(string(errResp))
 	}
@@ -117,7 +117,7 @@ func Register(c *fiber.Ctx) error {
 		Token:    token,
 		Username: REQ_IN.Username,
 		UserId:   uid,
-		Message:  OutRegisterMsg,
+		Message:  OutRegister_Msg,
 	}
 	outResp, _ := json.Marshal(RESP_OUT)
 	conf.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))

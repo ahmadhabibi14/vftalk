@@ -75,6 +75,25 @@ func GetUsernameFromJWT(c *fiber.Ctx) (interface{}, error) {
 	return "", nil
 }
 
+func GetUserIdFromJWTfunc(c *fiber.Ctx) (interface{}, error) {
+	tokenString := ExtractToken(c)
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+		}
+		return []byte(os.Getenv("JWT_SECRET_KEY")), nil
+	})
+	if err != nil {
+		return "", err
+	}
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if ok && token.Valid {
+		uid := claims["user_id"]
+		return uid, nil
+	}
+	return "", nil
+}
+
 func WsGetUsernameFromJWT(c *websocket.Conn) (interface{}, error) {
 	tokenString := WsExtractToken(c)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {

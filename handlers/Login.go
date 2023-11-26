@@ -33,11 +33,11 @@ type (
 )
 
 const (
-	OutLoginMsg = "Login successful !"
+	OutLogin_Msg = "Login successful !"
 
-	ErrLoginInvalidInput    = "The payload or input provided is invalid. Please check your request and try again."
-	ErrLoginUserNotFound    = "User not found"
-	ErrLoginInvalidPassword = "Password does not match the user's password."
+	ErrLogin_InvalidInput    = "The payload or input provided is invalid. Please check your request and try again."
+	ErrLogin_UserNotFound    = "User not found"
+	ErrLogin_InvalidPassword = "Password does not match the user's password."
 )
 
 func Login(c *fiber.Ctx) error {
@@ -52,7 +52,7 @@ func Login(c *fiber.Ctx) error {
 
 	if err := c.BodyParser(&REQ_IN); err != nil {
 		RESP_ERR.Ok = false
-		RESP_ERR.ErrorMsg = ErrLoginInvalidInput
+		RESP_ERR.ErrorMsg = ErrLogin_InvalidInput
 		errResp, _ := json.Marshal(RESP_ERR)
 		return c.Status(fiber.StatusBadRequest).JSON(string(errResp))
 	}
@@ -68,7 +68,7 @@ func Login(c *fiber.Ctx) error {
 	userLoginRow, isUserExist := queries.UserLogin(ctx, REQ_IN.Username)
 	if isUserExist != nil {
 		RESP_ERR.Ok = false
-		RESP_ERR.ErrorMsg = ErrLoginUserNotFound
+		RESP_ERR.ErrorMsg = ErrLogin_UserNotFound
 		errorResp, _ := json.Marshal(RESP_ERR)
 		return c.Status(fiber.StatusBadRequest).JSON(string(errorResp))
 	}
@@ -76,7 +76,7 @@ func Login(c *fiber.Ctx) error {
 	err := verifyPassword(REQ_IN.Password, userLoginRow.Password)
 	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
 		RESP_ERR.Ok = false
-		RESP_ERR.ErrorMsg = ErrLoginInvalidPassword
+		RESP_ERR.ErrorMsg = ErrLogin_InvalidPassword
 		errorResp, _ := json.Marshal(RESP_ERR)
 		return c.Status(fiber.StatusBadRequest).JSON(string(errorResp))
 	}
@@ -94,7 +94,7 @@ func Login(c *fiber.Ctx) error {
 		Token:    token,
 		Username: userLoginRow.Username,
 		UserId:   userLoginRow.UserID,
-		Message:  OutLoginMsg,
+		Message:  OutLogin_Msg,
 	}
 	successResp, _ := json.Marshal(RESP_OUT)
 	conf.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
