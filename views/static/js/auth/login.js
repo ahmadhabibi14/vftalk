@@ -6,7 +6,7 @@ let loginLoadingIcon = document.getElementById("loginLoadingIcon");
 
 loginBtn.addEventListener("click", async () => {
   if (username.value === "" || password.value === "") {
-    alert("Please enter username and password");
+    notifier.showError("Please enter username and password");
     return;
   }
   loginBtn.disabled = true;
@@ -33,11 +33,15 @@ loginBtn.addEventListener("click", async () => {
       loginLoadingIcon.style.display = "none";
       loginBtn.disabled = false;
       localStorage.setItem("username", successResp["username"]);
-      window.location.href = "/";
+
+      notifier.showSuccess("Login successful");
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1200);
     } else {
       const creds = await resp.json();
       const errResp = await JSON.parse(creds);
-      alert(errResp["error"]);
+      notifier.showError(errResp["error"]);
       loginBtn.disabled = false;
       loginTxt.style.display = "block";
       loginLoadingIcon.style.display = "none";
@@ -46,7 +50,7 @@ loginBtn.addEventListener("click", async () => {
       return;
     }
   } catch (e) {
-    alert("Login failed");
+    notifier.showError("Login failed");
     loginBtn.disabled = false;
     loginTxt.style.display = "block";
     loginLoadingIcon.style.display = "none";

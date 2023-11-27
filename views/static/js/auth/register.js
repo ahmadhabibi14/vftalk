@@ -8,7 +8,7 @@ let registerLoadingIcon = document.getElementById("registerLoadingIcon");
 
 registerBtn.addEventListener("click", async () => {
   if (username.value === "" || password.value === "" || email.value === "" || fullname.value === "") {
-    alert("Please enter username and password");
+    notifier.showError("Please fill your credentials");
     return;
   }
   registerBtn.disabled = true;
@@ -37,11 +37,14 @@ registerBtn.addEventListener("click", async () => {
       registerLoadingIcon.style.display = "none";
       registerBtn.disabled = false;
       localStorage.setItem("username", successResp["username"]);
-      window.location.href = "/";
+      notifier.showSuccess("Register successfully!")
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
     } else {
       const creds = await resp.json();
       const errResp = await JSON.parse(creds);
-      alert(errResp["error"]);
+      notifier.showError(errResp["error"]);
       registerBtn.disabled = false;
       registerTxt.style.display = "block";
       registerLoadingIcon.style.display = "none";
@@ -50,7 +53,7 @@ registerBtn.addEventListener("click", async () => {
       return;
     }
   } catch (e) {
-    alert("Login failed");
+    notifier.showError("Login failed");
     registerBtn.disabled = false;
     registerTxt.style.display = "block";
     registerLoadingIcon.style.display = "none";

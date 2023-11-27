@@ -77,7 +77,8 @@ html {
 }
 
 .notifyjs-container .notifyjs-notification p.progress {
-  @apply absolute bottom-0 left-0 right-full h-[2px] mb-0 content-[' '];
+  @apply absolute bottom-0 left-0 right-full h-[2px] mb-0;
+  content: ' ';
 }
 
 .notifyjs-container .notifyjs-notification.alert-success {
