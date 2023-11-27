@@ -55,7 +55,7 @@ func UpdateProfilePicture(c *fiber.Ctx) error {
 		errResp, _ := json.Marshal(RESP_ERR)
 		return c.Status(fiber.StatusBadRequest).JSON(string(errResp))
 	}
-	imgFiles := form.File["file"]
+	imgFiles := form.File["avatar"]
 	imgValid := utils.ImageValidation(imgFiles[0])
 	if imgValid != nil {
 		RESP_ERR.Ok = false

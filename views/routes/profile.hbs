@@ -11,125 +11,167 @@
       <span>User Profile</span>
     </div>
   </header>
-  <div class="pt-24 px-7 flex flex-col gap-6">
-    <div class="flex flex-row justify-start items-center gap-7">
-      <div class="shrink-0 w-fit">
-        <img src="/files/{{UserData.Avatar}}" class="border-[4px] border-[#0a0a0a] w-[90px] h-auto rounded-full"
-          alt="Avatar">
+  <div class="pt-24 px-7 flex flex-row gap-11">
+    {{!-- Edit Profile Picture --}}
+    <div id="popupUpdateAvatar" class="hidden z-[200] fixed bg-black/60 top-0 bottom-0 left-0 right-0 justify-center items-center">
+      <div class="h-fit w-[500px] bg-[#0a0a0a] rounded-2xl p-6 flex flex-col gap-4">
+        <input type="file" name="avatar" id="avatar" />
+        <div class="flex flex-row items-center gap-4">
+          <button onclick="cancelUpdateAvatar()" class="h-fit w-fit text-lg font-semibold gap-2 flex flex-row justify-center items-center bg-[#115A2A] hover:bg-[#2B874A] px-4 py-2 rounded-xl disabled:bg-[#115A2A]">
+            <span>Cancel</span>
+          </button>
+          <button onclick="updateAvatar()" class="h-fit w-fit text-lg font-semibold gap-2 flex flex-row justify-center items-center bg-[#115A2A] hover:bg-[#2B874A] px-4 py-2 rounded-xl disabled:bg-[#115A2A]">
+            <span>Submit</span>
+          </button>
+        </div>
       </div>
+    </div>
+    <div class="flex flex-col justify-start items-center gap-4">
+      <div class="w-fit">
+        <img src="/files/{{UserData.Avatar}}" class="border-[4px] border-[#0a0a0a] w-[150px] h-auto rounded-full"
+          alt="Avatar" />
+      </div>
+      <button
+        onclick="openPopupUpdateAvatar()"
+        class="h-fit w-fit text-lg font-semibold gap-2 flex flex-row justify-center items-center bg-[#115A2A] hover:bg-[#2B874A] px-4 py-2 rounded-xl disabled:bg-[#115A2A]">
+        <svg class="w-5 h-auto fill-none" viewBox="0 0 24 24">
+          <path d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke="#ADDEBE" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M16.04 3.02001L8.16 10.9C7.86 11.2 7.56 11.79 7.5 12.22L7.07 15.23C6.91 16.32 7.68 17.08 8.77 16.93L11.78 16.5C12.2 16.44 12.79 16.14 13.1 15.84L20.98 7.96001C22.34 6.60001 22.98 5.02001 20.98 3.02001C18.98 1.02001 17.4 1.66001 16.04 3.02001Z"
+            stroke="#ADDEBE" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M14.91 4.1499C15.58 6.5399 17.45 8.4099 19.85 9.0899" stroke="#ADDEBE" stroke-width="1.5"
+            stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>Edit Avatar</span>
+      </button>
+    </div>
+    <div class="flex flex-col gap-9">
       <div class="flex flex-col gap-3 shrink grow">
         <div class="flex flex-col gap-1">
           <span class="text-base font-light text-yellow-300">Name</span>
           <h2 class="text-3xl font-bold">{{UserData.FullName}}</h2>
         </div>
       </div>
-    </div>
-    <div class="ml-32 px-3 grid grid-cols-1 gap-6">
-      <div class="flex flex-col gap-2">
-        <div class="flex flex-row items-center gap-2 font-light text-yellow-300">
-          <svg class="fill-none w-6" viewBox="0 0 24 24">
-            <path d="M8 2V5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M16 2V5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M3.5 9.08997H20.5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"
+      <div class="flex flex-col gap-6">
+        <div class="grid grid-cols-1 gap-6">
+          <div class="flex flex-col gap-2">
+            <div class="flex flex-row items-center gap-2 font-light text-yellow-300">
+              <svg class="fill-none w-5" viewBox="0 0 24 24">
+                <path d="M8 2V5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M16 2V5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M3.5 9.08997H20.5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z"
+                  stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M15.6947 13.7H15.7037" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M15.6947 16.7H15.7037" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M11.9955 13.7H12.0045" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M11.9955 16.7H12.0045" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M8.29431 13.7H8.30329" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M8.29431 16.7H8.30329" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <span>Join on</span>
+            </div>
+            <span class="text-xl font-semibold">{{JoinAt}}</span>
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="flex flex-row items-center gap-2 font-light text-yellow-300">
+              <svg class="fill-none w-5" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+              </svg>
+              <span>Username</span>
+            </div>
+            <span class="text-xl font-semibold">{{UserData.Username}}</span>
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="flex flex-row items-center gap-2 font-light text-yellow-300">
+              <svg class="fill-none w-5" viewBox="0 0 24 24">
+                <path
+                  d="M17 20.5H7C4 20.5 2 19 2 15.5V8.5C2 5 4 3.5 7 3.5H17C20 3.5 22 5 22 8.5V15.5C22 19 20 20.5 17 20.5Z"
+                  stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M17 9L13.87 11.5C12.84 12.32 11.15 12.32 10.12 11.5L7 9" stroke="currentColor"
+                  stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>Email</span>
+            </div>
+            <span class="text-xl font-semibold">{{UserData.Email}}</span>
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="flex flex-row items-center gap-2 font-light text-yellow-300">
+              <svg class="fill-none w-5" viewBox="0 0 24 24">
+                <path
+                  d="M17 20.5H7C4 20.5 2 19 2 15.5V8.5C2 5 4 3.5 7 3.5H17C20 3.5 22 5 22 8.5V15.5C22 19 20 20.5 17 20.5Z"
+                  stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M17 9L13.87 11.5C12.84 12.32 11.15 12.32 10.12 11.5L7 9" stroke="currentColor"
+                  stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>Location</span>
+            </div>
+            <span class="text-xl font-semibold">Lombok, West Nusa Tenggara, Indonesia</span>
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="flex flex-row items-center gap-2 font-light text-yellow-300">
+              <svg class="fill-none w-5" viewBox="0 0 24 24">
+                <path
+                  d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                  stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M7.99998 3H8.99998C7.04998 8.84 7.04998 15.16 8.99998 21H7.99998" stroke="currentColor"
+                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M15 3C16.95 8.84 16.95 15.16 15 21" stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3 16V15C8.84 16.95 15.16 16.95 21 15V16" stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3 9.0001C8.84 7.0501 15.16 7.0501 21 9.0001" stroke="currentColor" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>Website</span>
+            </div>
+            <a href="https://habibi2004.pages.dev" target="_blank"
+              class="flex flex-row gap-2 hover:underline text-xl font-semibold w-fit">
+              <span>https://habibi2004.pages.dev</span>
+              <svg class="w-4 text-yellow-500" viewBox="0 0 24 24" fill="none">
+                <path stroke="currentColor" d="M13 11L21.2 2.80005" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path stroke="currentColor" d="M22 6.8V2H17.2" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path stroke="currentColor" d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13"
+                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <button
+          class="h-fit w-fit text-lg font-semibold gap-2 flex flex-row justify-center items-center bg-[#115A2A] hover:bg-[#2B874A] px-4 py-2 rounded-xl disabled:bg-[#115A2A]">
+          <svg class="w-5 h-auto fill-none" viewBox="0 0 24 24">
+            <path d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke="#ADDEBE" stroke-width="1.5"
               stroke-linecap="round" stroke-linejoin="round" />
             <path
-              d="M21 8.5V17C21 20 19.5 22 16 22H8C4.5 22 3 20 3 17V8.5C3 5.5 4.5 3.5 8 3.5H16C19.5 3.5 21 5.5 21 8.5Z"
-              stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+              d="M16.04 3.02001L8.16 10.9C7.86 11.2 7.56 11.79 7.5 12.22L7.07 15.23C6.91 16.32 7.68 17.08 8.77 16.93L11.78 16.5C12.2 16.44 12.79 16.14 13.1 15.84L20.98 7.96001C22.34 6.60001 22.98 5.02001 20.98 3.02001C18.98 1.02001 17.4 1.66001 16.04 3.02001Z"
+              stroke="#ADDEBE" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
               stroke-linejoin="round" />
-            <path d="M15.6947 13.7H15.7037" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M15.6947 16.7H15.7037" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M11.9955 13.7H12.0045" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M11.9955 16.7H12.0045" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M8.29431 13.7H8.30329" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M8.29431 16.7H8.30329" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
-          <span>Join on</span>
-        </div>
-        <span class="text-xl font-semibold">{{JoinAt}}</span>
-      </div>
-      <div class="flex flex-col gap-2">
-        <div class="flex flex-row items-center gap-2 font-light text-yellow-300">
-          <svg class="fill-none w-6" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-            stroke-linejoin="round" class="feather feather-at-sign">
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
-          </svg>
-          <span>Username</span>
-        </div>
-        <span class="text-xl font-semibold">{{UserData.Username}}</span>
-      </div>
-      <div class="flex flex-col gap-2">
-        <div class="flex flex-row items-center gap-2 font-light text-yellow-300">
-          <svg class="fill-none w-6" viewBox="0 0 24 24">
-            <path
-              d="M17 20.5H7C4 20.5 2 19 2 15.5V8.5C2 5 4 3.5 7 3.5H17C20 3.5 22 5 22 8.5V15.5C22 19 20 20.5 17 20.5Z"
-              stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M17 9L13.87 11.5C12.84 12.32 11.15 12.32 10.12 11.5L7 9" stroke="currentColor" stroke-width="1.5"
+            <path d="M14.91 4.1499C15.58 6.5399 17.45 8.4099 19.85 9.0899" stroke="#ADDEBE" stroke-width="1.5"
               stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <span>Email</span>
-        </div>
-        <span class="text-xl font-semibold">{{UserData.Email}}</span>
+          <span>Edit Profile</span>
+        </button>
       </div>
-      <div class="flex flex-col gap-2">
-        <div class="flex flex-row items-center gap-2 font-light text-yellow-300">
-          <svg class="fill-none w-6" viewBox="0 0 24 24">
-            <path
-              d="M17 20.5H7C4 20.5 2 19 2 15.5V8.5C2 5 4 3.5 7 3.5H17C20 3.5 22 5 22 8.5V15.5C22 19 20 20.5 17 20.5Z"
-              stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M17 9L13.87 11.5C12.84 12.32 11.15 12.32 10.12 11.5L7 9" stroke="currentColor" stroke-width="1.5"
-              stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          <span>Location</span>
-        </div>
-        <span class="text-xl font-semibold">Lombok, West Nusa Tenggara, Indonesia</span>
-      </div>
-      <div class="flex flex-col gap-2">
-        <div class="flex flex-row items-center gap-2 font-light text-yellow-300">
-          <svg class="fill-none w-6" viewBox="0 0 24 24">
-            <path
-              d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M7.99998 3H8.99998C7.04998 8.84 7.04998 15.16 8.99998 21H7.99998" stroke="currentColor"
-              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M15 3C16.95 8.84 16.95 15.16 15 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M3 16V15C8.84 16.95 15.16 16.95 21 15V16" stroke="currentColor" stroke-width="1.5"
-              stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M3 9.0001C8.84 7.0501 15.16 7.0501 21 9.0001" stroke="currentColor" stroke-width="1.5"
-              stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          <span>Website</span>
-        </div>
-        <a href="https://habibi2004.pages.dev" target="_blank" class="flex flex-row gap-2 hover:underline text-xl font-semibold w-fit">
-          <span>https://habibi2004.pages.dev</span>
-          <svg class="w-4 text-yellow-500" viewBox="0 0 24 24" fill="none">
-            <path stroke="currentColor" d="M13 11L21.2 2.80005" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path stroke="currentColor" d="M22 6.8V2H17.2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path stroke="currentColor" d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>            
-        </a>
-      </div>
-    </div>
-    <div class="ml-32 mt-2 px-3">
-      <button class="text-lg font-semibold gap-2 flex flex-row justify-center items-center bg-[#115A2A] hover:bg-[#2B874A] h-full px-4 py-2 rounded-xl disabled:bg-[#115A2A]">
-        <svg class="w-6 h-auto fill-none" viewBox="0 0 24 24">
-          <path d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke="#ADDEBE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M16.04 3.02001L8.16 10.9C7.86 11.2 7.56 11.79 7.5 12.22L7.07 15.23C6.91 16.32 7.68 17.08 8.77 16.93L11.78 16.5C12.2 16.44 12.79 16.14 13.1 15.84L20.98 7.96001C22.34 6.60001 22.98 5.02001 20.98 3.02001C18.98 1.02001 17.4 1.66001 16.04 3.02001Z" stroke="#ADDEBE" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M14.91 4.1499C15.58 6.5399 17.45 8.4099 19.85 9.0899" stroke="#ADDEBE" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>Edit Profile</span>      
-      </button>
     </div>
   </div>
 </div>
+
+<script src="/static/js/profile.js"></script>
