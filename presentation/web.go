@@ -25,6 +25,12 @@ func (w *WebServer) Start() {
 		AppName: w.AppName,
 		Views:   engine,
 		Prefork: false,
+		ErrorHandler: func(c *fiber.Ctx, err error) error {
+			return c.Render("404", fiber.Map{
+				"Title":   "404 - Page not found",
+				"Message": "Page not found",
+			})
+		},
 	})
 	app.Use(requestid.New())
 	app.Use(logger.New(middlewares.LoggerConfig))
