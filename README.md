@@ -38,6 +38,9 @@ docker exec -it vftalk-db mariadb -u root -p
 ```shell
 # Remove all containers
 docker rm -f $(docker ps -aq)
+
+# Remove containers
+docker-compose down
 ```
 
 ### TODO:
