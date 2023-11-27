@@ -6,7 +6,7 @@ let currentPathname = window.location.pathname;
 menuLists.forEach(function(link) {
   if (link.getAttribute("href") === currentPathname || (link.getAttribute("href") === "/" && currentPathname === "/direct")) {
     link.classList.add("font-bold");
-    link.classList.add("bg-[#0a0a0a]");
+    link.classList.add("bg-[#131313]");
     link.classList.remove("font-semibold");
     const svgs = link.querySelectorAll('svg');
     svgs.forEach(function(svg, index) {
