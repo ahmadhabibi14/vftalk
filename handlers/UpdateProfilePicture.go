@@ -1,9 +1,11 @@
 package handlers
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"vftalk/conf"
+	"vftalk/models/database/sqlc"
 	"vftalk/utils"
 
 	"github.com/goccy/go-json"
@@ -32,6 +34,8 @@ const (
 
 func UpdateProfilePicture(c *fiber.Ctx) error {
 	var db *sql.DB = conf.ConnectMariaDB()
+	queries := sqlc.New(db)
+	ctx := context.Background()
 	var (
 		RESP_OUT updateProfilePictureOut
 		RESP_ERR updateProfilePictureError
@@ -71,10 +75,17 @@ func UpdateProfilePicture(c *fiber.Ctx) error {
 
 	imgPathStored := fmt.Sprintf("/img/avatars/%v.png", userId)
 	// Set image avatar to database
-	_, err = db.Exec(
-		"UPDATE Users SET avatar = ? WHERE user_id = ?",
-		imgPathStored, userId,
-	)
+	updateAvatarParam := sqlc.UpdateUserAvatarParams{
+		Avatar: imgPathStored,
+		UserID: fmt.Sprintf("%v", userId),
+	}
+	execSqlUpUserAvatar := queries.UpdateUserAvatar(ctx, updateAvatarParam)
+	if execSqlUpUserAvatar != nil {
+		RESP_ERR.Ok = false
+		RESP_ERR.ErrorMsg = ErrUpdateProfilePicture_ServerError
+		errResp, _ := json.Marshal(RESP_ERR)
+		return c.Status(fiber.StatusInternalServerError).JSON(string(errResp))
+	}
 
 	RESP_OUT = updateProfilePictureOut{
 		Ok:      true,
