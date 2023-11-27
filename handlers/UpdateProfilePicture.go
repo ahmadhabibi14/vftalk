@@ -14,8 +14,9 @@ import (
 
 type (
 	updateProfilePictureOut struct {
-		Ok      bool   `json:"ok"`
-		Message string `json:"message"`
+		Ok        bool   `json:"ok"`
+		AvatarUrl string `json:"avatarUrl"`
+		Message   string `json:"message"`
 	}
 	updateProfilePictureError struct {
 		Ok       bool   `json:"ok"`
@@ -88,8 +89,9 @@ func UpdateProfilePicture(c *fiber.Ctx) error {
 	}
 
 	RESP_OUT = updateProfilePictureOut{
-		Ok:      true,
-		Message: OutUpdateProfilePicture_Msg,
+		Ok:        true,
+		AvatarUrl: imgPathStored,
+		Message:   OutUpdateProfilePicture_Msg,
 	}
 	outResp, _ := json.Marshal(RESP_OUT)
 

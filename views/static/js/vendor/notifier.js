@@ -1,6 +1,6 @@
 let Notifier = function() {
   let a = {
-    container: null, default_time: 4500, vanish_time: 300, fps: 30, success: {
+    container: null, default_time: 3500, vanish_time: 300, fps: 30, success: {
       classes: 'alert-success',
       icon: '<svg width="15" height="15" viewBox="0 0 8 8"><path d="M6.41 0l-.69.72-2.78 2.78-.81-.78-.72-.72-1.41 1.41.72.72 1.5 1.5.69.72.72-.72 3.5-3.5.72-.72-1.44-1.41z" transform="translate(0 1)" /></svg>',
     }, error: {

@@ -16,17 +16,34 @@
     <div id="popupUpdateAvatar" class="hidden z-[200] fixed bg-black/60 top-0 bottom-0 left-0 right-0 justify-center items-center">
       <div class="h-fit w-[500px] bg-[#0a0a0a] rounded-2xl p-6 flex flex-col gap-4">
         <div class="w-full h-fit">
-          <label for="avatar" class="cursor-pointer py-9 h-fit w-full border-[3px] border-dashed group border-[#333] hover:border-white/30 hover:text-white/30  rounded-2xl flex flex-col text-lg gap-4 justify-center items-center text-[#333]">
-            <svg class="w-28 fill-none" viewBox="0 0 24 24">
+          <label for="avatarFileInput" class="cursor-pointer py-9 h-fit w-full border-[3px] border-dashed group border-[#333] hover:border-white/30 hover:text-white/30  rounded-2xl flex flex-col text-lg gap-4 justify-center items-center text-[#333]">
+            <svg
+              id="avatarLoadingIcon"
+              viewBox="0 0 24 24"
+              class="hidden w-28 fill-none h-auto stroke-[#333] animate-spin"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="12" y1="2" x2="12" y2="6"></line>
+              <line x1="12" y1="18" x2="12" y2="22"></line>
+              <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+              <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+              <line x1="2" y1="12" x2="6" y2="12"></line>
+              <line x1="18" y1="12" x2="22" y2="12"></line>
+              <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+              <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+            </svg>
+            <svg id="avatarFileIcon" class="block w-28 h-auto fill-none" viewBox="0 0 24 24">
               <path stroke="#333" d="M9 10C10.1046 10 11 9.10457 11 8C11 6.89543 10.1046 6 9 6C7.89543 6 7 6.89543 7 8C7 9.10457 7.89543 10 9 10Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               <path stroke="#333" d="M13 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               <path stroke="#333" d="M15.75 5H21.25" stroke-width="1.5" stroke-linecap="round"/>
               <path stroke="#333" d="M18.5 7.75V2.25" stroke-width="1.5" stroke-linecap="round"/>
               <path stroke="#333" d="M2.67004 18.9501L7.60004 15.6401C8.39004 15.1101 9.53004 15.1701 10.24 15.7801L10.57 16.0701C11.35 16.7401 12.61 16.7401 13.39 16.0701L17.55 12.5001C18.33 11.8301 19.59 11.8301 20.37 12.5001L22 13.9001" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <span>Select image from your device</span>
+            <span id="avatarFileName">Select image from your device</span>
           </label>
-          <input class="hidden" type="file" name="avatar" id="avatar" />
+          <input class="hidden" type="file" name="avatarFileInput" id="avatarFileInput" />
         </div>
         
         <div class="flex flex-row items-center gap-4">
@@ -41,7 +58,7 @@
     </div>
     <div class="flex flex-col justify-start items-center gap-4">
       <div class="w-fit">
-        <img src="/files/{{UserData.Avatar}}" class="border-[4px] border-[#0a0a0a] w-[150px] h-auto rounded-full"
+        <img id="userAvatarImg" src="/files/{{UserData.Avatar}}" class="border-[4px] border-[#0a0a0a] w-[150px] h-auto rounded-full"
           alt="Avatar" />
       </div>
       <button
