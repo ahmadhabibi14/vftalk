@@ -6,6 +6,8 @@ function openPopupUpdateAvatar() {
 }
 
 function updateAvatar() {
+  popupUpdateAvatar.classList.add("hidden");
+  popupUpdateAvatar.classList.remove("flex");
   var avatar = document.getElementById("avatar");
   var file = avatar.files[0];
   if (!file) {
@@ -20,12 +22,12 @@ function updateAvatar() {
   xhr.addEventListener( 'load', function( event ) {
     if( xhr.status===200 ) {
       const out = JSON.parse( event.target.responseText );
-      alert("Image uploaded successfully.");
+      notifier.showSuccess("Image uploaded successfully.");
       console.log(out);
     } else if( xhr.status===413 ) {
-      alert( 'Image too large' );
+      notifier.showError( 'Image too large' );
     } else {
-      alert( `Error: ${xhr.status}  ${xhr.statusText}` );
+      notifier.showError( `Error: ${xhr.status}  ${xhr.statusText}` );
       console.log( event.target.responseText );
     }
   } );

@@ -65,3 +65,73 @@ html {
   background: #333;
   color: #ADDEBE;
 }
+
+/* Notifier */
+.notifyjs-container {
+  @apply z-[900] fixed bottom-0 right-3 max-w-[304px] w-fit h-fit;
+}
+
+.notifyjs-container .notifyjs-notification {
+  @apply rounded-lg hidden p-3 relative mb-3 w-full border border-transparent
+  box-border flex-row justify-center items-center gap-3;
+}
+
+.notifyjs-container .notifyjs-notification p.progress {
+  @apply absolute bottom-0 left-0 right-full h-[2px] mb-0 content-[' '];
+}
+
+.notifyjs-container .notifyjs-notification.alert-success {
+  @apply bg-emerald-400/10 text-emerald-300 border-emerald-400;
+}
+
+.notifyjs-container .notifyjs-notification.alert-danger {
+  @apply bg-red-400/10 text-red-300 border-red-400;
+}
+
+.notifyjs-container .notifyjs-notification.alert-warning {
+  @apply bg-amber-400/10 text-amber-300 border-amber-400;
+}
+
+.notifyjs-container .notifyjs-notification.alert-info {
+  @apply bg-blue-400/10 text-blue-300 border-blue-400;
+}
+
+.notifyjs-container .notifyjs-notification.alert-success p.progress {
+  @apply bg-emerald-300 rounded-full;
+}
+
+.notifyjs-container .notifyjs-notification.alert-danger p.progress {
+  @apply bg-red-300 rounded-full;
+}
+
+.notifyjs-container .notifyjs-notification.alert-warning p.progress {
+  @apply bg-amber-300 rounded-full;
+}
+
+.notifyjs-container .notifyjs-notification.alert-info p.progress {
+  @apply bg-blue-300 rounded-full;
+}
+
+.notifyjs-container .notifyjs-notification {
+  @apply shrink;
+}
+
+.notifyjs-container .notifyjs-notification svg {
+  @apply shrink-0;
+}
+
+.notifyjs-container .notifyjs-notification.alert-success .notifyjs-icon svg {
+  @apply fill-emerald-300;
+}
+
+.notifyjs-container .notifyjs-notification.alert-danger .notifyjs-icon svg {
+  @apply fill-red-300;
+}
+
+.notifyjs-container .notifyjs-notification.alert-warning .notifyjs-icon svg {
+  @apply fill-amber-300;
+}
+
+.notifyjs-container .notifyjs-notification.alert-info .notifyjs-icon svg {
+  @apply fill-blue-300;
+}
