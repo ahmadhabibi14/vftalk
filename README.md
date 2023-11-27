@@ -44,7 +44,7 @@ docker-compose down
 ```
 
 ### TODO:
-- [ ] User management
+- [ ] User edit progile
 - [ ] Limit online users to only 20
 - [x] Login handler
 - [x] API rate limit
@@ -61,4 +61,5 @@ docker-compose down
 - [ ] Deploy to server
 - [x] Add MariaDB to docker-compose
 - [ ] Use docker-mailserver for SMTP in production
-- [ ] User can edit profile picture
+- [x] User can edit profile picture
+- [ ] Image editor for update profile picture, specify for 1:1 ratio
