@@ -5,6 +5,7 @@ import (
 	"vftalk/conf"
 
 	"github.com/gofiber/contrib/websocket"
+	"github.com/gofiber/fiber/v2/log"
 )
 
 type (
@@ -26,6 +27,7 @@ func HandleClients(conn *websocket.Conn) {
 	go broadcastMessagesToClients()
 	defer func() {
 		conn.Close()
+		log.Error(`User disconnected`)
 	}()
 
 	clients[conn] = true
