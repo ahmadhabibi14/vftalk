@@ -1,0 +1,12 @@
+[Unit]
+Description=VFTalk
+
+[Service]
+User=root
+Type=simple
+Restart=on-failure
+WorkingDirectory=/root/vftalk
+ExecStart=/root/vftalk/main
+
+[Install]
+WantedBy=multi-user.target
