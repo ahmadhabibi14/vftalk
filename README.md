@@ -63,3 +63,6 @@ docker-compose down
 - [ ] Use docker-mailserver for SMTP in production
 - [x] User can edit profile picture
 - [ ] Image editor for update profile picture, specify for 1:1 ratio
+- [ ] Direct message
+- [ ] Notification
+- [ ] Active user list
