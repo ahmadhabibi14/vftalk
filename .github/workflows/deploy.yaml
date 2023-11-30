@@ -34,7 +34,5 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             cd /root/vftalk
-            go get
-            go build main.go
             pnpm install
             pnpm build
