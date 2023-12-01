@@ -11,14 +11,22 @@ import (
 )
 
 func WebViews(app *fiber.App) {
-	app.Get("/", middlewares.AuthJWT, func(c *fiber.Ctx) error {
-		u, _ := conf.GetUsernameFromJWT(c)
-		username := fmt.Sprintf("%v", u)
-		c.Set("Content-Type", "text/html; charset=utf-8")
-		return c.Render("index", fiber.Map{
-			"Title":    "VFtalk",
-			"Username": username,
-		}, "layouts/main")
+	app.Get("/", func(c *fiber.Ctx) error {
+		err := conf.TokenValid(c)
+		if err != nil {
+			return c.Render("landingpage", fiber.Map{
+				"Title":   "VFTalk",
+				"Message": "Hello world!",
+			})
+		} else {
+			u, _ := conf.GetUsernameFromJWT(c)
+			username := fmt.Sprintf("%v", u)
+			c.Set("Content-Type", "text/html; charset=utf-8")
+			return c.Render("index", fiber.Map{
+				"Title":    "VFtalk",
+				"Username": username,
+			}, "layouts/main")
+		}
 	})
 
 	app.Get("/direct", middlewares.AuthJWT, func(c *fiber.Ctx) error {
