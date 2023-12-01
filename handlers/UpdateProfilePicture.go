@@ -8,7 +8,8 @@ import (
 	"vftalk/models/database/sqlc"
 	"vftalk/utils"
 
-	"github.com/goccy/go-json"
+	"encoding/json"
+
 	"github.com/gofiber/fiber/v2"
 )
 
