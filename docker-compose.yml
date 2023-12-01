@@ -49,4 +49,3 @@ services:
 networks:
   vftalk-network:
     external: true
-    name: vftalk-network
