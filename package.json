@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun x tailwindcss -i ./views/static/css/main.css -o ./views/static/css/main.tmp.css --watch",
-    "build": "pnpm tailwindcss -i ./views/static/css/main.css -o ./views/static/css/main.tmp.css"
+    "build": "npm tailwindcss -i ./views/static/css/main.css -o ./views/static/css/main.tmp.css"
   },
   "keywords": [],
   "author": "",
