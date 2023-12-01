@@ -34,5 +34,5 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             cd /root/vftalk
-            pnpm install
-            pnpm build
+            npm install
+            npm build
