@@ -6,8 +6,7 @@ let avatarFileIcon = document.getElementById("avatarFileIcon");
 let userAvatarImg = document.getElementById("userAvatarImg");
 
 function openPopupUpdateAvatar() {
-  popupUpdateAvatar.classList.remove("hidden");
-  popupUpdateAvatar.classList.add("flex");
+  popupUpdateAvatar.classList.replace("hidden", "flex");
 }
 
 var file;
@@ -17,6 +16,14 @@ avatarFileInput.addEventListener("change", function() {
     avatarFileName.innerText = file.name;
   }
 })
+
+function updateAvatarResp() {
+  popupUpdateAvatar.classList.replace("flex", "hidden");
+  avatarLoadingIcon.classList.replace("block", "hidden");
+  avatarFileIcon.classList.replace("hidden", "block");
+  avatarFileName.innerText = "Select image from your device";
+  file = null;
+}
 
 function updateAvatar() {
   avatarLoadingIcon.classList.replace("hidden", "block");
@@ -36,27 +43,26 @@ function updateAvatar() {
     if( xhr.status===200 ) {
       userAvatarImg.src = `/files/${outJson.avatarUrl}`;
       notifier.showSuccess("Image uploaded successfully.");
-      popupUpdateAvatar.classList.replace("flex", "hidden");
+      updateAvatarResp();
       setTimeout(() => {
         location.reload();
       }, 3500);
     } else {
-      popupUpdateAvatar.classList.replace("flex", "hidden");
+      updateAvatarResp();
       notifier.showError(outJson.error);
     }
   } );
   xhr.addEventListener( "error", function() {
-    popupUpdateAvatar.classList.replace("flex", "hidden");
+    updateAvatarResp();
     notifier.showError( "Network error" );
   } );
   xhr.addEventListener( "abort", function() {
-    popupUpdateAvatar.classList.replace("flex", "hidden");
+    updateAvatarResp();
     notifier.showWarning( "Upload aborted" );
   }, false );
   xhr.send(formData);
 }
 
 function cancelUpdateAvatar() {
-  popupUpdateAvatar.classList.add("hidden");
-  popupUpdateAvatar.classList.remove("flex");
+  popupUpdateAvatar.classList.replace("flex", "hidden");
 }
