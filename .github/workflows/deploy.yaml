@@ -39,3 +39,4 @@ jobs:
             pnpm install
             pnpm build
             systemctl restart vftalk
+            systemctl restart nginx
