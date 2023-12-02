@@ -41,7 +41,7 @@ function updateAvatar() {
     const out = JSON.parse(xhr.responseText );
     const outJson = JSON.parse( out );
     if( xhr.status===200 ) {
-      userAvatarImg.src = `/files/${outJson.avatarUrl}`;
+      userAvatarImg.src = `/files${outJson.avatarUrl}`;
       notifier.showSuccess("Image uploaded successfully.");
       updateAvatarResp();
       setTimeout(() => {

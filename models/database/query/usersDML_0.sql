@@ -1,10 +1,3 @@
--- name: CreateNewUser :exec
-INSERT INTO Users (
-  user_id, username, full_name, email, password
-) VALUES (
-  ?, ?, ?, ?, ?
-);
-
 -- name: GetUserByUsername :one
 SELECT username FROM Users
 WHERE username = ?;
