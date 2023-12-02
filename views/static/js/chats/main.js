@@ -3,7 +3,7 @@ let chatContainer = document.getElementById("chatContainer");
 let sendChatBtnElm = document.getElementById("sendChatBtnElm");
 let sendChatIcon = document.getElementById("sendChatIcon");
 let loadingIcon = document.getElementById("loadingIcon");
-let socket = new WebSocket(`ws://${window.location.host}/api/room`);
+let socket = new WebSocket(`wss://${window.location.host}/api/room`);
 
 const username = localStorage.getItem("username");
 
