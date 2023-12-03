@@ -36,7 +36,5 @@ jobs:
             cd /root/vftalk
             go get
             go build main.go
-            pnpm install
-            pnpm build
             systemctl restart vftalk
             systemctl restart nginx
