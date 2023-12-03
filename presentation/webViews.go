@@ -15,12 +15,14 @@ func WebViews(app *fiber.App) {
 		err := conf.TokenValid(c)
 		if err != nil {
 			currentTime := time.Now().UTC()
-			// createdTime := time.Date(2023, time.December, 1, 10, 26, 0, 0, time.UTC)
-			// OG_createdAt := createdTime.Format("2006-01-02T15:04:05Z")
+			createdTime := time.Date(2023, time.December, 1, 10, 26, 0, 0, time.UTC)
+			OG_createdAt := createdTime.Format("2006-01-02T15:04:05Z")
 			OG_updatedAt := currentTime.Format("2006-01-02T15:04:05Z")
 			return c.Render("landingpage", fiber.Map{
-				"Title":        "VFTalk",
-				"OG_UpdatedAt": OG_updatedAt,
+				"Title":       "VFTalk",
+				`Description`: "VFTalk is an open-source Chat App for your privacy needs and to feels another experience of communications",
+				`UpdatedAt`:   OG_updatedAt,
+				`CreatedAt`:   OG_createdAt,
 			})
 		} else {
 			u, _ := conf.GetUsernameFromJWT(c)
