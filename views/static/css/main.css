@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+*, :after, :before {
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+}
+
+*::selection {
+  background: #2B874A;
+  color: #ADDEBE;
+}
+
 html {
   font-size: 12px;
 }
@@ -64,6 +79,29 @@ html {
 :global(.apexcharts-tooltip) {
   background: #333;
   color: #ADDEBE;
+}
+
+.titled {
+  position: relative;
+  white-space: nowrap;
+}
+
+.titled-content {
+  position: relative;
+  padding: 5px 15px 5px 10px;
+  color: #131313;
+}
+
+.titled::before {
+  background-color: #2B874A;
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  --tw-skew-y: -3deg;
+  transform: translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 /* Notifier */
