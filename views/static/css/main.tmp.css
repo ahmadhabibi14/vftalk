@@ -600,8 +600,8 @@ video {
   bottom: 0px;
 }
 
-.bottom-3 {
-  bottom: 0.75rem;
+.bottom-\[10px\] {
+  bottom: 10px;
 }
 
 .left-0 {
@@ -630,22 +630,6 @@ video {
 
 .top-28 {
   top: 7rem;
-}
-
-.bottom-\[15px\] {
-  bottom: 15px;
-}
-
-.bottom-\[7px\] {
-  bottom: 7px;
-}
-
-.bottom-\[8px\] {
-  bottom: 8px;
-}
-
-.bottom-\[10px\] {
-  bottom: 10px;
 }
 
 .z-10 {
@@ -773,14 +757,6 @@ video {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-5 {
-  height: 1.25rem;
-}
-
-.h-6 {
-  height: 1.5rem;
 }
 
 .max-h-screen {
