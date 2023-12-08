@@ -58,8 +58,18 @@ socket.onmessage = (e) => {
 };
 
 socket.onerror = (e) => {
-  alert("Error WebSocket connection: ", e);
-  console.error("Error WebSocket connection: ", e);
+  notifier.showError("Error WebSocket connection: ", e);
+}
+
+socket.onclose = (e) => {
+  if (e.wasClean) {
+    notifier.showWarning(`Connection closed cleanly, code=${e.code}, reason=${e.reason}`);
+  } else {
+    notifier.showWarning("Connection abruptly closed");
+  }
+  setTimeout(() => {
+    window.location.reload()
+  }, 2000);
 }
 
 sendChatBtnElm.addEventListener("click", () => {

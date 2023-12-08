@@ -6,6 +6,9 @@ import (
 	"github.com/wneessen/go-mail"
 )
 
+// Use docker-mailserver for production
+// Use mailhog for development
+
 func SendUserRegisterMail() {
 	m := mail.NewMsg()
 	if err := m.From("ahmadhabibi04@proton.me"); err != nil {
