@@ -14,11 +14,18 @@ function SendMessage() {
   sendChatBtnElm.disabled = true;
   sendChatIcon.style.display = "none";
   loadingIcon.style.display = "block";
-  socket.send(
-    JSON.stringify({
-      message: chatInputElm.value,
-    })
-  );
+  try {
+    socket.send(
+      JSON.stringify({
+        message: chatInputElm.value,
+      })
+    );
+  } catch (error) {
+    notifier.showError("Error sending message: ", e);
+    setTimeout(() => {
+      window.location.reload()
+    }, 2000);
+  }
   chatInputElm.value = "";
   sendChatIcon.style.display = "block";
   loadingIcon.style.display = "none";
