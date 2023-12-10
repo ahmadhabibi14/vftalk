@@ -3,35 +3,31 @@ package conf
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"os"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/joho/godotenv"
 )
 
-func init() {
-	if err := godotenv.Load("../.env"); err != nil {
-		log.Println("Error loading .env files")
-	}
-}
-
 func ConnectMariaDB() *sql.DB {
+	zlog := GetLogger()
+	DbDriver := "mysql"
 	DbHost := os.Getenv("MARIADB_HOST")
 	DbPort := os.Getenv("MARIADB_PORT")
 	DbName := os.Getenv("MARIADB_NAME")
 	DbUser := os.Getenv("MARIADB_USER")
 	DbPassword := os.Getenv("MARIADB_PASSWORD")
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", DbUser, DbPassword, DbHost, DbPort, DbName)
-	db, err := sql.Open("mysql", dsn)
+	db, err := sql.Open(DbDriver, dsn)
 	if err != nil {
-		log.Fatalln("Error connecting to database ::", err)
+		zlog.Panic().
+			Str("ERROR", err.Error()).
+			Msg("cannot connect to " + DbDriver)
 	}
 
-	db.SetMaxIdleConns(5)
-	db.SetMaxOpenConns(20)
+	db.SetMaxIdleConns(10)
+	db.SetMaxOpenConns(100)
+	db.SetConnMaxIdleTime(5 * time.Minute)
 	db.SetConnMaxLifetime(60 * time.Minute)
-	db.SetConnMaxIdleTime(10 * time.Minute)
 	return db
 }
