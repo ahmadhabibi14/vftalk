@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"runtime"
 
 	"vftalk/conf"
 	"vftalk/presentation"
@@ -15,9 +14,6 @@ func init() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	cpu := runtime.NumCPU()
-	log.Println("Total CPU Cores : ", cpu)
-	runtime.GOMAXPROCS(cpu)
 }
 
 func main() {
