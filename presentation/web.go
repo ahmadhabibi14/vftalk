@@ -26,6 +26,7 @@ func (w *WebServer) Start() {
 		Views:   engine,
 		Prefork: false,
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
+			c.Status(fiber.StatusNotFound)
 			return c.Render("404", fiber.Map{
 				"Title":   "404 - Page not found",
 				"Message": "Page not found",
