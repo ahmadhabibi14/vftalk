@@ -1,11 +1,10 @@
 package presentation
 
 import (
-	"fmt"
-	"time"
 	"vftalk/conf"
 	"vftalk/handlers"
 	"vftalk/middlewares"
+	"vftalk/utils"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -18,23 +17,35 @@ func WebViews(app *fiber.App) {
 				"Title": "VFTalk",
 			})
 		} else {
-			u, _ := conf.GetUsernameFromJWT(c)
-			username := fmt.Sprintf("%v", u)
+			userData, err := handlers.GetUserDataByUsername(c)
+			if err != nil {
+				return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+					"error": err,
+				})
+			}
 			c.Set("Content-Type", "text/html; charset=utf-8")
 			return c.Render("index", fiber.Map{
 				"Title":    "VFtalk",
-				"Username": username,
+				"Username": userData.Username,
+				"UserData": userData,
+				"JoinAt":   utils.FormatTime(userData.JoinAt),
 			}, "layouts/main")
 		}
 	})
 
 	app.Get("/direct", middlewares.AuthJWT, func(c *fiber.Ctx) error {
-		u, _ := conf.GetUsernameFromJWT(c)
-		username := fmt.Sprintf("%v", u)
+		userData, err := handlers.GetUserDataByUsername(c)
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": err,
+			})
+		}
 		c.Set("Content-Type", "text/html; charset=utf-8")
 		return c.Render("direct", fiber.Map{
 			"Title":    "Direct Messages",
-			"Username": username,
+			"Username": userData.Username,
+			"UserData": userData,
+			"JoinAt":   utils.FormatTime(userData.JoinAt),
 		}, "layouts/main")
 	})
 
@@ -45,12 +56,11 @@ func WebViews(app *fiber.App) {
 				"error": err,
 			})
 		}
-		parsedTime, _ := time.Parse("2006-01-02 15:04:05 -0700 MST", fmt.Sprintf("%v", userData.JoinAt))
 		c.Set("Content-Type", "text/html; charset=utf-8")
 		return c.Render("profile", fiber.Map{
 			"Title":    "Profile",
 			"UserData": userData,
-			"JoinAt":   fmt.Sprintf("%v %v %v", parsedTime.Day(), parsedTime.Month(), parsedTime.Year()),
+			"JoinAt":   utils.FormatTime(userData.JoinAt),
 		}, "layouts/main")
 	})
 

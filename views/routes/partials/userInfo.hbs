@@ -20,6 +20,26 @@
 
   <script src="/static/js/vendor/apexcharts.js"></script>
   <script>
+    function formatDatetime( dateData ) {
+      if( !dateData ) return "";
+      const dt = new Date( dateData );
+      // const date = dt.getDate();
+      const month = dt.toLocaleDateString( "default", {month: "long"} );
+      const year = dt.getFullYear();
+      const formattedDate = `${month} ${year}`;
+      return formattedDate;
+    }
+
+    // Element Variables
+    let ELM_userAvatar = document.getElementById("userAvatar");
+    let ELM_userFullName = document.getElementById("userFullName");
+    let ELM_userJoinedDate = document.getElementById("userJoinedDate");
+
+    // User Data
+    let userAvatar = `{{ UserData.Avatar }}`;
+    let userFullName = `{{ UserData.FullName }}`;
+    let userJoinedDate = `{{ JoinAt }}`;
+
     // Stats
     document.addEventListener("DOMContentLoaded", async function () {
       var options = {
@@ -65,39 +85,11 @@
         }
       };
 
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
+      var chart = new ApexCharts(document.querySelector("#chart"), options);
+      chart.render();
+      ELM_userAvatar.src = `/files${userAvatar}` || "/files/img/avatars/default.png";
+      ELM_userFullName.innerText = `${userFullName}` || "John Doe";
+      ELM_userJoinedDate.innerText = formatDatetime( userJoinedDate );
     });
-
-    // Utility functions
-    function unescapeHtmlEntities(text) {
-      const element = document.createElement("div");
-      element.innerHTML = text;
-      return element.textContent;
-    }
-    function formatDatetime( dateData ) {
-      if( !dateData ) return "";
-      const dt = new Date( dateData );
-      // const date = dt.getDate();
-      const month = dt.toLocaleDateString( "default", {month: "long"} );
-      const year = dt.getFullYear();
-      const formattedDate = `${month} ${year}`;
-      return formattedDate;
-    }
-
-    // Declare variables
-    let userAvatar = document.getElementById("userAvatar");
-    let userFullName = document.getElementById("userFullName");
-    let userJoinedDate = document.getElementById("userJoinedDate");
-    let userData = `{&quot;username&quot;:&quot;ahmadhabibi14&quot;,&quot;full_name&quot;:&quot;Ahmad Rizky Nusantara Habibi&quot;,&quot;email&quot;:&quot;habi@ternaklinux.com&quot;,&quot;avatar&quot;:&quot;/img/avatars/default.png&quot;,&quot;join_at&quot;:&quot;2023-11-18T11:00:23Z&quot;}`;
-    userData = unescapeHtmlEntities(userData);
-    userData = JSON.parse(userData);
-
-    // Operations
-    userAvatar.src = `/files${userData.avatar}` || "/files/img/avatars/default.png";
-    userFullName.innerText = `${userData.full_name}` || "John Doe";
-    userJoinedDate.innerText = formatDatetime( userData.join_at );
-
-    console.log("User data = ", userData);
   </script>
 </div>

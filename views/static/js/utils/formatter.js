@@ -13,3 +13,13 @@ function unescapeHtmlEntitiesToJSON(text) {
   let j = JSON.stringify(tC);
   return j;
 }
+
+function formatDatetime( dateData ) {
+  if( !dateData ) return "";
+  const dt = new Date( dateData );
+  // const date = dt.getDate();
+  const month = dt.toLocaleDateString( "default", {month: "long"} );
+  const year = dt.getFullYear();
+  const formattedDate = `${month} ${year}`;
+  return formattedDate;
+}
