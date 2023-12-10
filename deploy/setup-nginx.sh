@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+set -x
 
 sudo apt install nginx
 echo '
