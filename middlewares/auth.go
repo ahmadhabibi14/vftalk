@@ -11,9 +11,7 @@ func AuthJWT(c *fiber.Ctx) error {
 	httpMethod := string(c.Request().Header.Method())
 	if err != nil {
 		if string(httpMethod) == fiber.MethodGet {
-			if c.Route().Path == "/login" {
-				return c.Next()
-			} else if c.Route().Path == "/register" {
+			if c.Route().Path == "/login" || c.Route().Path == "/register" {
 				return c.Next()
 			} else {
 				return c.Redirect("/login", fiber.StatusTemporaryRedirect)

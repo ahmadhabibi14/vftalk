@@ -11,9 +11,9 @@ import (
 
 const createNewUser = `-- name: CreateNewUser :exec
 INSERT INTO Users (
-  user_id, username, full_name, email, password
+  user_id, username, full_name, email, avatar, password
 ) VALUES (
-  ?, ?, ?, ?, ?
+  ?, ?, ?, ?, ?, ?
 )
 `
 
@@ -22,6 +22,7 @@ type CreateNewUserParams struct {
 	Username string `db:"username" json:"username"`
 	FullName string `db:"full_name" json:"full_name"`
 	Email    string `db:"email" json:"email"`
+	Avatar   string `db:"avatar" json:"avatar"`
 	Password string `db:"password" json:"password"`
 }
 
@@ -31,6 +32,7 @@ func (q *Queries) CreateNewUser(ctx context.Context, arg CreateNewUserParams) er
 		arg.Username,
 		arg.FullName,
 		arg.Email,
+		arg.Avatar,
 		arg.Password,
 	)
 	return err

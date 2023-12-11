@@ -1,8 +1,8 @@
 -- name: CreateNewUser :exec
 INSERT INTO Users (
-  user_id, username, full_name, email, password
+  user_id, username, full_name, email, avatar, password
 ) VALUES (
-  ?, ?, ?, ?, ?
+  ?, ?, ?, ?, ?, ?
 );
 
 -- name: UpdateUserAvatar :exec

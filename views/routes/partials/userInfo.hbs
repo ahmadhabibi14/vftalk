@@ -87,7 +87,11 @@
 
       var chart = new ApexCharts(document.querySelector("#chart"), options);
       chart.render();
-      ELM_userAvatar.src = `/files${userAvatar}` || "/files/img/avatars/default.png";
+      if (userAvatar.includes("https")) {
+        ELM_userAvatar.src = userAvatar;
+      } else {
+        ELM_userAvatar.src = `/files${userAvatar}` || "/files/img/avatars/default.png";
+      }
       ELM_userFullName.innerText = `${userFullName}` || "John Doe";
       ELM_userJoinedDate.innerText = formatDatetime( userJoinedDate );
     });

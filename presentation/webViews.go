@@ -64,6 +64,21 @@ func WebViews(app *fiber.App) {
 		}, "layouts/main")
 	})
 
+	app.Get("/explore", middlewares.AuthJWT, func(c *fiber.Ctx) error {
+		userData, err := handlers.GetUserDataByUsername(c)
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": err,
+			})
+		}
+		c.Set("Content-Type", "text/html; charset=utf-8")
+		return c.Render("explore", fiber.Map{
+			"Title":    "Explore",
+			"UserData": userData,
+			"JoinAt":   utils.FormatTime(userData.JoinAt),
+		}, "layouts/main")
+	})
+
 	app.Get("/login", middlewares.IsLoggedIn, func(c *fiber.Ctx) error {
 		c.Set("Content-Type", "text/html; charset=utf-8")
 		return c.Render("login", fiber.Map{
@@ -78,5 +93,11 @@ func WebViews(app *fiber.App) {
 			"Title": "Register",
 			"Desc":  "Welcome, please create your account",
 		})
+	})
+
+	app.Get("/oauth/google", middlewares.IsLoggedIn, func(c *fiber.Ctx) error {
+		stateString := utils.GenerateRandomID(40)
+		url := handlers.GoogleOauthConfig.AuthCodeURL(stateString)
+		return c.Redirect(url, fiber.StatusTemporaryRedirect)
 	})
 }
