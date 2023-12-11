@@ -5,12 +5,14 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 	"vftalk/conf"
 	"vftalk/models/database/sqlc"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
@@ -36,19 +38,25 @@ const (
 )
 
 var (
+	zlog              = conf.GetLogger()
 	GoogleOauthConfig *oauth2.Config
 )
 
 func init() {
-
-}
-
-func OAuthGoogle(c *fiber.Ctx) error {
-	zlog := conf.GetLogger()
+	err := godotenv.Load(".env")
+	if err != nil {
+		zlog.Error().
+			Str("ERROR", err.Error()).
+			Msg("cannot load .env files")
+	}
+	redirectURL := "http://localhost:8000/api/oauth/google"
+	if os.Getenv("WEB_ENV") == "prod" {
+		redirectURL = "https://vftalk.my.id/api/oauth/google"
+	}
 	GoogleOauthConfig = &oauth2.Config{
-		RedirectURL:  "https://vftalk.my.id/api/oauth/google",
-		ClientID:     "287998054290-bpoi1b1a7j0olkpre3k1vc28m3ppfgu1.apps.googleusercontent.com",
-		ClientSecret: "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",
+		RedirectURL:  redirectURL,
+		ClientID:     os.Getenv("GOOGLE_OAUTH_CLIENT_ID"),
+		ClientSecret: os.Getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
 		Scopes: []string{
 			"openid",
 			"profile",
@@ -58,6 +66,9 @@ func OAuthGoogle(c *fiber.Ctx) error {
 		},
 		Endpoint: google.Endpoint,
 	}
+}
+
+func OAuthGoogle(c *fiber.Ctx) error {
 	var db *sql.DB = conf.ConnectMariaDB()
 	defer db.Close()
 	queries := sqlc.New(db)
