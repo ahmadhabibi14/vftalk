@@ -40,8 +40,13 @@ var (
 )
 
 func init() {
+
+}
+
+func OAuthGoogle(c *fiber.Ctx) error {
+	zlog := conf.GetLogger()
 	GoogleOauthConfig = &oauth2.Config{
-		RedirectURL:  "http://localhost:8000/api/oauth/google",
+		RedirectURL:  "https://vftalk.my.id/api/oauth/google",
 		ClientID:     "287998054290-bpoi1b1a7j0olkpre3k1vc28m3ppfgu1.apps.googleusercontent.com",
 		ClientSecret: "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",
 		Scopes: []string{
@@ -53,10 +58,6 @@ func init() {
 		},
 		Endpoint: google.Endpoint,
 	}
-}
-
-func OAuthGoogle(c *fiber.Ctx) error {
-	zlog := conf.GetLogger()
 	var db *sql.DB = conf.ConnectMariaDB()
 	defer db.Close()
 	queries := sqlc.New(db)
