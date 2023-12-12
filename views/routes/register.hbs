@@ -7,12 +7,12 @@
 
     <link rel="stylesheet" href="/static/css/main.tmp.css" />
   </head>
-  <body class="bg-gradient-to-tr from-black via-[#080d0a] to-black">
+  <body class="bg-black">
     <main class="w-full min-h-screen h-screen text-[#ADDEBE]">
       <div
-        class="flex flex-row justify-center items-center w-full h-fit mt-5 mx-auto"
+        class="flex flex-row justify-center items-center w-full h-fit my-6 mx-auto"
       >
-        <div class="bg-black rounded-2xl w-full mx-[10px] md:w-[440px] flex flex-col gap-8 p-5 md:p-8 border border-[#333]">
+        <div class="my-6 bg-gradient-to-tr from-black via-[#080d0a] to-black rounded-2xl w-full mx-[10px] md:w-[440px] flex flex-col gap-8 p-5 md:p-8 border border-[#333]">
           <h1 class="text-4xl capitalize font-bold">{{Desc}}</h1>
           <div class="flex flex-col gap-3">
             <div class="flex flex-col gap-2">
@@ -82,13 +82,18 @@
               </button>
             </div>
 
+            <div class="flex flex-row gap-2 ml-3 mt-3">
+              <input type="checkbox" name="agree" id="agree" />
+              <p>I agree with the <a href="/terms-of-service" class="text-[#2B874A] underline">Terms of Service</a></p>
+            </div>
+
             <div>
-              <button id="registerBtn" class="flex flex-row justify-center items-center w-full bg-[#115A2A] hover:bg-[#2B874A] py-3 h-fit px-7 rounded-2xl mt-6 disabled:bg-[#115A2A]">
+              <button id="registerBtn" class="flex flex-row justify-center items-center w-full bg-[#115A2A] hover:bg-[#2B874A] py-3 h-fit px-7 rounded-2xl mt-4 disabled:bg-[#115A2A]">
                 <span id="registerTxt" class="text-xl font-bold">Register</span>
                 <svg
                   id="registerLoadingIcon"
                   viewBox="0 0 24 24"
-                  class="w-[23px] h-auto stroke-[#ADDEBE] fill-none animate-spin hidden"
+                  class="w-[22px] h-auto stroke-[#ADDEBE] fill-none animate-spin hidden"
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -114,11 +119,11 @@
             <div class="flex flex-col gap-3">
               <a href="/oauth/google" class="flex flex-row gap-3 justify-center items-center text-gray-100 hover:text-gray-200 font-bold py-4 rounded-2xl border-[#333] border bg-[#0a0a0a] hover:bg-[#0f0f0f]">
                 <img src="/public/icons/oauth/google.svg" class="w-6 h-auto" alt="Google" />
-                <span>Login with Google</span>
+                <span>Register with Google</span>
               </a>
               <a href="" class="flex flex-row gap-3 justify-center items-center text-gray-100 hover:text-gray-200 font-bold py-4 rounded-2xl border-[#333] border bg-[#0a0a0a] hover:bg-[#0f0f0f]">
                 <img src="/public/icons/oauth/facebook.svg" class="w-6 h-auto" alt="facebook" />
-                <span>Login with Facebook</span>
+                <span>Register with Facebook</span>
               </a>
             </div>
             

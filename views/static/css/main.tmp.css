@@ -662,6 +662,11 @@ video {
   margin-right: auto;
 }
 
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
 .mb-8 {
   margin-bottom: 2rem;
 }
@@ -692,6 +697,22 @@ video {
 
 .mt-7 {
   margin-top: 1.75rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.ml-6 {
+  margin-left: 1.5rem;
+}
+
+.ml-8 {
+  margin-left: 2rem;
+}
+
+.mt-3 {
+  margin-top: 0.75rem;
 }
 
 .block {
@@ -860,6 +881,22 @@ video {
   width: 100%;
 }
 
+.w-7\/12 {
+  width: 58.333333%;
+}
+
+.w-6\/12 {
+  width: 50%;
+}
+
+.w-\[20px\] {
+  width: 20px;
+}
+
+.w-\[22px\] {
+  width: 22px;
+}
+
 .flex-auto {
   flex: 1 1 auto;
 }
@@ -911,6 +948,22 @@ video {
 
 .resize {
   resize: both;
+}
+
+.list-decimal {
+  list-style-type: decimal;
+}
+
+.list-disc {
+  list-style-type: disc;
+}
+
+.list-\[alphabet\] {
+  list-style-type: alphabet;
+}
+
+.list-\[lower-alpha\] {
+  list-style-type: lower-alpha;
 }
 
 .grid-cols-1 {
@@ -1145,12 +1198,12 @@ video {
   fill: #ADDEBE;
 }
 
-.fill-none {
-  fill: none;
-}
-
 .fill-current {
   fill: currentColor;
+}
+
+.fill-none {
+  fill: none;
 }
 
 .stroke-\[\#333\] {
@@ -1275,6 +1328,16 @@ video {
   padding-bottom: 2.25rem;
 }
 
+.py-7 {
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+}
+
+.px-\[10px\] {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .pl-16 {
   padding-left: 4rem;
 }
@@ -1301,6 +1364,10 @@ video {
 
 .pt-6 {
   padding-top: 1.5rem;
+}
+
+.pt-7 {
+  padding-top: 1.75rem;
 }
 
 .text-center {
@@ -1350,6 +1417,11 @@ video {
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
 }
 
 .font-bold {
@@ -1427,6 +1499,11 @@ video {
 .text-yellow-500 {
   --tw-text-opacity: 1;
   color: rgb(234 179 8 / var(--tw-text-opacity));
+}
+
+.text-\[\#115A2A\] {
+  --tw-text-opacity: 1;
+  color: rgb(17 90 42 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1864,6 +1941,11 @@ html {
 }
 
 @media (min-width: 768px) {
+  .md\:mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .md\:flex {
     display: flex;
   }
@@ -1890,6 +1972,18 @@ html {
 
   .md\:w-\[660px\] {
     width: 660px;
+  }
+
+  .md\:w-6\/12 {
+    width: 50%;
+  }
+
+  .md\:flex-row {
+    flex-direction: row;
+  }
+
+  .md\:justify-between {
+    justify-content: space-between;
   }
 
   .md\:p-8 {

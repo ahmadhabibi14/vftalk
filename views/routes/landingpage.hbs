@@ -139,7 +139,23 @@
       </div>
     </main>
     <footer class="bg-black w-full mx-auto border-t border-[#333] py-8 text-center">
-      <p>Copyright &copy; 2023 • VFTalk</p>
+      <div class="w-10/12 md:w-9/12 mx-auto flex flex-col md:flex-row gap-2 md:justify-between">
+      <div
+        class="flex gap-3 flex-row"
+        x-data="{ year: '' }"
+        x-init="year = new Date().getFullYear()">
+        <p>Copyright &copy; <span x-text="year"></span></p>
+        <span class="text-[#2B874A]">•</span>
+        <p>VFTalk</p>
+      </div>
+      <div class="flex gap-3 flex-row">
+        <a class="hover:text-[#2B874A] hover:underline" href="/privacy-policy">Privacy Policy</a>
+        <span class="text-[#2B874A]">•</span>
+        <a class="hover:text-[#2B874A] hover:underline" href="/term-of-service">Term of Service</a>
+        <span class="text-[#2B874A]">•</span>
+        <a class="hover:text-[#2B874A] hover:underline" href="/apidocs">API Docs</a>
+      </div>
+      </div>
     </footer>
   </body>
 </html>

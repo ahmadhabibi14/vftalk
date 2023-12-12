@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="/static/css/main.tmp.css" />
   </head>
   <body>
-    <main class="w-full bg-gradient-to-tr from-black via-[#080d0a] to-black max-h-screen h-screen text-[#ADDEBE] pt-16">
+    <main class="w-full bg-black max-h-screen h-screen text-[#ADDEBE] pt-16">
       <div
         class="flex flex-row justify-center items-center w-full h-fit mx-auto"
       >
-        <div class="bg-black rounded-2xl w-full mx-[10px] md:w-[440px] flex flex-col gap-8 p-5 md:p-8 border border-[#333]">
+        <div class="bg-gradient-to-tr from-black via-[#080d0a] to-black rounded-2xl w-full mx-[10px] md:w-[440px] flex flex-col gap-8 p-5 md:p-8 border border-[#333]">
           <h1 class="text-4xl capitalize font-bold">{{Desc}}</h1>
           <div class="flex flex-col gap-3">
             <div class="flex flex-col gap-2">
@@ -56,13 +56,18 @@
               </button>
             </div>
 
+            <div class="flex flex-row gap-2 ml-3 mt-3">
+              <input type="checkbox" name="agree" id="agree" />
+              <p>I agree with the <a href="/terms-of-service" class="text-[#2B874A] underline">Terms of Service</a></p>
+            </div>
+
             <div>
-              <button id="loginBtn" class="flex flex-row justify-center items-center w-full bg-[#115A2A] hover:bg-[#2B874A] py-3 h-fit px-7 rounded-2xl mt-6 disabled:bg-[#115A2A]">
-                <span id="loginTxt" class="text-xl font-bold">Login</span>
+              <button id="loginBtn" class="flex flex-row justify-center items-center w-full bg-[#115A2A] hover:bg-[#2B874A] py-3 h-fit px-7 rounded-2xl mt-4 disabled:bg-[#115A2A]">
+                <span id="loginTxt" class=" text-xl font-bold">Login</span>
                 <svg
                   id="loginLoadingIcon"
                   viewBox="0 0 24 24"
-                  class="w-[23px] h-auto stroke-[#ADDEBE] fill-none animate-spin hidden"
+                  class="w-[22px] h-auto stroke-[#ADDEBE] fill-none animate-spin hidden"
                   stroke-width="2"
                   stroke-linecap="round"
                   stroke-linejoin="round"

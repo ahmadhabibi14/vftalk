@@ -14,7 +14,7 @@ func WebViews(app *fiber.App) {
 		err := conf.TokenValid(c)
 		if err != nil {
 			return c.Render("landingpage", fiber.Map{
-				"Title": "VFTalk",
+				"Title": "VFTalk | Chat App",
 			})
 		} else {
 			userData, err := handlers.GetUserDataByUsername(c)
@@ -25,7 +25,7 @@ func WebViews(app *fiber.App) {
 			}
 			c.Set("Content-Type", "text/html; charset=utf-8")
 			return c.Render("index", fiber.Map{
-				"Title":    "VFtalk",
+				"Title":    "VFtalk | Home",
 				"Username": userData.Username,
 				"UserData": userData,
 				"JoinAt":   utils.FormatTime(userData.JoinAt),
@@ -42,7 +42,7 @@ func WebViews(app *fiber.App) {
 		}
 		c.Set("Content-Type", "text/html; charset=utf-8")
 		return c.Render("direct", fiber.Map{
-			"Title":    "Direct Messages",
+			"Title":    "VFtalk | Direct Messages",
 			"Username": userData.Username,
 			"UserData": userData,
 			"JoinAt":   utils.FormatTime(userData.JoinAt),
@@ -58,7 +58,7 @@ func WebViews(app *fiber.App) {
 		}
 		c.Set("Content-Type", "text/html; charset=utf-8")
 		return c.Render("profile", fiber.Map{
-			"Title":    "Profile",
+			"Title":    "VFtalk | Profile",
 			"UserData": userData,
 			"JoinAt":   utils.FormatTime(userData.JoinAt),
 		}, "layouts/main")
@@ -73,10 +73,24 @@ func WebViews(app *fiber.App) {
 		}
 		c.Set("Content-Type", "text/html; charset=utf-8")
 		return c.Render("explore", fiber.Map{
-			"Title":    "Explore",
+			"Title":    "VFtalk | Explore",
 			"UserData": userData,
 			"JoinAt":   utils.FormatTime(userData.JoinAt),
 		}, "layouts/main")
+	})
+
+	app.Get("/term-of-service", func(c *fiber.Ctx) error {
+		c.Set("Content-Type", "text/html; charset=utf-8")
+		return c.Render("termOfService", fiber.Map{
+			"Title": "VFtalk | Term of Service",
+		})
+	})
+
+	app.Get("/privacy-policy", func(c *fiber.Ctx) error {
+		c.Set("Content-Type", "text/html; charset=utf-8")
+		return c.Render("privacyPolicy", fiber.Map{
+			"Title": "VFtalk | Privacy Policy",
+		})
 	})
 
 	app.Get("/login", middlewares.IsLoggedIn, func(c *fiber.Ctx) error {
