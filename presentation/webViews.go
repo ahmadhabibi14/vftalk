@@ -114,22 +114,4 @@ func WebViews(app *fiber.App) {
 		url := handlers.GoogleOauthConfig.AuthCodeURL(stateString)
 		return c.Redirect(url, fiber.StatusTemporaryRedirect)
 	})
-
-	app.Get("/PRIVACY_POLICY", func(c *fiber.Ctx) error {
-		content, err := utils.ReadFile("./PRIVACY_POLICY.md")
-		if err != nil {
-			return fiber.NewError(fiber.StatusServiceUnavailable)
-		}
-		c.Set(fiber.HeaderContentType, "text/markdown; charset=utf-8")
-		return c.Send(content)
-	})
-
-	app.Get("/TERM_OF_SERVICE", func(c *fiber.Ctx) error {
-		content, err := utils.ReadFile("./TERM_OF_SERVICE.md")
-		if err != nil {
-			return fiber.NewError(fiber.StatusServiceUnavailable)
-		}
-		c.Set(fiber.HeaderContentType, "text/markdown; charset=utf-8")
-		return c.Send(content)
-	})
 }
