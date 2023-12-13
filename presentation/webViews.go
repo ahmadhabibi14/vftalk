@@ -23,7 +23,7 @@ func WebViews(app *fiber.App) {
 					"error": err,
 				})
 			}
-			c.Set("Content-Type", "text/html; charset=utf-8")
+			c.Set(fiber.HeaderContentType, "text/html; charset=utf-8")
 			return c.Render("index", fiber.Map{
 				"Title":    "VFtalk | Home",
 				"Username": userData.Username,
@@ -40,7 +40,7 @@ func WebViews(app *fiber.App) {
 				"error": err,
 			})
 		}
-		c.Set("Content-Type", "text/html; charset=utf-8")
+		c.Set(fiber.HeaderContentType, "text/html; charset=utf-8")
 		return c.Render("direct", fiber.Map{
 			"Title":    "VFtalk | Direct Messages",
 			"Username": userData.Username,
@@ -56,7 +56,7 @@ func WebViews(app *fiber.App) {
 				"error": err,
 			})
 		}
-		c.Set("Content-Type", "text/html; charset=utf-8")
+		c.Set(fiber.HeaderContentType, "text/html; charset=utf-8")
 		return c.Render("profile", fiber.Map{
 			"Title":    "VFtalk | Profile",
 			"UserData": userData,
@@ -71,7 +71,7 @@ func WebViews(app *fiber.App) {
 				"error": err,
 			})
 		}
-		c.Set("Content-Type", "text/html; charset=utf-8")
+		c.Set(fiber.HeaderContentType, "text/html; charset=utf-8")
 		return c.Render("explore", fiber.Map{
 			"Title":    "VFtalk | Explore",
 			"UserData": userData,
@@ -80,21 +80,21 @@ func WebViews(app *fiber.App) {
 	})
 
 	app.Get("/term-of-service", func(c *fiber.Ctx) error {
-		c.Set("Content-Type", "text/html; charset=utf-8")
+		c.Set(fiber.HeaderContentType, "text/html; charset=utf-8")
 		return c.Render("termOfService", fiber.Map{
 			"Title": "VFtalk | Term of Service",
 		})
 	})
 
 	app.Get("/privacy-policy", func(c *fiber.Ctx) error {
-		c.Set("Content-Type", "text/html; charset=utf-8")
+		c.Set(fiber.HeaderContentType, "text/html; charset=utf-8")
 		return c.Render("privacyPolicy", fiber.Map{
 			"Title": "VFtalk | Privacy Policy",
 		})
 	})
 
 	app.Get("/login", middlewares.IsLoggedIn, func(c *fiber.Ctx) error {
-		c.Set("Content-Type", "text/html; charset=utf-8")
+		c.Set(fiber.HeaderContentType, "text/html; charset=utf-8")
 		return c.Render("login", fiber.Map{
 			"Title": "Login",
 			"Desc":  "Hi, Welcome back 👋",
@@ -102,7 +102,7 @@ func WebViews(app *fiber.App) {
 	})
 
 	app.Get("/register", middlewares.IsLoggedIn, func(c *fiber.Ctx) error {
-		c.Set("Content-Type", "text/html; charset=utf-8")
+		c.Set(fiber.HeaderContentType, "text/html; charset=utf-8")
 		return c.Render("register", fiber.Map{
 			"Title": "Register",
 			"Desc":  "Welcome, please create your account",
@@ -113,5 +113,23 @@ func WebViews(app *fiber.App) {
 		stateString := utils.GenerateRandomID(40)
 		url := handlers.GoogleOauthConfig.AuthCodeURL(stateString)
 		return c.Redirect(url, fiber.StatusTemporaryRedirect)
+	})
+
+	app.Get("/PRIVACY_POLICY", func(c *fiber.Ctx) error {
+		content, err := utils.ReadFile("./PRIVACY_POLICY.md")
+		if err != nil {
+			return fiber.NewError(fiber.StatusServiceUnavailable)
+		}
+		c.Set(fiber.HeaderContentType, "text/markdown; charset=utf-8")
+		return c.Send(content)
+	})
+
+	app.Get("/TERM_OF_SERVICE", func(c *fiber.Ctx) error {
+		content, err := utils.ReadFile("./TERM_OF_SERVICE.md")
+		if err != nil {
+			return fiber.NewError(fiber.StatusServiceUnavailable)
+		}
+		c.Set(fiber.HeaderContentType, "text/markdown; charset=utf-8")
+		return c.Send(content)
 	})
 }

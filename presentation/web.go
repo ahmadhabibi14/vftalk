@@ -8,6 +8,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/favicon"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
@@ -33,6 +34,10 @@ func (w *WebServer) Start() {
 			})
 		},
 	})
+	app.Use(favicon.New(favicon.Config{
+		File: "./views/public/favicons/favicon.ico",
+		URL:  "/favicon.ico",
+	}))
 	app.Use(requestid.New())
 	app.Use(logger.New(middlewares.LoggerConfig))
 	app.Use(limiter.New(middlewares.Limiter))
