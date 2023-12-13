@@ -21,7 +21,7 @@ function SendMessage() {
       })
     );
   } catch (error) {
-    notifier.showError("Error sending message: ", e);
+    notifier.showError("Error sending message: ", error);
     setTimeout(() => {
       window.location.reload()
     }, 2000);

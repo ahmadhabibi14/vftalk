@@ -73,3 +73,12 @@
 
 <script src="/static/js/chats/main.js"></script>
 <script src="/static/js/home.js"></script>
+<script>
+  const usernameLocalStorage = localStorage.getItem("username");
+  let usernameFromServer = `{{ UserData.Username }}`;
+  document.addEventListener("DOMContentLoaded", function () {
+    if (!usernameLocalStorage) {
+      localStorage.setItem("username", usernameFromServer);
+    }
+  })
+</script>
