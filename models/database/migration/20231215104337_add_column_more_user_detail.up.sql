@@ -1,0 +1,3 @@
+ALTER TABLE `Users`
+ADD COLUMN `website` VARCHAR(255) NOT NULL DEFAULT 'https://example.com',
+ADD COLUMN `location` VARCHAR(255) NOT NULL DEFAULT 'Earth';

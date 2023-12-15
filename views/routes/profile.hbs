@@ -57,44 +57,44 @@
       </div>
     </div>
     {{!-- Edit Profile --}}
-    <div id="popupUpdateProfile" class="flex z-[200] fixed bg-black/60 top-0 bottom-0 left-0 right-0 justify-center items-center">
-      <div class="h-fit w-[500px] bg-[#0a0a0a] rounded-2xl p-6 flex flex-col gap-4">
+    <div id="popupUpdateProfile" class="hidden z-[200] fixed bg-black/60 top-0 bottom-0 left-0 right-0 justify-center items-center">
+      <div class="h-fit w-[500px] bg-[#0a0a0a] rounded-2xl p-6 flex flex-col gap-9">
         <div class="w-full h-fit flex flex-col gap-3">
           <div class="flex flex-col gap-2">
             <label
-              for="fullName"
+              for="fullNameInput"
               class="ml-3 text-base font-medium text-[#ADDEBE]"
             >Name</label>
             <input
               type="text"
-              name="fullName"
-              id="fullName"
+              name="fullNameInput"
+              id="fullNameInput"
               placeholder="John Doe"
               class="auth-input-elm"
             />
           </div>
           <div class="flex flex-col gap-2">
             <label
-              for="location"
+              for="locationInput"
               class="ml-3 text-base font-medium text-[#ADDEBE]"
             >Location</label>
             <input
               type="text"
-              name="location"
-              id="location"
+              name="locationInput"
+              id="locationInput"
               placeholder="Lombok, Indonesia"
               class="auth-input-elm"
             />
           </div>
           <div class="flex flex-col gap-2">
             <label
-              for="website"
+              for="websiteInput"
               class="ml-3 text-base font-medium text-[#ADDEBE]"
             >Website</label>
             <input
               type="text"
-              name="website"
-              id="website"
+              name="websiteInput"
+              id="websiteInput"
               placeholder="https://example.com"
               class="auth-input-elm"
             />

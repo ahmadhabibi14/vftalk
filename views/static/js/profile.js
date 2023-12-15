@@ -63,6 +63,15 @@ function cancelUpdateAvatar() {
 }
 
 let popupUpdateProfile = document.getElementById("popupUpdateProfile");
+let fullNameInput = document.getElementById("fullNameInput");
+let locationInput = document.getElementById("locationInput");
+let websiteInput = document.getElementById("websiteInput");
+
+function updateProfileResp() {
+  fullNameInput.value = "";
+  locationInput.value = "";
+  websiteInput.value = "";
+}
 
 function openPopupUpdateProfile() {
   popupUpdateProfile.classList.replace("hidden", "flex");
@@ -73,6 +82,9 @@ function cancelUpdateProfile() {
 }
 
 function updateProfile() {
+  if (!fullNameInput.value) return notifier.showError("Please enter your full name.");
+  if (!locationInput.value) return notifier.showError("Please enter your location.");
+  if (!websiteInput.value) return notifier.showError("Please enter your website.");
   console.log('Update profile');
   notifier.showInfo("Updating profile...");
 }

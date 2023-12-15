@@ -41,6 +41,9 @@ docker rm -f $(docker ps -aq)
 
 # Remove containers
 docker-compose down
+
+# Create Migration
+migrate create -ext sql -dir models/database/migration migration_state
 ```
 
 ### TODO:
