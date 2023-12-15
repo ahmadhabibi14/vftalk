@@ -34,4 +34,5 @@ func ApiRoutes(app *fiber.App) {
 	api.Post("/user-active-list", handlers.GetUserActiveLists)
 	api.Post("/user-update-active", handlers.UpdateUserLastActive)
 	api.Post("/user-update-avatar", middlewares.AuthJWT, handlers.UpdateProfilePicture)
+	api.Post("/user-update-profile", middlewares.AuthJWT, handlers.UpdateProfile)
 }

@@ -24,7 +24,7 @@ SELECT user_id, username, full_name, email, avatar, join_at FROM Users
 WHERE user_id = ?;
 
 -- name: GetUserDataByUsername :one
-SELECT username, full_name, email, avatar, join_at FROM Users
+SELECT username, full_name, email, avatar, join_at, website, location FROM Users
 WHERE username = ?;
 
 -- name: UpdateUserLastActive :exec

@@ -11,10 +11,13 @@ import (
 func main() {
 	zlog := conf.InitLogger()
 	validArgs := `web, migrate`
+
+	var mode string
 	if len(os.Args) < 2 {
-		zlog.Fatal().Msg(`Must have at least one argument with: ` + validArgs)
+		mode = `web`
+	} else {
+		mode = strings.ToLower(os.Args[1])
 	}
-	mode := strings.ToLower(os.Args[1])
 
 	switch mode {
 	case `web`:

@@ -17,4 +17,6 @@ type User struct {
 	Avatar     string    `db:"avatar" json:"avatar"`
 	JoinAt     time.Time `db:"join_at" json:"join_at"`
 	LastActive time.Time `db:"last_active" json:"last_active"`
+	Website    string    `db:"website" json:"website"`
+	Location   string    `db:"location" json:"location"`
 }

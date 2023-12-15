@@ -207,7 +207,7 @@
               </svg>
               <span>Location</span>
             </div>
-            <span class="text-xl font-semibold">Lombok, West Nusa Tenggara, Indonesia</span>
+            <span class="text-xl font-semibold">{{UserData.Location}}</span>
           </div>
           <div class="flex flex-col gap-2">
             <div class="flex flex-row items-center gap-2 font-light text-yellow-300">
@@ -226,9 +226,9 @@
               </svg>
               <span>Website</span>
             </div>
-            <a href="https://habibi2004.pages.dev" target="_blank"
+            <a href="{{UserData.Website}}" target="_blank"
               class="flex flex-row gap-2 hover:underline text-xl font-semibold w-fit">
-              <span>https://habibi2004.pages.dev</span>
+              <span>{{UserData.Website}}</span>
               <svg class="w-4 text-yellow-500" viewBox="0 0 24 24" fill="none">
                 <path stroke="currentColor" d="M13 11L21.2 2.80005" stroke-width="1.5" stroke-linecap="round"
                   stroke-linejoin="round" />

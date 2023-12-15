@@ -31,7 +31,6 @@ func RunMigration() {
 	if err != nil {
 		zlog.Fatal().Msg(`Error: ` + err.Error())
 	}
-
 	// Run the migration
 	err = m.Up()
 	if err != nil && err != migrate.ErrNoChange {
@@ -46,7 +45,6 @@ func RunMigration() {
 			zlog.Fatal().Msg(`Error: ` + err.Error())
 		}
 		defer rows.Close()
-
 		var tableNameResult, createTableStatement string
 		for rows.Next() {
 			err := rows.Scan(&tableNameResult, &createTableStatement)
@@ -54,14 +52,12 @@ func RunMigration() {
 				zlog.Fatal().Msg(`Error: ` + err.Error())
 			}
 		}
-
 		sqlSchemaFile := fmt.Sprintf("models/database/schema/%s.sql", table)
 		file, err := os.Create(sqlSchemaFile)
 		if err != nil {
 			zlog.Fatal().Msg(`Error: ` + err.Error())
 		}
 		defer file.Close()
-
 		_, err = file.WriteString(createTableStatement)
 		if err != nil {
 			zlog.Fatal().Msg(`Error: ` + err.Error())

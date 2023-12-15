@@ -9,24 +9,24 @@ import (
 	"context"
 )
 
-const updateUserData = `-- name: UpdateUserData :exec
+const updateUserProfile = `-- name: UpdateUserProfile :exec
 UPDATE Users
-SET username = ?, full_name = ?, email = ?
+SET full_name = ?, location = ?, website = ?
 WHERE user_id = ?
 `
 
-type UpdateUserDataParams struct {
-	Username string `db:"username" json:"username"`
+type UpdateUserProfileParams struct {
 	FullName string `db:"full_name" json:"full_name"`
-	Email    string `db:"email" json:"email"`
+	Location string `db:"location" json:"location"`
+	Website  string `db:"website" json:"website"`
 	UserID   string `db:"user_id" json:"user_id"`
 }
 
-func (q *Queries) UpdateUserData(ctx context.Context, arg UpdateUserDataParams) error {
-	_, err := q.db.ExecContext(ctx, updateUserData,
-		arg.Username,
+func (q *Queries) UpdateUserProfile(ctx context.Context, arg UpdateUserProfileParams) error {
+	_, err := q.db.ExecContext(ctx, updateUserProfile,
 		arg.FullName,
-		arg.Email,
+		arg.Location,
+		arg.Website,
 		arg.UserID,
 	)
 	return err

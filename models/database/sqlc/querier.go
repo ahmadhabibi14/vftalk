@@ -17,9 +17,9 @@ type Querier interface {
 	ListUserActive(ctx context.Context) ([]ListUserActiveRow, error)
 	ListUsers(ctx context.Context) ([]ListUsersRow, error)
 	UpdateUserAvatar(ctx context.Context, arg UpdateUserAvatarParams) error
-	UpdateUserData(ctx context.Context, arg UpdateUserDataParams) error
 	UpdateUserLastActive(ctx context.Context, userID string) error
 	UpdateUserPassword(ctx context.Context, arg UpdateUserPasswordParams) error
+	UpdateUserProfile(ctx context.Context, arg UpdateUserProfileParams) error
 	UserLogin(ctx context.Context, username string) (UserLoginRow, error)
 }
 

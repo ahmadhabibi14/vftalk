@@ -61,7 +61,7 @@ func (q *Queries) GetUserDataByUserId(ctx context.Context, userID string) (GetUs
 }
 
 const getUserDataByUsername = `-- name: GetUserDataByUsername :one
-SELECT username, full_name, email, avatar, join_at FROM Users
+SELECT username, full_name, email, avatar, join_at, website, location FROM Users
 WHERE username = ?
 `
 
@@ -71,6 +71,8 @@ type GetUserDataByUsernameRow struct {
 	Email    string    `db:"email" json:"email"`
 	Avatar   string    `db:"avatar" json:"avatar"`
 	JoinAt   time.Time `db:"join_at" json:"join_at"`
+	Website  string    `db:"website" json:"website"`
+	Location string    `db:"location" json:"location"`
 }
 
 func (q *Queries) GetUserDataByUsername(ctx context.Context, username string) (GetUserDataByUsernameRow, error) {
@@ -82,6 +84,8 @@ func (q *Queries) GetUserDataByUsername(ctx context.Context, username string) (G
 		&i.Email,
 		&i.Avatar,
 		&i.JoinAt,
+		&i.Website,
+		&i.Location,
 	)
 	return i, err
 }

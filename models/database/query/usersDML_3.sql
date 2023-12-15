@@ -1,4 +1,4 @@
--- name: UpdateUserData :exec
+-- name: UpdateUserProfile :exec
 UPDATE Users
-SET username = ?, full_name = ?, email = ?
+SET full_name = ?, location = ?, website = ?
 WHERE user_id = ?
