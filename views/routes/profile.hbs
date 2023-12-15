@@ -56,6 +56,61 @@
         </div>
       </div>
     </div>
+    {{!-- Edit Profile --}}
+    <div id="popupUpdateProfile" class="flex z-[200] fixed bg-black/60 top-0 bottom-0 left-0 right-0 justify-center items-center">
+      <div class="h-fit w-[500px] bg-[#0a0a0a] rounded-2xl p-6 flex flex-col gap-4">
+        <div class="w-full h-fit flex flex-col gap-3">
+          <div class="flex flex-col gap-2">
+            <label
+              for="fullName"
+              class="ml-3 text-base font-medium text-[#ADDEBE]"
+            >Name</label>
+            <input
+              type="text"
+              name="fullName"
+              id="fullName"
+              placeholder="John Doe"
+              class="auth-input-elm"
+            />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label
+              for="location"
+              class="ml-3 text-base font-medium text-[#ADDEBE]"
+            >Location</label>
+            <input
+              type="text"
+              name="location"
+              id="location"
+              placeholder="Lombok, Indonesia"
+              class="auth-input-elm"
+            />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label
+              for="website"
+              class="ml-3 text-base font-medium text-[#ADDEBE]"
+            >Website</label>
+            <input
+              type="text"
+              name="website"
+              id="website"
+              placeholder="https://example.com"
+              class="auth-input-elm"
+            />
+          </div>
+        </div>
+        
+        <div class="flex flex-row items-center gap-4">
+          <button onclick="cancelUpdateProfile()" class="border border-[#ADDEBE]/20 bg-emerald-400/10 hover:border-[#ADDEBE]/60 h-fit w-fit text-lg font-semibold gap-2 flex flex-row justify-center items-center px-4 py-2 rounded-xl disabled:bg-[#115A2A]">
+            <span>Cancel</span>
+          </button>
+          <button onclick="updateProfile()" class="h-fit w-fit text-lg font-semibold gap-2 flex flex-row justify-center items-center bg-[#115A2A] hover:bg-[#2B874A] px-4 py-2 rounded-xl disabled:bg-[#115A2A]">
+            <span>Submit</span>
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="flex flex-col justify-start items-center gap-4">
       <div class="w-fit">
         <img id="userAvatarImg" src="" class="border-[4px] border-[#0a0a0a] w-[150px] h-auto rounded-full"
@@ -186,6 +241,7 @@
           </div>
         </div>
         <button
+          onclick="openPopupUpdateProfile()"
           class="h-fit w-fit text-lg font-semibold gap-2 flex flex-row justify-center items-center bg-[#115A2A] hover:bg-[#2B874A] px-4 py-2 rounded-xl disabled:bg-[#115A2A]">
           <svg class="w-5 h-auto fill-none" viewBox="0 0 24 24">
             <path d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13" stroke="#ADDEBE" stroke-width="1.5"

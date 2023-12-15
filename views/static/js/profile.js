@@ -12,9 +12,7 @@ function openPopupUpdateAvatar() {
 var file;
 avatarFileInput.addEventListener("change", function() {
   file = avatarFileInput.files[0];
-  if (file) {
-    avatarFileName.innerText = file.name;
-  }
+  if (file) avatarFileName.innerText = file.name;
 })
 
 function updateAvatarResp() {
@@ -26,12 +24,9 @@ function updateAvatarResp() {
 }
 
 function updateAvatar() {
+  if (!file) return notifier.showError("Please select an image first.");
   avatarLoadingIcon.classList.replace("hidden", "block");
   avatarFileIcon.classList.replace("block", "hidden");
-  if (!file) {
-    alert("Please select an image first.");
-    return;
-  }
   var xhr = new XMLHttpRequest();
   var formData = new FormData();
   formData.append("avatar", file);
@@ -65,4 +60,19 @@ function updateAvatar() {
 
 function cancelUpdateAvatar() {
   popupUpdateAvatar.classList.replace("flex", "hidden");
+}
+
+let popupUpdateProfile = document.getElementById("popupUpdateProfile");
+
+function openPopupUpdateProfile() {
+  popupUpdateProfile.classList.replace("hidden", "flex");
+}
+
+function cancelUpdateProfile() {
+  popupUpdateProfile.classList.replace("flex", "hidden");
+}
+
+function updateProfile() {
+  console.log('Update profile');
+  notifier.showInfo("Updating profile...");
 }

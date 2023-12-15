@@ -38,7 +38,7 @@ const (
 )
 
 var (
-	zlog              = conf.GetLogger()
+	zlog              = conf.InitLogger()
 	GoogleOauthConfig *oauth2.Config
 )
 

@@ -10,7 +10,7 @@ import (
 )
 
 func ConnectMariaDB() *sql.DB {
-	zlog := GetLogger()
+	zlog := InitLogger()
 	DbDriver := "mysql"
 	DbHost := os.Getenv("MARIADB_HOST")
 	DbPort := os.Getenv("MARIADB_PORT")

@@ -20,11 +20,8 @@ function SendMessage() {
         message: chatInputElm.value,
       })
     );
-  } catch (error) {
-    notifier.showError("Error sending message: ", error);
-    setTimeout(() => {
-      window.location.reload()
-    }, 2000);
+  } catch (e) {
+    notifier.showError("Error sending message: ", e);
   }
   chatInputElm.value = "";
   sendChatIcon.style.display = "block";

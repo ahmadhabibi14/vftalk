@@ -16,7 +16,7 @@ var (
 	l    zerolog.Logger
 )
 
-func GetLogger() zerolog.Logger {
+func InitLogger() zerolog.Logger {
 	once.Do(func() {
 		zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
 		zerolog.TimeFieldFormat = `2006/01/02 03:04 PM`
