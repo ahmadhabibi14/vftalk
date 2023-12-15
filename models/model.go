@@ -19,6 +19,7 @@ var (
 )
 
 func RunMigration() {
+	conf.LoadEnv()
 	zlog := conf.InitLogger()
 	db := conf.ConnectMariaDB()
 	defer db.Close()

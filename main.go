@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	conf.LoadEnv()
 	zlog := conf.InitLogger()
 	validArgs := `web, migrate`
 
