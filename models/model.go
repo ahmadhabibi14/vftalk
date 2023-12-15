@@ -11,23 +11,20 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
-const (
-	driverName    = `mysql`
+var (
+	MySQLTables = []string{ // Define SQL tables here
+		`Users`,
+	}
 	migrationsDir = `file://models/database/migration`
 )
-
-// Define SQL tables here
-var MySQLTables = []string{
-	`Users`,
-}
 
 func RunMigration() {
 	zlog := conf.InitLogger()
 	db := conf.ConnectMariaDB()
 	defer db.Close()
 
-	driver, err := mysql.WithInstance(db, &mysql.Config{})
-	m, err := migrate.NewWithDatabaseInstance(migrationsDir, "mysql", driver)
+	driver, _ := mysql.WithInstance(db, &mysql.Config{})
+	m, err := migrate.NewWithDatabaseInstance(migrationsDir, os.Getenv(`MARIADB_NAME`), driver)
 	if err != nil {
 		zlog.Fatal().Msg(`Error: ` + err.Error())
 	}
