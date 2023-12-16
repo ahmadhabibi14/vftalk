@@ -17,6 +17,7 @@ func AuthJWT(c *fiber.Ctx) error {
 				return c.Redirect("/login", fiber.StatusTemporaryRedirect)
 			}
 		} else {
+			c.ClearCookie(`auth`)
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 				"error": "Unauthorized Access",
 			})
