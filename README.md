@@ -1,37 +1,55 @@
-## An implementation of Go, Fiber, Handlebars, with WebSocket connection
+# VFtalk - Chat App
 
-### Tech stack:
-- [Go Fiber](https://gofiber.io)
-- [Handlebars](https://handlebarsjs.com/)
-- [TailwindCSS](https://tailwindcss.com/)
+## Tech stack:
+- Programming Language: [Go-Lang](https://go.dev), CSS, [JavaScript](https://www.javascript.com/), SQL, Bash
+- Http Router: [Go Fiber](https://gofiber.io)
+- Template Engine: [Handlebars](https://handlebarsjs.com/)
+- UI Library: [TailwindCSS](https://tailwindcss.com/), [Iconsax](https://iconsax.io/)
+- DBMS: [MariaDB](https://mariadb.org/)
+- ORM/Query Builder: [SQLC](https://sqlc.dev/)
+- Container: [Docker](https://www.docker.com/)
+- CI/CD: Github Action
+- Web Server: [NGINX](https://www.nginx.com/)
+- SMTP: [Docker-mailserver](https://github.com/docker-mailserver/docker-mailserver), [Mailhog](https://github.com/mailhog/MailHog)
 
 ### How to start development:
 
 ```shell
-# Install dependencies
-go get
+##### Install dependencies
+go mod tidy
+pnpm install
 
-bun install
-
+##### Set up docker
 docker-compose up -d
-
-# Create a new docker network
 docker network create vftalk-network
 
-# use Air live reload to start web server
-air
+##### Start App
+go run main.go web
 
-# or you can do manually
-go run main.go
-
-# start nodejs for build javascript or css stuff
-bun dev
+##### Start nodejs for build javascript or css stuff
+pnpm dev
 ```
 
 ### MariaDB
 
 ```shell
+##### Login to MariaDB CLI
 docker exec -it vftalk-db mariadb -u root -p
+
+##### Database migration
+### Install golang-migrate
+go install -tags "postgres,mysql" github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+
+### Create Migration
+migrate create -ext sql -dir models/database/migration migration_state
+
+### migrate up
+make migrate-up
+## or
+go run main.go migrate
+
+### migrate down
+make migrate-down
 ```
 
 ### Docker
@@ -41,13 +59,21 @@ docker rm -f $(docker ps -aq)
 
 # Remove containers
 docker-compose down
+```
 
-# Create Migration
-migrate create -ext sql -dir models/database/migration migration_state
+### Deploy
+```shell
+cd deploy
+##### Execute deploy script, it will automatically do their magic
+./deploy.sh
+
+#### or
+## Configure github action script for CI/CD
+## add github secrets, make sure which variable to store as defined at .github/workflows/deploy.yaml
 ```
 
 ### TODO:
-- [ ] User edit progile
+- [x] User edit progile
 - [ ] Limit online users to only 20
 - [x] Login handler
 - [x] API rate limit
@@ -59,13 +85,15 @@ migrate create -ext sql -dir models/database/migration migration_state
 - [ ] Add Database to store chats
 - [x] User Info
 - [ ] Add Tenor API for stickers and GIFs
-- [ ] Upload picture in chats, and sticker from Tenor
+- [ ] Upload picture in chats, and stickers from Tenor API
 - [x] Use mailhog for SMTP in development, add to docker
-- [ ] Deploy to server
+- [x] Deploy to server (must use linux)
 - [x] Add MariaDB to docker-compose
 - [ ] Use docker-mailserver for SMTP in production
 - [x] User can edit profile picture
 - [ ] Image editor for update profile picture, specify for 1:1 ratio
+- [ ] Compress image after user uploaded it
 - [ ] Direct message
-- [ ] Notification
-- [ ] Active user list
+- [ ] Notification (server sent event)
+- [ ] Active user list (for direct message)
+- [x] Database migration
