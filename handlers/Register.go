@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	"encoding/json"
+	"github.com/goccy/go-json"
 
 	"vftalk/conf"
 	"vftalk/models/database/sqlc"

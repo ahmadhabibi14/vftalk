@@ -3,13 +3,14 @@ package handlers
 import (
 	"context"
 	"database/sql"
-	"encoding/json"
 	"net/http"
 	"os"
 	"strings"
 	"time"
 	"vftalk/conf"
 	"vftalk/models/database/sqlc"
+
+	"github.com/goccy/go-json"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"

@@ -6,7 +6,7 @@ import (
 	"vftalk/conf"
 	"vftalk/models/database/sqlc"
 
-	"encoding/json"
+	"github.com/goccy/go-json"
 
 	"github.com/gofiber/fiber/v2"
 )
