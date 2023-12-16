@@ -6,3 +6,6 @@ migrate-up:
 
 migrate-down:
 	migrate -path models/database/migration -database "mysql://habi:habi123@tcp(localhost:3306)/vftalk" -verbose down
+
+build:
+	go build -o vftalk
