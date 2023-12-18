@@ -18,8 +18,10 @@ func AuthJWT(c *fiber.Ctx) error {
 			}
 		} else {
 			c.ClearCookie(`auth`)
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"error": "Unauthorized Access",
+			c.Status(fiber.StatusUnauthorized)
+			return c.Render("401", fiber.Map{
+				"Title":   "401 - Unauthorized",
+				"Message": "Unauthorized",
 			})
 		}
 	}
