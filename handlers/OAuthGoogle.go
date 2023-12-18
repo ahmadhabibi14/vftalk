@@ -10,7 +10,7 @@ import (
 	"vftalk/conf"
 	"vftalk/models/database/sqlc"
 
-	"github.com/goccy/go-json"
+	"encoding/json"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
