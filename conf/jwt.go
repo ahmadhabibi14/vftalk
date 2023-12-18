@@ -1,3 +1,6 @@
+// if you find `Ws` in the beginning of function name,
+// that means it uses websocket
+
 package conf
 
 import (
