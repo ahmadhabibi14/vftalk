@@ -122,7 +122,6 @@ func Register(c *fiber.Ctx) error {
 	outResp, _ := json.Marshal(RESP_OUT)
 	conf.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
 
-	// mail.SendUserRegisterMail()
 	defer db.Close()
 	return c.Status(fiber.StatusCreated).JSON(string(outResp))
 }

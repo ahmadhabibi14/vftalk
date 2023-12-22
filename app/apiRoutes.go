@@ -10,7 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func ApiRoutes(app *fiber.App) {
+func ApiRoutes(app *fiber.App, h *handlers.Handler) {
 	wsConf := websocket.Config{
 		HandshakeTimeout: 800 * time.Second,
 		ReadBufferSize:   1824,
@@ -28,7 +28,7 @@ func ApiRoutes(app *fiber.App) {
 	api.Get("/room", websocket.New(handlers.HandleClients, wsConf))
 
 	api.Post("/login", handlers.Login)
-	api.Post("/register", handlers.Register)
+	api.Post("/register", h.Register)
 	api.Get("/oauth/google", handlers.OAuthGoogle)
 	api.Post("/userdata", handlers.GetUserData)
 	api.Post("/user-active-list", handlers.GetUserActiveLists)

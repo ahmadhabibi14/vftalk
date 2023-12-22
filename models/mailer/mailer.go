@@ -1,4 +1,4 @@
-package mail
+package mailer
 
 import (
 	"log"
@@ -6,8 +6,20 @@ import (
 	"github.com/wneessen/go-mail"
 )
 
-// Use docker-mailserver for production
-// Use mailhog for development
+type SendMailFunc func(toEmailName map[string]string, subject, text, html string) error
+
+type Mailer struct {
+	SendMailFunc SendMailFunc
+}
+
+func (m *Mailer) SendUserRegisterEmail(email string) error {
+	return m.SendMailFunc(
+		map[string]string{email: ``},
+		`Welcome to VFtalk – Registration Successful!`,
+		`Halooo tess`,
+		`<p>Halooo</p>`,
+	)
+}
 
 func SendUserRegisterMail() {
 	m := mail.NewMsg()
