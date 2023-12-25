@@ -3,11 +3,11 @@ package main
 import (
 	"os"
 	"strings"
-	"vftalk/app"
 	"vftalk/conf"
 	"vftalk/handlers"
 	"vftalk/models"
 	"vftalk/models/mailer"
+	"vftalk/web"
 )
 
 func main() {
@@ -38,7 +38,7 @@ func main() {
 
 	switch mode {
 	case `web`:
-		ws := &app.WebServer{
+		ws := &web.WebServer{
 			Handler: h,
 			AppName: "VFtalk - Chat App",
 			Cfg:     conf.EnvWebConf(),
