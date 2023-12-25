@@ -16,23 +16,15 @@ func ApiRoutes(app *fiber.App, h handlers.Handler) {
 		ReadBufferSize:   1824,
 		WriteBufferSize:  256,
 	}
-
 	api := app.Group("/api")
 
-	api.Use("/room", middlewares.AuthJWT, func(c *fiber.Ctx) error {
-		if websocket.IsWebSocketUpgrade(c) {
-			return c.Next()
-		}
-		return fiber.ErrUpgradeRequired
-	})
-	api.Get("/room", websocket.New(handlers.HandleClients, wsConf))
-
+	api.Get("/room", middlewares.AuthJWT, middlewares.Websocket, websocket.New(handlers.HandleClients, wsConf))
 	api.Post("/login", handlers.Login)
 	api.Post("/register", h.Register)
 	api.Get("/oauth/google", handlers.OAuthGoogle)
 	api.Post("/userdata", handlers.GetUserData)
-	api.Post("/user-active-list", handlers.GetUserActiveLists)
-	api.Post("/user-update-active", handlers.UpdateUserLastActive)
 	api.Post("/user-update-avatar", middlewares.AuthJWT, handlers.UpdateProfilePicture)
 	api.Post("/user-update-profile", middlewares.AuthJWT, handlers.UpdateProfile)
+
+	api.Get("/debug", h.Debug)
 }
