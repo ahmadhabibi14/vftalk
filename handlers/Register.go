@@ -45,7 +45,7 @@ const (
 	ErrRegister_GenerateToken = "Error generate session token"
 )
 
-func Register(c *fiber.Ctx) error {
+func (h Handler) Register(c *fiber.Ctx) error {
 	var db *sql.DB = conf.ConnectMariaDB()
 	queries := sqlc.New(db)
 	ctx := context.Background()
@@ -121,6 +121,11 @@ func Register(c *fiber.Ctx) error {
 	}
 	outResp, _ := json.Marshal(RESP_OUT)
 	conf.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
+
+	errMail := h.Mailer.SendUserRegisterEmail(REQ_IN.Email)
+	if errMail != nil {
+		h.Log.Error().Str(`Error: `, errMail.Error()).Msg(`Cannot send email when user register`)
+	}
 
 	defer db.Close()
 	return c.Status(fiber.StatusCreated).JSON(string(outResp))

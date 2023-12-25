@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"vftalk/conf"
+	"vftalk/handlers"
 	"vftalk/middlewares"
 
 	"github.com/gofiber/fiber/v2"
@@ -18,6 +19,7 @@ import (
 type WebServer struct {
 	AppName string
 	Cfg     conf.WebConf
+	handlers.Handler
 }
 
 func (w *WebServer) Start() {
@@ -48,7 +50,7 @@ func (w *WebServer) Start() {
 	app.Static("/files", "./uploads")
 
 	WebViews(app)
-	ApiRoutes(app)
+	ApiRoutes(app, w.Handler)
 
 	log.Fatal(app.Listen(w.Cfg.ListenAddr()))
 }

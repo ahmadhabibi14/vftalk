@@ -8,7 +8,7 @@ import (
 
 type Handler struct {
 	Mailer mailer.Mailer
-	Log    *zerolog.Logger
+	Log    zerolog.Logger
 }
 
 type HTTPResponse struct {
