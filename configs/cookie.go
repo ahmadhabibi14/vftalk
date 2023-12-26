@@ -8,7 +8,8 @@ import (
 
 var AUTH_COOKIE = `auth`
 
-func SetJWTasCookie(c *fiber.Ctx, tokenString string, expiration time.Time) {
+func SetJWTasCookie(c *fiber.Ctx, tokenString string) {
+	expiration := time.Now().AddDate(0, 2, 0)
 	c.Cookie(&fiber.Cookie{
 		Name:     AUTH_COOKIE,
 		Value:    tokenString,

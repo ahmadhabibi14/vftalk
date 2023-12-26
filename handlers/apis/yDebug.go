@@ -7,12 +7,14 @@ import (
 )
 
 func (a *ApisHandler) Debug(c *fiber.Ctx) error {
-	in := services.InUser_FindById{
-		UserID: "A4qJdgJ6H3aoLir7WiqxMDJXqRM",
-	}
+	ctx := c.Context()
 	response := HTTPResponse{}
+	in := services.InUser_FindById{
+		UserID: "6f935d5c-1f55-4e6c-bd24-13e6ef6fb129",
+	}
+
 	user := services.NewUser(a.Db, a.Log)
-	userOut, err := user.FindById(in)
+	userOut, err := user.FindById(ctx, in)
 	if err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,

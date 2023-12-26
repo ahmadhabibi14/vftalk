@@ -1,7 +1,6 @@
 package apis
 
 import (
-	"time"
 	"vftalk/configs"
 	"vftalk/services"
 
@@ -9,8 +8,10 @@ import (
 )
 
 func (a *ApisHandler) AuthRegister(c *fiber.Ctx) error {
-	var in services.InUser_Create
+	ctx := c.Context()
 	response := HTTPResponse{}
+	in := services.InUser_Create{}
+
 	if err := c.BodyParser(&in); err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
@@ -22,7 +23,7 @@ func (a *ApisHandler) AuthRegister(c *fiber.Ctx) error {
 	}
 
 	user := services.NewUser(a.Db, a.Log)
-	token, err := user.CreateUser(in)
+	token, err := user.CreateUser(ctx, in)
 	if err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
@@ -33,7 +34,7 @@ func (a *ApisHandler) AuthRegister(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 
-	configs.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
+	configs.SetJWTasCookie(c, token)
 	response = HTTPResponse{
 		Code:   fiber.StatusOK,
 		Status: STATUS_OK,

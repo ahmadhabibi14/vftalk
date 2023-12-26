@@ -35,6 +35,7 @@ func NewUser(db *sql.DB, l *zerolog.Logger) *userImpl {
 }
 
 func (u *userImpl) CreateUser(ctx context.Context, user User) error {
+
 	query := `INSERT INTO Users (user_id, username, full_name, email, password) VALUES (?, ?, ?, ?, ?)`
 	_, err := u.DB.ExecContext(ctx, query,
 		user.UserID,
@@ -75,6 +76,7 @@ func (u *userImpl) FindById(ctx context.Context, id string) (User, error) {
 }
 
 func (u *userImpl) FindByUsername(ctx context.Context, username string) (User, error) {
+
 	query := `SELECT user_id, username, full_name, email, password, avatar, join_at, last_active, website, location FROM Users WHERE username = ? LIMIT 1`
 	rows, err := u.DB.QueryContext(ctx, query, username)
 	defer rows.Close()

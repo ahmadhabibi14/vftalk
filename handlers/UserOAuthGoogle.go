@@ -111,14 +111,14 @@ func OAuthGoogle(c *fiber.Ctx) error {
 	_, isUsernameExist := queries.GetUserByUsername(ctx, GOOGLE_username)
 	if isUsernameExist == nil {
 		token, _ := configs.GenerateJWT(GOOGLE_username, GOOGLE_id, time.Now().AddDate(0, 2, 0))
-		configs.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
+		configs.SetJWTasCookie(c, token)
 		return c.Redirect("/", fiber.StatusPermanentRedirect)
 	}
 
 	_, isEmailExist := queries.GetUserByEmail(ctx, GOOGLE_email)
 	if isEmailExist == nil {
 		token, _ := configs.GenerateJWT(GOOGLE_username, GOOGLE_id, time.Now().AddDate(0, 2, 0))
-		configs.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
+		configs.SetJWTasCookie(c, token)
 		return c.Redirect("/", fiber.StatusPermanentRedirect)
 	}
 
@@ -140,6 +140,6 @@ func OAuthGoogle(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(string(errResp))
 	}
 	token, _ := configs.GenerateJWT(GOOGLE_username, GOOGLE_id, time.Now().AddDate(0, 2, 0))
-	configs.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
+	configs.SetJWTasCookie(c, token)
 	return c.Redirect("/", fiber.StatusPermanentRedirect)
 }

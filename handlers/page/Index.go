@@ -24,7 +24,7 @@ func (p *PageHandler) Index(c *fiber.Ctx) error {
 			UserID: userId.(string),
 		}
 		user := services.NewUser(p.Db, p.Log)
-		userOut, err := user.FindById(in)
+		userOut, err := user.FindById(c.UserContext(), in)
 
 		return c.Render("index", fiber.Map{
 			"Title":    "VFtalk | Home",
