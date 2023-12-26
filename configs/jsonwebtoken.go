@@ -33,18 +33,20 @@ func TokenValid(c *fiber.Ctx) error {
 	tokenString := ExtractToken(c)
 	_, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			c.ClearCookie()
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
 		return []byte(os.Getenv("JWT_SECRET_KEY")), nil
 	})
 	if err != nil {
+		c.ClearCookie()
 		return err
 	}
 	return nil
 }
 
 func ExtractToken(c *fiber.Ctx) string {
-	bearerToken := c.Cookies("auth")
+	bearerToken := c.Cookies(AUTH_COOKIE)
 	if bearerToken == "" {
 		return ""
 	}
@@ -52,7 +54,7 @@ func ExtractToken(c *fiber.Ctx) string {
 }
 
 func WsExtractToken(c *websocket.Conn) string {
-	bearerToken := c.Cookies("auth")
+	bearerToken := c.Cookies(AUTH_COOKIE)
 	if bearerToken == "" {
 		return ""
 	}
