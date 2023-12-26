@@ -7,7 +7,7 @@ import (
 )
 
 func (a *ApisHandler) Debug(c *fiber.Ctx) error {
-	id := "A4qJdgJ6H3aoLir7WiqxMDJXqRM"
+	id := "A4qJdgJ6H3aoLir7WiqxMDJXqR"
 	response := HTTPResponse{}
 	user := services.NewUser(a.Db, a.Log)
 	userOut, err := user.FindById(id)
@@ -22,7 +22,7 @@ func (a *ApisHandler) Debug(c *fiber.Ctx) error {
 	}
 
 	if mailErr := a.Mailer.SendUserRegisterEmail(userOut.Email); mailErr != nil {
-		a.Log.Error().Str("Error: ", mailErr.Error()).Msg("Canno send email")
+		a.Log.Error().Str("Error", mailErr.Error()).Msg("Cannot send email")
 	}
 
 	response = HTTPResponse{

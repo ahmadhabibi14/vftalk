@@ -5,6 +5,7 @@ import (
 
 	"vftalk/configs"
 	"vftalk/handlers/apis"
+	"vftalk/handlers/page"
 	"vftalk/middlewares"
 	"vftalk/models/mailer"
 
@@ -41,6 +42,7 @@ func (w *WebServer) Start() {
 			})
 		},
 	})
+
 	app.Use(favicon.New(favicon.Config{
 		File: "./views/public/favicons/favicon.ico",
 		URL:  "/favicon.ico",
@@ -50,19 +52,22 @@ func (w *WebServer) Start() {
 	app.Use(limiter.New(middlewares.Limiter))
 	app.Use(cors.New(middlewares.CORSConfig))
 
-	// app.Static("/static", "./views/static")
-	// app.Static("/public", "./views/public")
-	// app.Static("/files", "./uploads")
+	app.Static("/static", "./views/static")
+	app.Static("/public", "./views/public")
+	app.Static("/files", "./uploads")
 
-	apiHandler := apis.ApisHandler{
+	apiHandler := &apis.ApisHandler{
 		Mailer: mlr,
 		Log:    w.Log,
 		Db:     db,
 	}
+	pageHandler := &page.PageHandler{
+		Log: w.Log,
+		Db:  db,
+	}
 
-	// WebViews(app)
-	ApiRoutes(app, &apiHandler)
-
+	WebViews(app, pageHandler)
+	ApiRoutes(app, apiHandler)
 	log.Fatal(app.Listen(w.Cfg.ListenAddr()))
 }
 

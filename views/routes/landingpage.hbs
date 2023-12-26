@@ -158,17 +158,4 @@
       </div>
     </footer>
   </body>
-  <script>
-    try {
-      const resp = fetch("/api/debug", { method: "GET" });
-      if (resp.ok) {
-        const creds = resp.json();
-        console.log(creds)
-      } else {
-        console.log(resp)
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  </script>
 </html>

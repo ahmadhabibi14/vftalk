@@ -40,7 +40,7 @@ func (u *userImpl) FindById(ctx context.Context, id string) (User, error) {
 	defer rows.Close()
 	user := User{}
 	if err != nil {
-		u.Log.Error().Str("Error: ", err.Error()).Msg("Error: User FindById")
+		u.Log.Error().Str("Error", err.Error()).Msg("Error: User FindById")
 		return user, err
 	}
 	if rows.Next() {
@@ -57,6 +57,7 @@ func (u *userImpl) FindById(ctx context.Context, id string) (User, error) {
 			&user.Location,
 		)
 	} else {
+		u.Log.Error().Str("Error", "User not found")
 		return user, errors.New("User not found")
 	}
 	return user, nil
