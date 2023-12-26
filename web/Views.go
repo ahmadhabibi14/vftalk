@@ -1,7 +1,7 @@
 package web
 
 import (
-	"vftalk/conf"
+	"vftalk/configs"
 	"vftalk/handlers"
 	"vftalk/middlewares"
 	"vftalk/utils"
@@ -11,7 +11,7 @@ import (
 
 func WebViews(app *fiber.App) {
 	app.Get("/", func(c *fiber.Ctx) error {
-		err := conf.TokenValid(c)
+		err := configs.TokenValid(c)
 		if err != nil {
 			return c.Render("landingpage", fiber.Map{
 				"Title": "VFTalk | Chat App",

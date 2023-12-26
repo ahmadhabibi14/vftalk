@@ -1,14 +1,16 @@
 package apis
 
 import (
+	"database/sql"
 	"vftalk/models/mailer"
 
 	"github.com/rs/zerolog"
 )
 
-type Handler struct {
+type ApisHandler struct {
 	Mailer mailer.Mailer
-	Log    zerolog.Logger
+	Log    *zerolog.Logger
+	Db     *sql.DB
 }
 
 type HTTPResponse struct {
@@ -17,3 +19,9 @@ type HTTPResponse struct {
 	Errors string      `json:"errors"`
 	Data   interface{} `json:"data"`
 }
+
+const (
+	STATUS_OK                  = "OK"
+	STATUS_BADREQUEST          = "BAD REQUEST"
+	STATUS_INTERNALSERVERERROR = "INTERNAL SERVER ERROR"
+)

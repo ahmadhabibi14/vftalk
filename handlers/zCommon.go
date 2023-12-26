@@ -1,14 +1,16 @@
 package handlers
 
 import (
+	"database/sql"
 	"vftalk/models/mailer"
 
 	"github.com/rs/zerolog"
 )
 
-type Handler struct {
-	Mailer mailer.Mailer
-	Log    zerolog.Logger
+type ApisHandler struct {
+	Mailer *mailer.Mailer
+	Log    *zerolog.Logger
+	Db     *sql.DB
 }
 
 type HTTPResponse struct {

@@ -3,9 +3,10 @@ package web
 import (
 	"log"
 
-	"vftalk/conf"
-	"vftalk/handlers"
+	"vftalk/configs"
+	"vftalk/handlers/apis"
 	"vftalk/middlewares"
+	"vftalk/models/mailer"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -14,15 +15,19 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/gofiber/template/handlebars/v2"
+	"github.com/rs/zerolog"
 )
 
 type WebServer struct {
 	AppName string
-	Cfg     conf.WebConf
-	handlers.Handler
+	Cfg     configs.WebConf
+	Log     *zerolog.Logger
 }
 
 func (w *WebServer) Start() {
+	mlr := MailServer(w.Log)
+	db := configs.ConnectMariaDB()
+
 	engine := handlebars.New("./views/routes", ".hbs")
 	app := fiber.New(fiber.Config{
 		AppName: w.AppName,
@@ -45,12 +50,28 @@ func (w *WebServer) Start() {
 	app.Use(limiter.New(middlewares.Limiter))
 	app.Use(cors.New(middlewares.CORSConfig))
 
-	app.Static("/static", "./views/static")
-	app.Static("/public", "./views/public")
-	app.Static("/files", "./uploads")
+	// app.Static("/static", "./views/static")
+	// app.Static("/public", "./views/public")
+	// app.Static("/files", "./uploads")
 
-	WebViews(app)
-	ApiRoutes(app, w.Handler)
+	apiHandler := apis.ApisHandler{
+		Mailer: mlr,
+		Log:    w.Log,
+		Db:     db,
+	}
+
+	// WebViews(app)
+	ApiRoutes(app, &apiHandler)
 
 	log.Fatal(app.Listen(w.Cfg.ListenAddr()))
+}
+
+func MailServer(l *zerolog.Logger) mailer.Mailer {
+	mlr := mailer.Mailer{}
+	mh, err := mailer.NewMailhog(configs.EnvMailhog())
+	if err != nil {
+		l.Error().Str(`Error: `, err.Error()).Msg(`Cannot load mailhog`)
+	}
+	mlr.SendMailFunc = mh.SendEmail
+	return mlr
 }

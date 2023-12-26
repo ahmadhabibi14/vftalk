@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"vftalk/conf"
+	"vftalk/configs"
 	"vftalk/models/database/sqlc"
 	"vftalk/utils"
 
@@ -35,14 +35,14 @@ const (
 )
 
 func UpdateProfilePicture(c *fiber.Ctx) error {
-	var db *sql.DB = conf.ConnectMariaDB()
+	var db *sql.DB = configs.ConnectMariaDB()
 	queries := sqlc.New(db)
 	ctx := context.Background()
 	var (
 		RESP_OUT updateProfilePictureOut
 		RESP_ERR updateProfilePictureError
 	)
-	userId, err := conf.GetUserIdFromJWTfunc(c)
+	userId, err := configs.GetUserIdFromJWTfunc(c)
 	if err != nil {
 		RESP_ERR.Ok = false
 		RESP_ERR.ErrorMsg = ErrUpdateProfilePicture_InvalidUser

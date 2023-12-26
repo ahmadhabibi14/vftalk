@@ -3,16 +3,14 @@ package main
 import (
 	"os"
 	"strings"
-	"vftalk/conf"
-	"vftalk/handlers"
+	"vftalk/configs"
 	"vftalk/models"
-	"vftalk/models/mailer"
 	"vftalk/web"
 )
 
 func main() {
-	conf.LoadEnv()
-	zlog := conf.InitLogger()
+	configs.LoadEnv()
+	zlog := configs.InitLogger()
 	validArgs := `web, migrate`
 
 	var mode string
@@ -22,26 +20,12 @@ func main() {
 		mode = strings.ToLower(os.Args[1])
 	}
 
-	var mlr mailer.Mailer
-	mh, err := mailer.NewMailhog(conf.EnvMailhog())
-	if err != nil {
-		zlog.Error().Str(`Error: `, err.Error()).Msg(`Cannot load mailhog`)
-	}
-
-	mlr.SendMailFunc = mh.SendEmail
-	h := handlers.Handler{
-		Mailer: mailer.Mailer{
-			SendMailFunc: mlr.SendMailFunc,
-		},
-		Log: zlog,
-	}
-
 	switch mode {
 	case `web`:
 		ws := &web.WebServer{
-			Handler: h,
 			AppName: "VFtalk - Chat App",
-			Cfg:     conf.EnvWebConf(),
+			Cfg:     configs.EnvWebConf(),
+			Log:     zlog,
 		}
 		ws.Start()
 	case `migrate`:

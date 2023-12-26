@@ -2,17 +2,17 @@ package mailer
 
 import (
 	"fmt"
-	"vftalk/conf"
+	"vftalk/configs"
 
 	"github.com/wneessen/go-mail"
 )
 
 type Mailhog struct {
-	conf.MailhogConf
+	configs.MailhogConf
 	client *mail.Client
 }
 
-func NewMailhog(cfg conf.MailhogConf) (*Mailhog, error) {
+func NewMailhog(cfg configs.MailhogConf) (*Mailhog, error) {
 	res := &Mailhog{
 		MailhogConf: cfg,
 	}
@@ -21,7 +21,7 @@ func NewMailhog(cfg conf.MailhogConf) (*Mailhog, error) {
 }
 
 func (m *Mailhog) Connect() error {
-	zlog := conf.InitLogger()
+	zlog := configs.InitLogger()
 	if m.client != nil {
 		err := m.client.Close()
 		if err != nil {

@@ -3,7 +3,7 @@ package models
 import (
 	"fmt"
 	"os"
-	"vftalk/conf"
+	"vftalk/configs"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golang-migrate/migrate/v4"
@@ -19,9 +19,9 @@ var (
 )
 
 func RunMigration() {
-	conf.LoadEnv()
-	zlog := conf.InitLogger()
-	db := conf.ConnectMariaDB()
+	configs.LoadEnv()
+	zlog := configs.InitLogger()
+	db := configs.ConnectMariaDB()
 	defer db.Close()
 
 	driver, _ := mysql.WithInstance(db, &mysql.Config{})

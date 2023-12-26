@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 	"time"
-	"vftalk/conf"
+	"vftalk/configs"
 	"vftalk/models/database/sqlc"
 
 	"encoding/json"
@@ -39,7 +39,7 @@ const (
 )
 
 var (
-	zlog              = conf.InitLogger()
+	zlog              = configs.InitLogger()
 	GoogleOauthConfig *oauth2.Config
 )
 
@@ -70,7 +70,7 @@ func init() {
 }
 
 func OAuthGoogle(c *fiber.Ctx) error {
-	var db *sql.DB = conf.ConnectMariaDB()
+	var db *sql.DB = configs.ConnectMariaDB()
 	defer db.Close()
 	queries := sqlc.New(db)
 	ctx := context.Background()
@@ -110,15 +110,15 @@ func OAuthGoogle(c *fiber.Ctx) error {
 
 	_, isUsernameExist := queries.GetUserByUsername(ctx, GOOGLE_username)
 	if isUsernameExist == nil {
-		token, _ := conf.GenerateJWT(GOOGLE_username, GOOGLE_id, time.Now().AddDate(0, 2, 0))
-		conf.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
+		token, _ := configs.GenerateJWT(GOOGLE_username, GOOGLE_id, time.Now().AddDate(0, 2, 0))
+		configs.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
 		return c.Redirect("/", fiber.StatusPermanentRedirect)
 	}
 
 	_, isEmailExist := queries.GetUserByEmail(ctx, GOOGLE_email)
 	if isEmailExist == nil {
-		token, _ := conf.GenerateJWT(GOOGLE_username, GOOGLE_id, time.Now().AddDate(0, 2, 0))
-		conf.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
+		token, _ := configs.GenerateJWT(GOOGLE_username, GOOGLE_id, time.Now().AddDate(0, 2, 0))
+		configs.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
 		return c.Redirect("/", fiber.StatusPermanentRedirect)
 	}
 
@@ -139,7 +139,7 @@ func OAuthGoogle(c *fiber.Ctx) error {
 		errResp, _ := json.Marshal(RESP_ERR)
 		return c.Status(fiber.StatusInternalServerError).JSON(string(errResp))
 	}
-	token, _ := conf.GenerateJWT(GOOGLE_username, GOOGLE_id, time.Now().AddDate(0, 2, 0))
-	conf.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
+	token, _ := configs.GenerateJWT(GOOGLE_username, GOOGLE_id, time.Now().AddDate(0, 2, 0))
+	configs.SetJWTasCookie(c, token, time.Now().AddDate(0, 2, 0))
 	return c.Redirect("/", fiber.StatusPermanentRedirect)
 }

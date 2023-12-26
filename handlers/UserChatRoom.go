@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"sync"
-	"vftalk/conf"
+	"vftalk/configs"
 
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2/log"
@@ -72,7 +72,7 @@ func HandleClients(conn *websocket.Conn) {
 	// Register the client
 	register <- conn
 
-	username, _ := conf.WsGetUsernameFromJWT(conn)
+	username, _ := configs.WsGetUsernameFromJWT(conn)
 	for {
 		var messageIn MessageIn
 		err := conn.ReadJSON(&messageIn)

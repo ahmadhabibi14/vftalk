@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"vftalk/conf"
+	"vftalk/configs"
 	"vftalk/models/database/sqlc"
 
 	"encoding/json"
@@ -14,9 +14,9 @@ import (
 )
 
 func GetUserDataByUsername(c *fiber.Ctx) (sqlc.GetUserDataByUsernameRow, error) {
-	u, _ := conf.GetUsernameFromJWT(c)
+	u, _ := configs.GetUsernameFromJWT(c)
 	username := fmt.Sprintf("%v", u)
-	var db *sql.DB = conf.ConnectMariaDB()
+	var db *sql.DB = configs.ConnectMariaDB()
 	queries := sqlc.New(db)
 	ctx := context.Background()
 
@@ -36,9 +36,9 @@ type userDataout struct {
 
 func GetUserData(c *fiber.Ctx) error {
 	var U_OUT userDataout
-	u, _ := conf.GetUsernameFromJWT(c)
+	u, _ := configs.GetUsernameFromJWT(c)
 	username := fmt.Sprintf("%v", u)
-	var db *sql.DB = conf.ConnectMariaDB()
+	var db *sql.DB = configs.ConnectMariaDB()
 	queries := sqlc.New(db)
 	ctx := context.Background()
 
