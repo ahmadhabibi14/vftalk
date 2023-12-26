@@ -20,8 +20,11 @@ func (p *PageHandler) Index(c *fiber.Ctx) error {
 			c.ClearCookie(`auth`)
 			return c.Redirect("/", fiber.StatusTemporaryRedirect)
 		}
+		in := services.InUser_FindById{
+			UserID: userId.(string),
+		}
 		user := services.NewUser(p.Db, p.Log)
-		userOut, err := user.FindById(userId.(string))
+		userOut, err := user.FindById(in)
 
 		return c.Render("index", fiber.Map{
 			"Title":    "VFtalk | Home",

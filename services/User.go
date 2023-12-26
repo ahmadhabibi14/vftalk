@@ -5,10 +5,13 @@ import (
 	"database/sql"
 	"fmt"
 	"time"
+	"vftalk/configs"
 	"vftalk/models/databases"
 	"vftalk/utils"
 
+	"github.com/google/uuid"
 	"github.com/rs/zerolog"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type userImpl struct {
@@ -25,7 +28,7 @@ func NewUser(db *sql.DB, l *zerolog.Logger) *userImpl {
 
 type (
 	InUser_FindById struct {
-		Id string `validate:"required,min=5,max=36" json:"id"`
+		UserID string `json:"id" form:"id" validate:"required,min=5,max=36"`
 	}
 	OutUser_FindById struct {
 		UserID     string    `db:"user_id" json:"user_id"`
@@ -41,17 +44,17 @@ type (
 	}
 )
 
-func (u *userImpl) FindById(id string) (OutUser_FindById, error) {
+func (u *userImpl) FindById(in InUser_FindById) (OutUser_FindById, error) {
 	ctx := context.Background()
 	outUser := OutUser_FindById{}
 
-	msg, err := utils.ValidateStruct(InUser_FindById{Id: id})
+	msg, err := utils.ValidateStruct(in)
 	if err != nil {
 		return outUser, fmt.Errorf(msg)
 	}
 
 	userrepo := databases.NewUser(u.DB, u.Log)
-	user, err := userrepo.FindById(ctx, id)
+	user, err := userrepo.FindById(ctx, in.UserID)
 	if err != nil {
 		return outUser, err
 	}
@@ -68,4 +71,50 @@ func (u *userImpl) FindById(id string) (OutUser_FindById, error) {
 		Location:   user.Location,
 	}
 	return outUser, nil
+}
+
+type (
+	InUser_Create struct {
+		UserID   string `json:"id" form:"id" validate:"required,min=35,max=36"`
+		Username string `json:"username" form:"username" validate:"required,omitempty,min=4"`
+		FullName string `json:"full_name" form:"full_name" validate:"required,omitempty,min=4"`
+		Email    string `json:"email" form:"email" validate:"required,email"`
+		Password string `json:"password" form:"password" validate:"required,min=8,containsany=!@#?*%&>_<}-{+"`
+	}
+)
+
+func (u *userImpl) CreateUser(in InUser_Create) (token string, err error) {
+	ctx := context.Background()
+
+	uid := fmt.Sprintf("%v", uuid.New())
+	in.UserID = uid
+	msg, err := utils.ValidateStruct(in)
+	if err != nil {
+		return "", fmt.Errorf(msg)
+	}
+
+	userrepo := databases.NewUser(u.DB, u.Log)
+	_, err = userrepo.FindByUsername(ctx, in.Username)
+	if err == nil {
+		return "", fmt.Errorf("Username already exist")
+	}
+
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(in.Password), bcrypt.DefaultCost)
+	user := databases.User{
+		UserID:   in.UserID,
+		Username: in.Username,
+		FullName: in.FullName,
+		Email:    in.Email,
+		Password: string(hashedPassword),
+	}
+	err = userrepo.CreateUser(ctx, user)
+	if err != nil {
+		return "", fmt.Errorf("Something went wrong")
+	}
+
+	t, err := configs.GenerateJWT(in.Username, uid, time.Now().AddDate(0, 2, 0))
+	if err != nil {
+		return "", fmt.Errorf("Error generate session token")
+	}
+	return t, nil
 }

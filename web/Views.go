@@ -2,12 +2,14 @@ package web
 
 import (
 	"vftalk/handlers/page"
+	"vftalk/middlewares"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func WebViews(app *fiber.App, page *page.PageHandler) {
 	app.Get("/", page.Index)
+	app.Get("/register", middlewares.IsLoggedIn, page.Register)
 
 	// 	app.Get("/direct", middlewares.AuthJWT, func(c *fiber.Ctx) error {
 	// 		userData, err := handlers.GetUserDataByUsername(c)
@@ -74,14 +76,6 @@ func WebViews(app *fiber.App, page *page.PageHandler) {
 	// 		return c.Render("login", fiber.Map{
 	// 			"Title": "Login",
 	// 			"Desc":  "Hi, Welcome back 👋",
-	// 		})
-	// 	})
-
-	// 	app.Get("/register", middlewares.IsLoggedIn, func(c *fiber.Ctx) error {
-	// 		c.Set(fiber.HeaderContentType, "text/html; charset=utf-8")
-	// 		return c.Render("register", fiber.Map{
-	// 			"Title": "Register",
-	// 			"Desc":  "Welcome, please create your account",
 	// 		})
 	// 	})
 

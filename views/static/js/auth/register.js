@@ -25,13 +25,17 @@ registerBtn.addEventListener("click", async () => {
         email: email.value,
         password: password.value,
         username: username.value,
-        fullname: fullname.value
+        full_name: fullname.value
       }),
     });
 
+    console.log('Resp: ', resp);
+
     if (resp.ok) {
       const creds = await resp.json();
+      console.log('Creds:', creds)
 			const successResp = await JSON.parse(creds);
+      console.log('Success Resp:', successResp)
       
       registerTxt.style.display = "block";
       registerLoadingIcon.style.display = "none";
@@ -43,8 +47,9 @@ registerBtn.addEventListener("click", async () => {
       }, 1500);
     } else {
       const creds = await resp.json();
+      console.log(creds);
       const errResp = await JSON.parse(creds);
-      notifier.showError(errResp["error"]);
+      notifier.showError(errResp["errors"]);
       registerBtn.disabled = false;
       registerTxt.style.display = "block";
       registerLoadingIcon.style.display = "none";
@@ -53,11 +58,9 @@ registerBtn.addEventListener("click", async () => {
       return;
     }
   } catch (e) {
-    notifier.showError("Login failed");
+    notifier.showError("Register failed");
     registerBtn.disabled = false;
     registerTxt.style.display = "block";
     registerLoadingIcon.style.display = "none";
-    username.value = "";
-    password.value = "";
   }
 });
