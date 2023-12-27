@@ -10,6 +10,7 @@ import (
 func WebViews(app *fiber.App, page *page.PageHandler) {
 	app.Get("/", page.Index)
 	app.Get("/register", middlewares.IsLoggedIn, page.Register)
+	app.Get("/oauth/google", middlewares.IsLoggedIn, page.OAuthGoogle)
 
 	// 	app.Get("/direct", middlewares.AuthJWT, func(c *fiber.Ctx) error {
 	// 		userData, err := handlers.GetUserDataByUsername(c)
@@ -78,10 +79,4 @@ func WebViews(app *fiber.App, page *page.PageHandler) {
 	// 			"Desc":  "Hi, Welcome back 👋",
 	// 		})
 	// 	})
-
-	//	app.Get("/oauth/google", middlewares.IsLoggedIn, func(c *fiber.Ctx) error {
-	//		stateString := utils.GenerateRandomID(40)
-	//		url := handlers.GoogleOauthConfig.AuthCodeURL(stateString)
-	//		return c.Redirect(url, fiber.StatusTemporaryRedirect)
-	//	})
 }

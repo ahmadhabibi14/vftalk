@@ -29,6 +29,7 @@ type WebServer struct {
 func (w *WebServer) Start() {
 	mlr := MailServer(w.Log)
 	db := configs.ConnectMariaDB()
+	oauth := configs.EnvOAuth()
 
 	engine := handlebars.New("./views/routes", ".hbs")
 	app := fiber.New(fiber.Config{
@@ -62,10 +63,12 @@ func (w *WebServer) Start() {
 		Mailer: mlr,
 		Log:    w.Log,
 		Db:     db,
+		OAuth:  oauth,
 	}
 	pageHandler := &page.PageHandler{
-		Log: w.Log,
-		Db:  db,
+		Log:   w.Log,
+		Db:    db,
+		OAuth: oauth,
 	}
 
 	WebViews(app, pageHandler)

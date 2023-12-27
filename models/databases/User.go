@@ -35,7 +35,6 @@ func NewUser(db *sql.DB, l *zerolog.Logger) *userImpl {
 }
 
 func (u *userImpl) CreateUser(ctx context.Context, user User) error {
-
 	query := `INSERT INTO Users (user_id, username, full_name, email, password) VALUES (?, ?, ?, ?, ?)`
 	_, err := u.DB.ExecContext(ctx, query,
 		user.UserID,
@@ -102,4 +101,16 @@ func (u *userImpl) FindByUsername(ctx context.Context, username string) (User, e
 		return user, errors.New("User not found")
 	}
 	return user, nil
+}
+
+func (u *userImpl) OAuthCreateUser(ctx context.Context, user User) error {
+	query := `INSERT INTO Users (user_id, username, full_name, email, avatar) VALUES (?, ?, ?, ?, ?, ?)`
+	_, err := u.DB.ExecContext(ctx, query,
+		user.UserID,
+		user.Username,
+		user.FullName,
+		user.Email,
+		user.Avatar,
+	)
+	return err
 }

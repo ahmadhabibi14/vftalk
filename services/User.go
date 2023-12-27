@@ -115,3 +115,50 @@ func (u *userImpl) CreateUser(ctx context.Context, in InUser_Create) (token stri
 	}
 	return t, nil
 }
+
+type (
+	InUser_OAuthCreate struct {
+		UserID   string `json:"id" form:"id" validate:"required,min=21,max=36"`
+		Username string `json:"username" form:"username" validate:"required,omitempty,min=4"`
+		FullName string `json:"full_name" form:"full_name" validate:"required,omitempty,min=4"`
+		Email    string `json:"email" form:"email" validate:"required,email"`
+		Avatar   string `json:"avatar" form:"avatar" validate:"required"`
+	}
+)
+
+func (u *userImpl) OAuthCreateUser(ctx context.Context, in InUser_OAuthCreate) (token string, err error) {
+	msg, err := utils.ValidateStruct(in)
+	if err != nil {
+		return "", fmt.Errorf(msg)
+	}
+
+	t, err := configs.GenerateJWT(in.Username, in.UserID, time.Now().AddDate(0, 2, 0))
+	if err != nil {
+		return "", fmt.Errorf("Error generate session token")
+	}
+
+	userrepo := databases.NewUser(u.DB, u.Log)
+	_, err = userrepo.FindByUsername(ctx, in.Username)
+	if err == nil {
+		return t, nil
+	}
+
+	_, err = userrepo.FindById(ctx, in.UserID)
+	if err == nil {
+		return t, nil
+	}
+
+	user := databases.User{
+		UserID:   in.UserID,
+		Username: in.Username,
+		FullName: in.FullName,
+		Email:    in.Email,
+		Avatar:   in.Avatar,
+	}
+	err = userrepo.CreateUser(ctx, user)
+	if err != nil {
+		return "", fmt.Errorf("Something went wrong")
+	}
+
+	return t, nil
+}

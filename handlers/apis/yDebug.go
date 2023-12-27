@@ -13,6 +13,8 @@ func (a *ApisHandler) Debug(c *fiber.Ctx) error {
 		UserID: "6f935d5c-1f55-4e6c-bd24-13e6ef6fb129",
 	}
 
+	a.Log.Info().Str("Host: ", c.Hostname()).Msg("Hostname for this request")
+
 	user := services.NewUser(a.Db, a.Log)
 	userOut, err := user.FindById(ctx, in)
 	if err != nil {
