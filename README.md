@@ -6,7 +6,6 @@
 - Template Engine: [Handlebars](https://handlebarsjs.com/)
 - UI Library: [TailwindCSS](https://tailwindcss.com/), [Iconsax](https://iconsax.io/)
 - DBMS: [MariaDB](https://mariadb.org/)
-- ORM/Query Builder: [SQLC](https://sqlc.dev/)
 - Container: [Docker](https://www.docker.com/)
 - CI/CD: Github Action
 - Web Server: [NGINX](https://www.nginx.com/)
@@ -41,7 +40,7 @@ docker exec -it vftalk-db mariadb -u root -p
 go install -tags "postgres,mysql" github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 
 ### Create Migration
-migrate create -ext sql -dir models/database/migration migration_state
+migrate create -ext sql -dir database/migration migration_state
 
 ### migrate up
 make migrate-up

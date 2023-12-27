@@ -15,7 +15,7 @@ var (
 	MySQLTables = []string{ // Define SQL tables here
 		`Users`,
 	}
-	migrationsDir = `file://models/database/migration`
+	migrationsDir = `file://database/migration`
 )
 
 func RunMigration() {

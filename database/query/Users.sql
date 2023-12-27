@@ -31,3 +31,25 @@ WHERE username = ?;
 UPDATE Users
 SET last_active = CURRENT_TIMESTAMP + INTERVAL 10 MINUTE
 WHERE user_id = ?
+
+-- name: CreateNewUser :exec
+INSERT INTO Users (
+  user_id, username, full_name, email, avatar, password
+) VALUES (
+  ?, ?, ?, ?, ?, ?
+);
+
+-- name: UpdateUserAvatar :exec
+UPDATE Users
+SET avatar = ?
+WHERE user_id = ?
+
+-- name: UpdateUserPassword :exec
+UPDATE Users
+SET password = ?
+WHERE user_id = ?
+
+-- name: UpdateUserProfile :exec
+UPDATE Users
+SET full_name = ?, location = ?, website = ?
+WHERE user_id = ?
