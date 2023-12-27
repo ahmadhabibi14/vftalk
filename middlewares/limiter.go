@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"time"
+	"vftalk/handlers/apis"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
@@ -14,8 +15,12 @@ var Limiter = limiter.Config{
 		return c.IP()
 	},
 	LimitReached: func(c *fiber.Ctx) error {
-		return c.Status(fiber.StatusTooManyRequests).JSON(fiber.Map{
-			"error": "Too many request",
-		})
+		response := apis.HTTPResponse{
+			Code:   fiber.StatusTooManyRequests,
+			Status: apis.STATUS_TOOMANYREQUEST,
+			Errors: "You have exceeded your rate limit. Please try again after the specified time.",
+			Data:   "",
+		}
+		return c.Status(fiber.StatusTooManyRequests).JSON(response)
 	},
 }
