@@ -91,13 +91,12 @@ func (u *userImpl) CreateUser(ctx context.Context, in InUser_Create) (token stri
 	}
 
 	userrepo := databases.NewUser(u.DB, u.Log)
-	_, err = userrepo.FindByUsername(ctx, in.Username)
-	if err == nil {
+	if userrepo.FindUsername(ctx, in.Username) {
 		return "", fmt.Errorf("Username already exist")
 	}
 
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(in.Password), bcrypt.DefaultCost)
-	user := databases.User{
+	user := databases.CreateUserIn{
 		UserID:   in.UserID,
 		Username: in.Username,
 		FullName: in.FullName,
@@ -138,27 +137,36 @@ func (u *userImpl) OAuthCreateUser(ctx context.Context, in InUser_OAuthCreate) (
 	}
 
 	userrepo := databases.NewUser(u.DB, u.Log)
-	_, err = userrepo.FindByUsername(ctx, in.Username)
-	if err == nil {
+	if userrepo.FindUsername(ctx, in.Username) {
 		return t, nil
 	}
 
-	_, err = userrepo.FindById(ctx, in.UserID)
-	if err == nil {
+	if userrepo.FindId(ctx, in.UserID) {
 		return t, nil
 	}
 
-	user := databases.User{
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(in.Username), bcrypt.DefaultCost)
+	user := databases.OAuthCreateUserIn{
 		UserID:   in.UserID,
 		Username: in.Username,
 		FullName: in.FullName,
 		Email:    in.Email,
+		Password: string(hashedPassword),
 		Avatar:   in.Avatar,
 	}
-	err = userrepo.CreateUser(ctx, user)
+	err = userrepo.OAuthCreateUser(ctx, user)
 	if err != nil {
 		return "", fmt.Errorf("Something went wrong")
 	}
 
 	return t, nil
+}
+
+func (u *userImpl) Debug(ctx context.Context, id string) bool {
+	userrepo := databases.NewUser(u.DB, u.Log)
+	if !userrepo.FindId(ctx, id) {
+		return false
+	}
+
+	return true
 }

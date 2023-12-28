@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/rs/zerolog"
@@ -34,7 +35,15 @@ func NewUser(db *sql.DB, l *zerolog.Logger) *userImpl {
 	}
 }
 
-func (u *userImpl) CreateUser(ctx context.Context, user User) error {
+type CreateUserIn struct {
+	UserID   string `db:"user_id"`
+	Username string `db:"username"`
+	FullName string `db:"full_name"`
+	Email    string `db:"email"`
+	Password string `db:"password"`
+}
+
+func (u *userImpl) CreateUser(ctx context.Context, user CreateUserIn) error {
 	query := `INSERT INTO Users (user_id, username, full_name, email, password) VALUES (?, ?, ?, ?, ?)`
 	_, err := u.DB.ExecContext(ctx, query,
 		user.UserID,
@@ -103,14 +112,43 @@ func (u *userImpl) FindByUsername(ctx context.Context, username string) (User, e
 	return user, nil
 }
 
-func (u *userImpl) OAuthCreateUser(ctx context.Context, user User) error {
-	query := `INSERT INTO Users (user_id, username, full_name, email, avatar) VALUES (?, ?, ?, ?, ?, ?)`
+type OAuthCreateUserIn struct {
+	UserID   string `db:"user_id"`
+	Username string `db:"username"`
+	FullName string `db:"full_name"`
+	Email    string `db:"email"`
+	Password string `db:"password"`
+	Avatar   string `db:"avatar"`
+}
+
+func (u *userImpl) OAuthCreateUser(ctx context.Context, user OAuthCreateUserIn) error {
+	query := `INSERT INTO Users (user_id, username, full_name, email, password, avatar) VALUES (?, ?, ?, ?, ?, ?)`
 	_, err := u.DB.ExecContext(ctx, query,
 		user.UserID,
 		user.Username,
 		user.FullName,
 		user.Email,
+		user.Password,
 		user.Avatar,
 	)
+	fmt.Println(err)
 	return err
+}
+
+func (u *userImpl) FindId(ctx context.Context, id string) bool {
+	query := `SELECT user_id FROM Users WHERE user_id = ? LIMIT 1`
+	rows := u.DB.QueryRowContext(ctx, query, id)
+	if rows.Scan() == sql.ErrNoRows {
+		return false
+	}
+	return true
+}
+
+func (u *userImpl) FindUsername(ctx context.Context, username string) bool {
+	query := `SELECT username FROM Users WHERE username = ? LIMIT 1`
+	rows := u.DB.QueryRowContext(ctx, query, username)
+	if rows.Scan() == sql.ErrNoRows {
+		return false
+	}
+	return true
 }

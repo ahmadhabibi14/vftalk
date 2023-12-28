@@ -2,7 +2,10 @@ package apis
 
 import (
 	"encoding/json"
+	"fmt"
+	"io"
 	"net/http"
+	"os"
 	"strings"
 	"vftalk/configs"
 	"vftalk/services"
@@ -63,6 +66,32 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 	GOOGLE_fullname := userInfo["name"].(string)
 	GOOGLE_avatar := userInfo["picture"].(string)
 
+	resp, err := http.Get(GOOGLE_avatar)
+	if err != nil || resp.StatusCode != fiber.StatusOK {
+		response = HTTPResponse{
+			Code:   fiber.StatusInternalServerError,
+			Status: STATUS_INTERNALSERVERERROR,
+			Errors: "Failed to save user info",
+			Data:   "",
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(response)
+	}
+	defer resp.Body.Close()
+
+	imgPath := fmt.Sprintf("uploads/img/avatars/%v.png", GOOGLE_id)
+	file, _ := os.Create(imgPath)
+	_, err = io.Copy(file, resp.Body)
+	if err != nil {
+		response = HTTPResponse{
+			Code:   fiber.StatusInternalServerError,
+			Status: STATUS_INTERNALSERVERERROR,
+			Errors: "Failed to save user avatar",
+			Data:   "",
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(response)
+	}
+
+	GOOGLE_avatar = fmt.Sprintf("/img/avatars/%v.png", GOOGLE_id)
 	in := services.InUser_OAuthCreate{
 		UserID:   GOOGLE_id,
 		Username: GOOGLE_username,
@@ -84,11 +113,5 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 	}
 
 	configs.SetJWTasCookie(c, token)
-	response = HTTPResponse{
-		Code:   fiber.StatusOK,
-		Status: STATUS_OK,
-		Errors: "",
-		Data:   "Login successful !",
-	}
-	return c.Status(fiber.StatusOK).JSON(response)
+	return c.Redirect("/", fiber.StatusPermanentRedirect)
 }
