@@ -13,6 +13,8 @@ loginBtn.addEventListener("click", async () => {
   loginTxt.style.display = "none";
   loginLoadingIcon.style.display = "block";
 
+  console.log('Username:', username.value);
+  console.log('Password:', password.value);
   try {
     const resp = await fetch("/api/login", {
       method: "POST",
@@ -27,12 +29,13 @@ loginBtn.addEventListener("click", async () => {
 
     if (resp.ok) {
       const creds = await resp.json();
-			const successResp = await JSON.parse(creds);
+
+      console.log(creds);
       
       loginTxt.style.display = "block";
       loginLoadingIcon.style.display = "none";
       loginBtn.disabled = false;
-      localStorage.setItem("username", successResp["username"]);
+      localStorage.setItem("username", successResp["data"]["username"]);
 
       notifier.showSuccess("Login successful");
       setTimeout(() => {
@@ -40,21 +43,22 @@ loginBtn.addEventListener("click", async () => {
       }, 1200);
     } else {
       const creds = await resp.json();
-      const errResp = await JSON.parse(creds);
-      notifier.showError(errResp["error"]);
+      notifier.showError('Error');
+      console.log(creds);
       loginBtn.disabled = false;
       loginTxt.style.display = "block";
       loginLoadingIcon.style.display = "none";
-      username.value = "";
-      password.value = "";
+      // username.value = "";
+      // password.value = "";
       return;
     }
   } catch (e) {
+    console.log(e);
     notifier.showError("Login failed");
     loginBtn.disabled = false;
     loginTxt.style.display = "block";
     loginLoadingIcon.style.display = "none";
-    username.value = "";
-    password.value = "";
+    // username.value = "";
+    // password.value = "";
   }
 });

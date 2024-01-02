@@ -18,9 +18,9 @@ var WEBSOCKET_CONF = websocket.Config{
 func ApiRoutes(app *fiber.App, apis *apis.ApisHandler) {
 	api := app.Group("/api")
 	api.Post("/register", apis.AuthRegister)
+	api.Post("/login", apis.AuthLogin)
 	api.Get("/oauth/google", apis.OAuthGoogle)
 	api.Get("/room", middlewares.AuthJWT, middlewares.Websocket, websocket.New(apis.UserChatRoom, WEBSOCKET_CONF))
-	// api.Post("/login", handlers.Login)
 
 	// api.Post("/userdata", handlers.GetUserData)
 	// api.Post("/user-update-avatar", middlewares.AuthJWT, handlers.UpdateProfilePicture)

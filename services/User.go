@@ -162,6 +162,38 @@ func (u *userImpl) OAuthCreateUser(ctx context.Context, in InUser_OAuthCreate) (
 	return t, nil
 }
 
+type (
+	InUser_AuthLogin struct {
+		Username string `json:"username" form:"username" validate:"required,omitempty,min=4"`
+		Password string `json:"password" form:"password" validate:"required,min=8"`
+	}
+)
+
+func (u *userImpl) AuthLogin(ctx context.Context, in InUser_AuthLogin) (token string, err error) {
+	msg, err := utils.ValidateStruct(in)
+	if err != nil {
+		return "", fmt.Errorf(msg)
+	}
+
+	userrepo := databases.NewUser(u.DB, u.Log)
+	user, err := userrepo.FindByUsername(ctx, in.Username)
+	if err != nil {
+		return "", fmt.Errorf("Username not found")
+	}
+
+	passwordMatch := utils.VerifyPassword(in.Password, user.Password)
+	if passwordMatch != nil {
+		return "", fmt.Errorf("Password does not match the user's password")
+	}
+
+	t, err := configs.GenerateJWT(user.Username, user.UserID, time.Now().AddDate(0, 2, 0))
+	if err != nil {
+		return "", fmt.Errorf("Error generate session token")
+	}
+
+	return t, nil
+}
+
 func (u *userImpl) Debug(ctx context.Context, id string) bool {
 	userrepo := databases.NewUser(u.DB, u.Log)
 	if !userrepo.FindId(ctx, id) {
