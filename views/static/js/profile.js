@@ -95,7 +95,7 @@ async function updateProfile() {
     const resp = await fetch('/api/user-update-profile', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/jsoa',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         full_name: fullNameInput.value,
