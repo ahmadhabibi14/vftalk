@@ -94,7 +94,7 @@ async function updateProfile() {
     const resp = await fetch('/api/user-update-profile', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/jsoa',
       },
       body: JSON.stringify({
         full_name: fullNameInput.value,
@@ -107,20 +107,20 @@ async function updateProfile() {
       const creds = await resp.json();
       console.log(creds);
       updateProfileResp()
-      notifier.showSuccess('Profile updated successfully.');
+      notifier.showSuccess(creds.data);
       setTimeout(()=>{
         window.location.reload();
       }, 1300)
     } else {
       const creds = await resp.json();
-      notifier.showError('Error');
+      notifier.showError(creds.errors+': '+creds.data);
       console.log(creds);
       updateProfileResp()
       return;
     }
   } catch (e) {
     console.log(e);
-    notifier.showError('Error');
+    notifier.showError('Error: ', e);
     updateProfileResp()
     return
   }

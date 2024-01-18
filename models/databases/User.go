@@ -73,6 +73,20 @@ func (u *userImpl) UpdateUserProfile(ctx context.Context, user UpdateUserProfile
 	return err
 }
 
+type UpdateUserAvatarIn struct {
+	UserID string `db:"user_id"`
+	Avatar string `db:"avatar"`
+}
+
+func (u *userImpl) UpdateUserAvatar(ctx context.Context, user UpdateUserAvatarIn) error {
+	query := `UPDATE Users SET avatar = ? WHERE user_id = ?`
+	_, err := u.DB.ExecContext(ctx, query,
+		user.Avatar,
+		user.UserID,
+	)
+	return err
+}
+
 func (u *userImpl) FindById(ctx context.Context, id string) (User, error) {
 	query := `SELECT user_id, username, full_name, email, password, avatar, join_at, last_active, website, location FROM Users WHERE user_id = ? LIMIT 1`
 	rows, err := u.DB.QueryContext(ctx, query, id)
