@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 	"time"
 	"vftalk/configs"
@@ -192,6 +193,40 @@ func (u *userImpl) AuthLogin(ctx context.Context, in InUser_AuthLogin) (token, u
 	}
 
 	return t, user.Username, nil
+}
+
+type (
+	InUser_UpdateProfile struct {
+		UserID   string `json:"user_id" validate:"required"`
+		FullName string `json:"full_name" validate:"required"`
+		Location string `json:"location" validate:"required"`
+		Website  string `json:"website" validate:"required"`
+	}
+)
+
+func (u *userImpl) UpdateProfile(ctx context.Context, in InUser_UpdateProfile) error {
+	msg, err := utils.ValidateStruct(in)
+	if err != nil {
+		return fmt.Errorf(msg)
+	}
+	userrepo := databases.NewUser(u.DB, u.Log)
+	if userrepo.FindId(ctx, in.UserID) == `` {
+		return errors.New("User not found")
+	}
+
+	user := databases.UpdateUserProfileIn{
+		UserID:   in.UserID,
+		FullName: in.FullName,
+		Location: in.Location,
+		Website:  in.Website,
+	}
+	updateProfile := userrepo.UpdateUserProfile(ctx, user)
+	if updateProfile != nil {
+		u.Log.Error().Msg(updateProfile.Error())
+		return updateProfile
+	}
+
+	return nil
 }
 
 func (u *userImpl) Debug(ctx context.Context, id string) bool {

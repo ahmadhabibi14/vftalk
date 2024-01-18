@@ -55,6 +55,24 @@ func (u *userImpl) CreateUser(ctx context.Context, user CreateUserIn) error {
 	return err
 }
 
+type UpdateUserProfileIn struct {
+	UserID   string `db:"user_id"`
+	FullName string `db:"full_name"`
+	Location string `db:"location"`
+	Website  string `db:"website"`
+}
+
+func (u *userImpl) UpdateUserProfile(ctx context.Context, user UpdateUserProfileIn) error {
+	query := `UPDATE Users SET full_name = ?, location = ?, website = ? WHERE user_id = ?`
+	_, err := u.DB.ExecContext(ctx, query,
+		user.FullName,
+		user.Location,
+		user.Website,
+		user.UserID,
+	)
+	return err
+}
+
 func (u *userImpl) FindById(ctx context.Context, id string) (User, error) {
 	query := `SELECT user_id, username, full_name, email, password, avatar, join_at, last_active, website, location FROM Users WHERE user_id = ? LIMIT 1`
 	rows, err := u.DB.QueryContext(ctx, query, id)

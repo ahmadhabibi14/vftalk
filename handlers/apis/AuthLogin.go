@@ -40,7 +40,8 @@ func (a *ApisHandler) AuthLogin(c *fiber.Ctx) error {
 		Status: STATUS_OK,
 		Errors: "",
 		Data: struct {
-			Msg, Username string
+			Msg      string `json:"message"`
+			Username string `json:"username"`
 		}{
 			Msg:      "Login successful !",
 			Username: username,

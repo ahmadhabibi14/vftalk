@@ -27,6 +27,11 @@ const (
 	STATUS_BADREQUEST          = "BAD REQUEST"
 	STATUS_INTERNALSERVERERROR = "INTERNAL SERVER ERROR"
 	STATUS_TOOMANYREQUEST      = "TOO MANY REQUEST"
-	ERROR_INVALIDPAYLOAD       = "The payload or input provided is invalid. Please check your request and try again."
-	ERROR_GENERATETOKEN        = "Error generate session token"
+	STATUS_UNAUTHORIZED        = "UNAUTHORIZED"
+)
+
+const (
+	ERROR_INVALIDPAYLOAD = "The payload or input provided is invalid. Please check your request and try again."
+	ERROR_GENERATETOKEN  = "Error generate session token"
+	ERROR_UNAUTHORIZED   = "You are unauthorized to do this operation"
 )

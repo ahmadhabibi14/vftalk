@@ -17,14 +17,14 @@ var WEBSOCKET_CONF = websocket.Config{
 
 func ApiRoutes(app *fiber.App, apis *apis.ApisHandler) {
 	api := app.Group("/api")
-	api.Post("/register", apis.AuthRegister)
-	api.Post("/login", apis.AuthLogin)
+	api.Post("/register", middlewares.ContentJSON, apis.AuthRegister)
+	api.Post("/login", middlewares.ContentJSON, apis.AuthLogin)
 	api.Get("/oauth/google", apis.OAuthGoogle)
 	api.Get("/room", middlewares.AuthJWT, middlewares.Websocket, websocket.New(apis.UserChatRoom, WEBSOCKET_CONF))
+	api.Post("/user-update-profile", middlewares.AuthJWT, middlewares.ContentJSON, apis.UpdateProfile)
 
 	// api.Post("/userdata", handlers.GetUserData)
 	// api.Post("/user-update-avatar", middlewares.AuthJWT, handlers.UpdateProfilePicture)
-	// api.Post("/user-update-profile", middlewares.AuthJWT, handlers.UpdateProfile)
 
 	api.Get("/debug", apis.Debug)
 }

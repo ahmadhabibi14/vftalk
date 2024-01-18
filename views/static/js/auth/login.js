@@ -58,7 +58,7 @@ loginBtn.addEventListener("click", async () => {
     loginBtn.disabled = false;
     loginTxt.style.display = "block";
     loginLoadingIcon.style.display = "none";
-    // username.value = "";
-    // password.value = "";
+    username.value = "";
+    password.value = "";
   }
 });

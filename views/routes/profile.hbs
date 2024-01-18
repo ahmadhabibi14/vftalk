@@ -104,12 +104,24 @@
           </div>
         </div>
         
-        <div class="flex flex-row items-center gap-4">
+        <div class="flex flex-row items-stretch gap-4">
           <button onclick="cancelUpdateProfile()" class="border border-[#ADDEBE]/20 bg-emerald-400/10 hover:border-[#ADDEBE]/60 h-fit w-fit text-lg font-semibold gap-2 flex flex-row justify-center items-center px-4 py-2 rounded-xl disabled:bg-[#115A2A]">
             <span>Cancel</span>
           </button>
-          <button onclick="updateProfile()" class="h-fit w-fit text-lg font-semibold gap-2 flex flex-row justify-center items-center bg-[#115A2A] hover:bg-[#2B874A] px-4 py-2 rounded-xl disabled:bg-[#115A2A]">
-            <span>Submit</span>
+          <button onclick="updateProfile()" class="h-auto w-fit text-lg font-semibold gap-2 flex flex-row justify-center items-center bg-[#115A2A] hover:bg-[#2B874A] px-4 py-2 rounded-xl disabled:bg-[#115A2A]">
+            <svg viewBox="0 0 24 24" id="updateProfileLoadingIcon"
+              class="hidden w-5 h-auto stroke-[#ADDEBE] fill-none animate-spin" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <line x1="12" y1="2" x2="12" y2="6"></line>
+              <line x1="12" y1="18" x2="12" y2="22"></line>
+              <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+              <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+              <line x1="2" y1="12" x2="6" y2="12"></line>
+              <line x1="18" y1="12" x2="22" y2="12"></line>
+              <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+              <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+            </svg>
+            <span id="updateProfileButtonText" class="block">Submit</span>
           </button>
         </div>
       </div>
