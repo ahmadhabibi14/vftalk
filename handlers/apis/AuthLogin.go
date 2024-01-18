@@ -23,7 +23,7 @@ func (a *ApisHandler) AuthLogin(c *fiber.Ctx) error {
 	}
 
 	user := services.NewUser(a.Db, a.Log)
-	token, err := user.AuthLogin(ctx, in)
+	token, username, err := user.AuthLogin(ctx, in)
 	if err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
@@ -39,7 +39,12 @@ func (a *ApisHandler) AuthLogin(c *fiber.Ctx) error {
 		Code:   fiber.StatusOK,
 		Status: STATUS_OK,
 		Errors: "",
-		Data:   "Login successful !",
+		Data: struct {
+			Msg, Username string
+		}{
+			Msg:      "Login successful !",
+			Username: username,
+		},
 	}
 	return c.Status(fiber.StatusOK).JSON(response)
 }

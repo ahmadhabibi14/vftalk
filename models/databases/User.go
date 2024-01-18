@@ -84,7 +84,6 @@ func (u *userImpl) FindById(ctx context.Context, id string) (User, error) {
 }
 
 func (u *userImpl) FindByUsername(ctx context.Context, username string) (User, error) {
-
 	query := `SELECT user_id, username, full_name, email, password, avatar, join_at, last_active, website, location FROM Users WHERE username = ? LIMIT 1`
 	rows, err := u.DB.QueryContext(ctx, query, username)
 	defer rows.Close()
@@ -135,20 +134,27 @@ func (u *userImpl) OAuthCreateUser(ctx context.Context, user OAuthCreateUserIn) 
 	return err
 }
 
-func (u *userImpl) FindId(ctx context.Context, id string) bool {
+func (u *userImpl) FindId(ctx context.Context, id string) string {
 	query := `SELECT user_id FROM Users WHERE user_id = ? LIMIT 1`
 	rows := u.DB.QueryRowContext(ctx, query, id)
-	if rows.Scan() == sql.ErrNoRows {
-		return false
+
+	var uid string
+	if rows.Scan(&uid) == sql.ErrNoRows {
+		return ``
 	}
-	return true
+
+	return uid
 }
 
-func (u *userImpl) FindUsername(ctx context.Context, username string) bool {
+func (u *userImpl) FindUsername(ctx context.Context, username string) string {
 	query := `SELECT username FROM Users WHERE username = ? LIMIT 1`
 	rows := u.DB.QueryRowContext(ctx, query, username)
-	if rows.Scan() == sql.ErrNoRows {
-		return false
+
+	var uname string
+	if rows.Scan(&uname) == sql.ErrNoRows {
+		return ``
 	}
-	return true
+
+	fmt.Println("Username: ", uname)
+	return uname
 }
