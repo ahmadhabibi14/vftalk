@@ -22,9 +22,7 @@ func ApiRoutes(app *fiber.App, apis *apis.ApisHandler) {
 	api.Get("/oauth/google", apis.OAuthGoogle)
 	api.Get("/room", middlewares.AuthJWT, middlewares.Websocket, websocket.New(apis.UserChatRoom, WEBSOCKET_CONF))
 	api.Post("/user-update-profile", middlewares.AuthJWT, middlewares.ContentJSON, apis.UpdateProfile)
-
-	// api.Post("/userdata", handlers.GetUserData)
-	// api.Post("/user-update-avatar", middlewares.AuthJWT, handlers.UpdateProfilePicture)
+	api.Post("/user-update-avatar", middlewares.AuthJWT, middlewares.ContentMultipartForm, apis.UpdateAvatar)
 
 	api.Get("/debug", apis.Debug)
 }

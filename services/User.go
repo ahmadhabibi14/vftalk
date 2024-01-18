@@ -229,6 +229,36 @@ func (u *userImpl) UpdateProfile(ctx context.Context, in InUser_UpdateProfile) e
 	return nil
 }
 
+type (
+	InUser_UpdateAvatar struct {
+		UserID string `form:"user_id" validate:"required"`
+		Avatar string `form:"avatar" validate:"required"`
+	}
+)
+
+func (u *userImpl) UpdateAvatar(ctx context.Context, in InUser_UpdateAvatar) error {
+	msg, err := utils.ValidateStruct(in)
+	if err != nil {
+		return fmt.Errorf(msg)
+	}
+	userrepo := databases.NewUser(u.DB, u.Log)
+	if userrepo.FindId(ctx, in.UserID) == `` {
+		return errors.New("User not found")
+	}
+
+	user := databases.UpdateUserAvatarIn{
+		UserID: in.UserID,
+		Avatar: in.Avatar,
+	}
+	updateAvatar := userrepo.UpdateUserAvatar(ctx, user)
+	if updateAvatar != nil {
+		u.Log.Error().Msg(updateAvatar.Error())
+		return updateAvatar
+	}
+
+	return nil
+}
+
 func (u *userImpl) Debug(ctx context.Context, id string) bool {
 	userrepo := databases.NewUser(u.DB, u.Log)
 	if userrepo.FindId(ctx, id) == `` {

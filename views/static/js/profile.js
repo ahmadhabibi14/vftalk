@@ -33,18 +33,19 @@ function updateAvatar() {
   xhr.open('POST', '/api/user-update-avatar', true);
   xhr.withCredentials = true;
   xhr.addEventListener( 'load', function() {
-    const out = JSON.parse(xhr.responseText );
-    const outJson = JSON.parse( out );
+    const outJson = JSON.parse(xhr.responseText );
     if( xhr.status===200 ) {
-      userAvatarImg.src = `/files${outJson.avatarUrl}`;
+      userAvatarImg.src = `/files${outJson.data.avatar}`;
       notifier.showSuccess('Image uploaded successfully.');
+      console.log(outJson);
       updateAvatarResp();
       setTimeout(() => {
         location.reload();
       }, 3500);
     } else {
+      console.log(outJson);
       updateAvatarResp();
-      notifier.showError(outJson.error);
+      notifier.showError(outJson.errors+': '+outJson.data);
     }
   } );
   xhr.addEventListener( 'error', function() {
