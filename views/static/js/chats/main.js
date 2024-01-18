@@ -1,19 +1,19 @@
-let chatInputElm = document.getElementById("chatInputElm");
-let chatContainer = document.getElementById("chatContainer");
-let sendChatBtnElm = document.getElementById("sendChatBtnElm");
-let sendChatIcon = document.getElementById("sendChatIcon");
-let loadingIcon = document.getElementById("loadingIcon");
+let chatInputElm = document.getElementById('chatInputElm');
+let chatContainer = document.getElementById('chatContainer');
+let sendChatBtnElm = document.getElementById('sendChatBtnElm');
+let sendChatIcon = document.getElementById('sendChatIcon');
+let loadingIcon = document.getElementById('loadingIcon');
 let socket = new WebSocket(`ws://${window.location.host}/api/room`);
 
-const username = localStorage.getItem("username");
+const username = localStorage.getItem('username');
 
 function SendMessage() {
-  if (chatInputElm.value === "") {
+  if (chatInputElm.value === '') {
     return;
   }
   sendChatBtnElm.disabled = true;
-  sendChatIcon.style.display = "none";
-  loadingIcon.style.display = "block";
+  sendChatIcon.style.display = 'none';
+  loadingIcon.style.display = 'block';
   try {
     socket.send(
       JSON.stringify({
@@ -21,36 +21,36 @@ function SendMessage() {
       })
     );
   } catch (e) {
-    notifier.showError("Error sending message: ", e);
+    notifier.showError('Error sending message: ', e);
   }
-  chatInputElm.value = "";
-  sendChatIcon.style.display = "block";
-  loadingIcon.style.display = "none";
+  chatInputElm.value = '';
+  sendChatIcon.style.display = 'block';
+  loadingIcon.style.display = 'none';
   sendChatBtnElm.disabled = false;
   return;
 }
 
 socket.onopen = () => {
-  console.log("Connected");
+  console.log('Connected');
 };
 
 socket.onmessage = (e) => {
   let data = JSON.parse(e.data);
-  let rootMsg = document.createElement("chatroot")
-  let msgContainer = document.createElement("chat");
-  let unameElm = document.createElement("span");
-  let msgElm = document.createElement("p");
+  let rootMsg = document.createElement('chatroot')
+  let msgContainer = document.createElement('chat');
+  let unameElm = document.createElement('span');
+  let msgElm = document.createElement('p');
 
   if (username === data.username) {
-    rootMsg.className = "chat_root owned"
+    rootMsg.className = 'chat_root owned'
   } else {
-    rootMsg.className = "chat_root"
+    rootMsg.className = 'chat_root'
   }
  
-  msgContainer.className = "chat_item";
-  unameElm.className = "chat_username";
+  msgContainer.className = 'chat_item';
+  unameElm.className = 'chat_username';
   unameElm.textContent = data.username;
-  msgElm.className = "chat_message";
+  msgElm.className = 'chat_message';
   msgElm.textContent = data.message;
 
 
@@ -62,36 +62,36 @@ socket.onmessage = (e) => {
 };
 
 socket.onerror = (e) => {
-  notifier.showError("Error WebSocket connection: ", e);
+  notifier.showError('Error WebSocket connection: ', e);
 }
 
 socket.onclose = (e) => {
   if (e.wasClean) {
     notifier.showWarning(`Connection closed cleanly, code=${e.code}, reason=${e.reason}`);
   } else {
-    notifier.showWarning("Connection abruptly closed");
+    notifier.showWarning('Connection abruptly closed');
   }
   setTimeout(() => {
     window.location.reload()
   }, 2000);
 }
 
-sendChatBtnElm.addEventListener("click", () => {
-  if (chatInputElm.value === "/clear") {
-    chatInputElm.value = "";
-    chatContainer.innerHTML = "";
+sendChatBtnElm.addEventListener('click', () => {
+  if (chatInputElm.value === '/clear') {
+    chatInputElm.value = '';
+    chatContainer.innerHTML = '';
     return;
   }
   SendMessage();
 });
 
-chatInputElm.addEventListener("keydown", (e) => {
-  if (chatInputElm.value === "/clear") {
-    chatInputElm.value = "";
-    chatContainer.innerHTML = "";
+chatInputElm.addEventListener('keydown', (e) => {
+  if (chatInputElm.value === '/clear') {
+    chatInputElm.value = '';
+    chatContainer.innerHTML = '';
     return;
   }
-  if (e.key === "Enter") {
+  if (e.key === 'Enter') {
     SendMessage();
   }
 });
