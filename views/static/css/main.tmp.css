@@ -772,6 +772,10 @@ video {
   height: 100vh;
 }
 
+.h-\[45px\] {
+  height: 45px;
+}
+
 .max-h-screen {
   max-height: 100vh;
 }
@@ -875,6 +879,10 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-\[45px\] {
+  width: 45px;
 }
 
 .flex-auto {
