@@ -31,7 +31,7 @@ func (w *WebServer) Start() {
 	db := configs.ConnectMariaDB()
 	oauth := configs.EnvOAuth()
 
-	engine := handlebars.New("./views/routes", ".hbs")
+	engine := handlebars.New("./views/pages", ".hbs")
 	app := fiber.New(fiber.Config{
 		AppName: w.AppName,
 		Views:   engine,
