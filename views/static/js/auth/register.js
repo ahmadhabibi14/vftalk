@@ -1,26 +1,27 @@
-let email = document.getElementById('email');
-let fullname = document.getElementById('fullname');
-let username = document.getElementById('username');
-let password = document.getElementById('password');
-let registerBtn = document.getElementById('registerBtn');
-let registerTxt = document.getElementById('registerTxt');
-let registerLoadingIcon = document.getElementById('registerLoadingIcon');
+const email = document.getElementById('email');
+const fullname = document.getElementById('fullname');
+const username = document.getElementById('username');
+const password = document.getElementById('password');
+const registerBtn = document.getElementById('registerBtn');
+const registerTxt = document.getElementById('registerTxt');
+const registerLoadingIcon = document.getElementById('registerLoadingIcon');
+
+function RespDOM_Register() {
+  registerTxt.style.display = 'block';
+  registerLoadingIcon.style.display = 'none';
+  registerBtn.disabled = false;
+}
 
 registerBtn.addEventListener('click', async () => {
   if (username.value === '' || password.value === '' || email.value === '' || fullname.value === '') {
-    notifier.showError('Please fill your credentials');
-    return;
+    return notifier.showWarning('Please fill with correct inputs');
   }
   registerBtn.disabled = true;
   registerTxt.style.display = 'none';
   registerLoadingIcon.style.display = 'block';
-
   try {
     const resp = await fetch('/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: email.value,
         password: password.value,
@@ -28,39 +29,22 @@ registerBtn.addEventListener('click', async () => {
         full_name: fullname.value
       }),
     });
-
-    console.log('Resp: ', resp);
-
+    const respjson = await resp.json();
     if (resp.ok) {
-      const creds = await resp.json();
-      console.log('Creds:', creds)
-			const successResp = await JSON.parse(creds);
-      console.log('Success Resp:', successResp)
-      
-      registerTxt.style.display = 'block';
-      registerLoadingIcon.style.display = 'none';
-      registerBtn.disabled = false;
-      localStorage.setItem('username', successResp['username']);
-      notifier.showSuccess('Register successfully!')
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 1500);
+      localStorage.setItem('username', respjson.data.username);
+      notifier.showSuccess(respjson.data.message);
+      RespDOM_Register();
+      setTimeout(() => window.location.href = '/', 1200);
     } else {
-      const creds = await resp.json();
-      console.log(creds);
-      const errResp = await JSON.parse(creds);
-      notifier.showError(errResp['errors']);
-      registerBtn.disabled = false;
-      registerTxt.style.display = 'block';
-      registerLoadingIcon.style.display = 'none';
-      username.value = '';
-      password.value = '';
+      notifier.showError(respjson.errors);
+      console.log(respjson);
+      RespDOM_Register();
       return;
     }
   } catch (e) {
-    notifier.showError('Register failed');
-    registerBtn.disabled = false;
-    registerTxt.style.display = 'block';
-    registerLoadingIcon.style.display = 'none';
+    console.log(e);
+    notifier.showError(e);
+    RespDOM_Register();
+    return;
   }
 });

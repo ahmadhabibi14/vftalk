@@ -1,5 +1,5 @@
-let eye = document.getElementById('eye');
-let eyeSlash = document.getElementById('eye-slash');
+const eye = document.getElementById('eye');
+const eyeSlash = document.getElementById('eye-slash');
 
 function togglePassword() {
   if (password.type === 'password') {

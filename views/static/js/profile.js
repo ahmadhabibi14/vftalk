@@ -1,13 +1,9 @@
-let popupUpdateAvatar = document.getElementById('popupUpdateAvatar');
-let avatarFileInput = document.getElementById('avatarFileInput');
-let avatarFileName = document.getElementById('avatarFileName');
-let avatarLoadingIcon = document.getElementById('avatarLoadingIcon');
-let avatarFileIcon = document.getElementById('avatarFileIcon');
-let userAvatarImg = document.getElementById('userAvatarImg');
-
-function openPopupUpdateAvatar() {
-  popupUpdateAvatar.classList.replace('hidden', 'flex');
-}
+const popupUpdateAvatar = document.getElementById('popupUpdateAvatar');
+const avatarFileInput = document.getElementById('avatarFileInput');
+const avatarFileName = document.getElementById('avatarFileName');
+const avatarLoadingIcon = document.getElementById('avatarLoadingIcon');
+const avatarFileIcon = document.getElementById('avatarFileIcon');
+const userAvatarImg = document.getElementById('userAvatarImg');
 
 var file;
 avatarFileInput.addEventListener('change', function() {
@@ -15,20 +11,26 @@ avatarFileInput.addEventListener('change', function() {
   if (file) avatarFileName.innerText = file.name;
 })
 
-function updateAvatarResp() {
+function RespDOM_updateAvatar() {
   popupUpdateAvatar.classList.replace('flex', 'hidden');
   avatarLoadingIcon.classList.replace('block', 'hidden');
   avatarFileIcon.classList.replace('hidden', 'block');
   avatarFileName.innerText = 'Select image from your device';
   file = null;
+  avatarFileInput.files = null;
+}
+
+const openPopupUpdateAvatar = () => popupUpdateAvatar.classList.replace('hidden', 'flex');
+const cancelUpdateAvatar = () => {
+  avatarFileInput.files = null; file = null; popupUpdateAvatar.classList.replace('flex', 'hidden');
+  avatarFileName.innerText = 'Select image from your device';
 }
 
 function updateAvatar() {
   if (!file) return notifier.showError('Please select an image first.');
   avatarLoadingIcon.classList.replace('hidden', 'block');
   avatarFileIcon.classList.replace('block', 'hidden');
-  var xhr = new XMLHttpRequest();
-  var formData = new FormData();
+  var xhr = new XMLHttpRequest(), formData = new FormData();
   formData.append('avatar', file);
   xhr.open('POST', '/api/user-update-avatar', true);
   xhr.withCredentials = true;
@@ -36,53 +38,40 @@ function updateAvatar() {
     const outJson = JSON.parse(xhr.responseText );
     if( xhr.status===200 ) {
       userAvatarImg.src = `/files${outJson.data.avatar}`;
-      notifier.showSuccess('Image uploaded successfully.');
-      console.log(outJson);
-      updateAvatarResp();
-      setTimeout(() => {
-        location.reload();
-      }, 3500);
+      notifier.showSuccess(outJson.data.message);
+      RespDOM_updateAvatar();
+      setTimeout(() => location.reload(), 3500);
     } else {
       console.log(outJson);
-      updateAvatarResp();
+      RespDOM_updateAvatar();
       notifier.showError(outJson.errors+': '+outJson.data);
     }
   } );
   xhr.addEventListener( 'error', function() {
-    updateAvatarResp();
+    RespDOM_updateAvatar();
     notifier.showError( 'Network error' );
   } );
   xhr.addEventListener( 'abort', function() {
-    updateAvatarResp();
+    RespDOM_updateAvatar();
     notifier.showWarning( 'Upload aborted' );
   }, false );
   xhr.send(formData);
 }
 
-function cancelUpdateAvatar() {
-  popupUpdateAvatar.classList.replace('flex', 'hidden');
-}
+const popupUpdateProfile = document.getElementById('popupUpdateProfile');
+const fullNameInput = document.getElementById('fullNameInput');
+const locationInput = document.getElementById('locationInput');
+const websiteInput = document.getElementById('websiteInput');
+const updateProfileLoadingIcon = document.getElementById('updateProfileLoadingIcon');
+const updateProfileButtonText = document.getElementById('updateProfileButtonText');
 
-let popupUpdateProfile = document.getElementById('popupUpdateProfile');
-let fullNameInput = document.getElementById('fullNameInput');
-let locationInput = document.getElementById('locationInput');
-let websiteInput = document.getElementById('websiteInput');
-let updateProfileLoadingIcon = document.getElementById('updateProfileLoadingIcon');
-let updateProfileButtonText = document.getElementById('updateProfileButtonText');
-
-function updateProfileResp() {
+function RespDOM_UpdateProfile() {
   updateProfileLoadingIcon.classList.replace('block', 'hidden');
   updateProfileButtonText.classList.replace('hidden', 'block');
 }
 
-function openPopupUpdateProfile() {
-  popupUpdateProfile.classList.replace('hidden', 'flex');
-}
-
-function cancelUpdateProfile() {
-  updateProfileResp()
-  popupUpdateProfile.classList.replace('flex', 'hidden');
-}
+const openPopupUpdateProfile = () => popupUpdateProfile.classList.replace('hidden', 'flex');
+const cancelUpdateProfile = () => popupUpdateProfile.classList.replace('flex', 'hidden');
 
 async function updateProfile() {
   if (!fullNameInput.value) return notifier.showError('Please enter your full name.');
@@ -94,35 +83,28 @@ async function updateProfile() {
   try {
     const resp = await fetch('/api/user-update-profile', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         full_name: fullNameInput.value,
         location: locationInput.value,
         website: websiteInput.value
       }),
     });
-
+    const respjson = await resp.json();
     if (resp.ok) {
-      const creds = await resp.json();
-      console.log(creds);
-      updateProfileResp()
-      notifier.showSuccess(creds.data);
-      setTimeout(()=>{
-        window.location.reload();
-      }, 1300)
+      RespDOM_UpdateProfile()
+      notifier.showSuccess(respjson.data);
+      setTimeout(()=> window.location.reload(), 1300);
     } else {
-      const creds = await resp.json();
-      notifier.showError(creds.errors+': '+creds.data);
-      console.log(creds);
-      updateProfileResp()
+      notifier.showError(respjson.errors+': '+respjson.data);
+      console.log(respjson);
+      RespDOM_UpdateProfile()
       return;
     }
   } catch (e) {
     console.log(e);
     notifier.showError('Error: ', e);
-    updateProfileResp()
-    return
+    RespDOM_UpdateProfile();
+    return;
   }
 }

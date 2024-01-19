@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"os"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
@@ -9,7 +10,7 @@ import (
 
 var CORSConfig = cors.Config{
 	AllowHeaders:     "Origin, Content-Type, Accept, Content-Length, Accept-Language, Accept-Encoding, Connection, Access-Control-Allow-Origin",
-	AllowOrigins:     "http://localhost:8000",
+	AllowOrigins:     strings.Join([]string{os.Getenv("WEB_PROTO_DOMAIN"), os.Getenv("WEB_DOMAIN")}, ", "),
 	AllowCredentials: true,
 	AllowMethods: strings.Join([]string{
 		fiber.MethodGet,

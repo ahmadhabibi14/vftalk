@@ -39,7 +39,13 @@ func (a *ApisHandler) AuthRegister(c *fiber.Ctx) error {
 		Code:   fiber.StatusOK,
 		Status: STATUS_OK,
 		Errors: "",
-		Data:   "Register successful !",
+		Data: struct {
+			Msg      string `json:"message"`
+			Username string `json:"username"`
+		}{
+			Msg:      "Register successful !",
+			Username: in.Username,
+		},
 	}
 	return c.Status(fiber.StatusOK).JSON(response)
 }

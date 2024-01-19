@@ -1,3 +1,5 @@
+// [ DEPRECATED ] no longer used it
+
 // Utility functions
 function unescapeHtmlEntities(text) {
   const element = document.createElement('div');

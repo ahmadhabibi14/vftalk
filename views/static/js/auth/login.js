@@ -1,64 +1,43 @@
-let username = document.getElementById('username');
-let password = document.getElementById('password');
-let loginBtn = document.getElementById('loginBtn');
-let loginTxt = document.getElementById('loginTxt');
-let loginLoadingIcon = document.getElementById('loginLoadingIcon');
+const username = document.getElementById('username');
+const password = document.getElementById('password');
+const loginBtn = document.getElementById('loginBtn');
+const loginTxt = document.getElementById('loginTxt');
+const loginLoadingIcon = document.getElementById('loginLoadingIcon');
+
+function RespDOM_Login() {
+  loginTxt.style.display = 'block';
+  loginLoadingIcon.style.display = 'none';
+  loginBtn.disabled = false;
+}
 
 loginBtn.addEventListener('click', async () => {
   if (username.value === '' || password.value === '') {
-    notifier.showError('Please enter username and password');
-    return;
+    return notifier.showWarning('Please fill the correct input');
   }
   loginBtn.disabled = true;
   loginTxt.style.display = 'none';
   loginLoadingIcon.style.display = 'block';
-
-  console.log('Username:', username.value);
-  console.log('Password:', password.value);
   try {
     const resp = await fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: username.value,
-        password: password.value,
-      }),
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: username.value, password: password.value })
     });
-
+    const respjson = await resp.json();
     if (resp.ok) {
-      const creds = await resp.json();
-
-      console.log(creds);
-      
-      loginTxt.style.display = 'block';
-      loginLoadingIcon.style.display = 'none';
-      loginBtn.disabled = false;
-      localStorage.setItem('username', successResp['data']['username']);
-
-      notifier.showSuccess('Login successful');
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 1200);
+      localStorage.setItem('username', respjson.data.username);
+      notifier.showSuccess(respjson.data.message);
+      RespDOM_Login();
+      setTimeout(() => window.location.href = '/', 1200);
     } else {
-      const creds = await resp.json();
-      notifier.showError('Error');
-      console.log(creds);
-      loginBtn.disabled = false;
-      loginTxt.style.display = 'block';
-      loginLoadingIcon.style.display = 'none';
-      // username.value = '';
-      // password.value = '';
+      notifier.showError(respjson.errors);
+      console.log(respjson);
+      RespDOM_Login();
       return;
     }
   } catch (e) {
     console.log(e);
-    notifier.showError('Login failed');
-    loginBtn.disabled = false;
-    loginTxt.style.display = 'block';
-    loginLoadingIcon.style.display = 'none';
-    username.value = '';
-    password.value = '';
+    notifier.showError(e);
+    RespDOM_Login();
+    return;
   }
 });

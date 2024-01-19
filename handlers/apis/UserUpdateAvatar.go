@@ -85,7 +85,7 @@ func (a *ApisHandler) UpdateAvatar(c *fiber.Ctx) error {
 			Msg    string `json:"message"`
 			Avatar string `json:"avatar"`
 		}{
-			Msg:    "Login successful !",
+			Msg:    "Profile picture updated !",
 			Avatar: imgPathStored,
 		},
 	}
