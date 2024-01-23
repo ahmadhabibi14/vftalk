@@ -85,8 +85,11 @@
         }
       };
 
-      var chart = new ApexCharts(document.querySelector("#chart"), options);
-      chart.render();
+      var chart;
+      setTimeout(() => {
+        chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+      }, 1300);
       if (userAvatar.includes("https")) {
         ELM_userAvatar.src = userAvatar;
       } else {
