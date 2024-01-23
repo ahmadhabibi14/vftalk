@@ -17,8 +17,6 @@
       {{!-- Charts will be render here --}}
     </div>
   </div>
-
-  <script src="/static/js/vendor/apexcharts.js"></script>
   <script>
     function formatDatetime( dateData ) {
       if( !dateData ) return "";
@@ -89,7 +87,7 @@
       setTimeout(() => {
         chart = new ApexCharts(document.querySelector("#chart"), options);
         chart.render();
-      }, 1300);
+      }, 500);
       if (userAvatar.includes("https")) {
         ELM_userAvatar.src = userAvatar;
       } else {
