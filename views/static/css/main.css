@@ -110,7 +110,7 @@ html {
 
 /* Notifier */
 .notifyjs-container {
-  @apply z-[900] fixed bottom-0 right-3 max-w-[304px] w-fit h-fit;
+  @apply z-[9999999999] fixed bottom-24 md:bottom-0 right-3 max-w-[304px] w-fit h-fit;
 }
 
 .notifyjs-container .notifyjs-notification {

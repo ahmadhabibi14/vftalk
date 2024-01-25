@@ -1,4 +1,4 @@
-version: "3"
+version: "3.2"
 
 services:
 
@@ -6,10 +6,10 @@ services:
     image: mariadb
     container_name: vftalk-db
     environment:
-      MARIADB_DATABASE: "vftalk"
-      MARIADB_USER: "habi"
-      MARIADB_PASSWORD: "habi123"
-      MARIADB_ROOT_PASSWORD: "root"
+      MARIADB_DATABASE: "${MARIADB_NAME}"
+      MARIADB_USER: "${MARIADB_USER}"
+      MARIADB_PASSWORD: "${MARIADB_PASSWORD}"
+      MARIADB_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
       MARIADB_TZ: "Asia/Makassar"
     command: "--default-time-zone=+08:00"
     ports:
@@ -26,13 +26,13 @@ services:
     container_name: phpmyadmin-vftalk
     restart: always
     ports:
-      - 8081:81
+      - 8080:80
     links:
       - db:mysql
     environment:
       PMA_HOST: db
       MYSQL_USERNAME: root
-      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
       PMA_ARBITRARY: 1
     volumes:
       - ./_tmpdb/phpmyadmin:/etc/phpmyadmin
@@ -48,4 +48,3 @@ services:
 
 networks:
   vftalk-network:
-    external: true

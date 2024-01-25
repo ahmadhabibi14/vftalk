@@ -1,6 +1,6 @@
 <div class="grow flex flex-col">
-  <header id="mainHeader" class="z-[100] text-2xl font-semibold h-20 absolute top-0 right-0 left-0 bg-black/40 backdrop-blur flex flex-row px-16 items-center border-b border-[#333]">
-    <a href="/" class="hover:bg-[#131313] flex flex-col justify-between items-center h-full w-full">
+  <header id="mainHeader" class="z-[100] text-2xl font-semibold h-20 absolute top-24 md:top-0 right-0 left-0 bg-black/40 backdrop-blur flex flex-row px-16 items-center border-b border-[#333]">
+    <a href="/" class="hover:bg-[#131313]/20 flex flex-col justify-between items-center h-full w-full">
       <div class="grow flex flex-row gap-2 justify-center items-center">
         <svg viewBox="0 0 24 24" fill="none" class="w-6 h-auto">
           <path stroke="currentColor" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -13,7 +13,7 @@
       </div>
       <span class="bg-[#2B874A] h-[4px] rounded-full w-20"></span>
     </a>
-    <a href="/direct" class="hover:bg-[#131313] flex flex-col justify-between items-center h-full w-full">
+    <a href="/direct" class="hover:bg-[#131313]/20 flex flex-col justify-between items-center h-full w-full">
       <div class="grow flex flex-row gap-2 justify-center items-center">
         <svg viewBox="0 0 24 24" fill="none" class="w-6 h-auto">
           <path stroke="currentColor" d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -26,7 +26,7 @@
       <span class="bg-transparent h-[4px] rounded-full w-20"></span>
     </a>
   </header>
-  <div class="flex-auto overflow-y-auto h-[0px] grow px-5 pt-24 bg-[#0a0a0a]" id="chatPartialContainer">
+  <div class="flex-auto overflow-y-auto h-[0px] grow px-5 pt-48 md:pt-24 bg-[#0a0a0a]" id="chatPartialContainer">
     {{> 'partials/chats'}}
   </div>
 </div>

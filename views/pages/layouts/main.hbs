@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv = "cache-control" content = "no-cache">
-  <meta http-equiv = "expires" content = "0">
-  <meta http-equiv = "pragma" content = "no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  <meta http-equiv="pragma" content="no-cache">
 
   <link rel="icon" type="image/svg+xml" href="/public/favicons/favicon.svg" />
   <title>{{Title}}</title>
@@ -18,8 +18,8 @@
 
   {{!-- Main Layout --}}
   <div class="w-full bg-black max-h-screen h-screen text-[#ADDEBE]">
-    <div class="w-full md:w-11/12 h-full mx-auto flex flex-row justify-center">
-      <div class="py-4 px-5 w-[220px] flex flex-col justify-between">
+    <div class="container h-full mx-auto flex flex-row justify-center">
+      <div class="py-4 px-5 w-[220px] hidden md:flex flex-col justify-between">
         <picture class="ml-3 mb-8">
           <img src="/public/icons/vftalk_2.svg" alt="Logo" title="VFtalk" class="w-[120px] h-auto" />
         </picture>
@@ -91,10 +91,63 @@
           </button>
         </div>
       </div>
+      <div class="md:hidden w-full px-5 bg-black h-24 border-b border-[#333] fixed top-0 z-[99999] flex flex-row justify-between items-center">
+        <a href="/" class="w-fit h-fit">
+          <img src="/public/icons/vftalk_2.svg" alt="Logo" title="VFtalk" class="w-[110px] md:w-[120px] h-auto" />
+        </a>
+        <div class="flex flex-row gap-6">
+          <button class="rounded-full flex flex-row items-center w-64 bg-[#0a0a0a] hover:bg-[#131313] border border-[#333] h-fit py-3 px-4">
+            <span class="grow text-left">Search...</span>
+            <svg class="w-6 h-auto fill-none" viewBox="0 0 24 24">
+              <path d="M11 20C15.9706 20 20 15.9706 20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M18.9299 20.6898C19.4599 22.2898 20.6699 22.4498 21.5999 21.0498C22.4499 19.7698 21.8899 18.7198 20.3499 18.7198C19.2099 18.7098 18.5699 19.5998 18.9299 20.6898Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button>
+          <svg class="fill-[#ADDEBE] stroke-none" width="30" height="25" viewBox="0 0 24 20">
+            <g transform="matrix(-1,0,0,1,23.197645,0)">
+              <rect
+                paint-order="stroke fill markers"
+                stroke-dasharray="none"
+                stroke-linejoin="round"
+                stroke-width="24.0788"
+                width="17.213737"
+                height="2.5733373"
+                x="0.80000001"
+                y="1.1929638"
+                ry="1.2866687"
+              />
+              <rect
+                paint-order="stroke fill markers"
+                stroke-dasharray="none"
+                stroke-linejoin="round"
+                stroke-width="24.0788"
+                width="17.213737"
+                height="2.5733373"
+                x="0.80000001"
+                y="15.928909"
+                ry="1.2866687"
+              />
+              <rect
+                paint-order="stroke fill markers"
+                stroke-dasharray="none"
+                stroke-linejoin="round"
+                stroke-width="24.0788"
+                width="21.597645"
+                height="2.5733373"
+                x="0.80000001"
+                y="8.4741688"
+                ry="1.2866687"
+              />
+            </g>
+          </svg>
+          </button>
+        </div>
+      </div>
       <div class="relative w-full md:w-[660px] h-full flex flex-col border-x border-[#333]">
         {{embed}}
       </div>
-      <div class="mt-7 ml-7">
+      <div class="hidden md:block mt-7 ml-7">
         {{> 'partials/userInfo'}}
       </div>
     </div>
