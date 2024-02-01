@@ -39,12 +39,12 @@ func (a *ApisHandler) UpdateProfile(c *fiber.Ctx) error {
 	updateProfile := user.UpdateProfile(ctx, in)
 	if updateProfile != nil {
 		response = HTTPResponse{
-			Code:   fiber.StatusInternalServerError,
-			Status: STATUS_INTERNALSERVERERROR,
+			Code:   fiber.StatusBadRequest,
+			Status: STATUS_BADREQUEST,
 			Errors: updateProfile.Error(),
 			Data:   "",
 		}
-		return c.Status(fiber.StatusInternalServerError).JSON(response)
+		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 
 	response = HTTPResponse{

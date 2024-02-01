@@ -26,6 +26,14 @@ type WebServer struct {
 	Log     *zerolog.Logger
 }
 
+func NewWebServer(cfg configs.WebConf, lg *zerolog.Logger) *WebServer {
+	return &WebServer{
+		AppName: "VFtalk - Chat App",
+		Cfg:     cfg,
+		Log:     lg,
+	}
+}
+
 func (w *WebServer) Start() {
 	mlr := MailServer(w.Log)
 	db := configs.ConnectMariaDB()

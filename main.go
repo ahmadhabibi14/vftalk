@@ -22,11 +22,7 @@ func main() {
 
 	switch mode {
 	case `web`:
-		ws := &web.WebServer{
-			AppName: "VFtalk - Chat App",
-			Cfg:     configs.EnvWebConf(),
-			Log:     zlog,
-		}
+		ws := web.NewWebServer(configs.EnvWebConf(), zlog)
 		ws.Start()
 	case `migrate`:
 		models.RunMigration()
