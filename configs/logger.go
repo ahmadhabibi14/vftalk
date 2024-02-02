@@ -26,11 +26,12 @@ func InitLogger() *zerolog.Logger {
 			logLevel = int(zerolog.InfoLevel)
 		}
 
+		file, _ := os.OpenFile("log/application.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0664)
+		multi := zerolog.MultiLevelWriter(os.Stderr, file)
 		var output io.Writer = zerolog.ConsoleWriter{
-			Out:        os.Stdout,
+			Out:        multi,
 			TimeFormat: `2006/01/02 03:04 PM`,
 		}
-
 		buildInfo, _ := debug.ReadBuildInfo()
 
 		l = zerolog.New(output).
