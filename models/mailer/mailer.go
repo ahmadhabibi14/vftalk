@@ -2,7 +2,9 @@ package mailer
 
 import (
 	"log"
+	"vftalk/configs"
 
+	"github.com/rs/zerolog"
 	"github.com/wneessen/go-mail"
 )
 
@@ -10,6 +12,16 @@ type SendMailFunc func(toEmailName map[string]string, subject, text, html string
 
 type Mailer struct {
 	SendMailFunc SendMailFunc
+}
+
+func NewMailer(l *zerolog.Logger) Mailer {
+	mlr := Mailer{}
+	mh, err := NewMailhog(configs.EnvMailhog())
+	if err != nil {
+		l.Error().Str(`Error: `, err.Error()).Msg(`Cannot load mailhog`)
+	}
+	mlr.SendMailFunc = mh.SendEmail
+	return mlr
 }
 
 func (m *Mailer) SendUserRegisterEmail(email string) error {

@@ -35,7 +35,7 @@ func NewWebServer(cfg configs.WebConf, lg *zerolog.Logger) *WebServer {
 }
 
 func (w *WebServer) Start() {
-	mlr := MailServer(w.Log)
+	mlr := mailer.NewMailer(w.Log)
 	db := configs.ConnectMariaDB()
 	oauth := configs.EnvOAuth()
 
@@ -82,14 +82,4 @@ func (w *WebServer) Start() {
 	WebViews(app, pageHandler)
 	ApiRoutes(app, apiHandler)
 	log.Fatal(app.Listen(w.Cfg.ListenAddr()))
-}
-
-func MailServer(l *zerolog.Logger) mailer.Mailer {
-	mlr := mailer.Mailer{}
-	mh, err := mailer.NewMailhog(configs.EnvMailhog())
-	if err != nil {
-		l.Error().Str(`Error: `, err.Error()).Msg(`Cannot load mailhog`)
-	}
-	mlr.SendMailFunc = mh.SendEmail
-	return mlr
 }

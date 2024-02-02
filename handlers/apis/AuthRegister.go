@@ -47,5 +47,12 @@ func (a *ApisHandler) AuthRegister(c *fiber.Ctx) error {
 			Username: in.Username,
 		},
 	}
+
+	err = a.Mailer.SendUserRegisterEmail(in.Email)
+	if err != nil {
+		a.Log.Error().
+			Str(`ERROR`, err.Error()).
+			Msg(`Cannot send email when user` + in.Username + `register`)
+	}
 	return c.Status(fiber.StatusOK).JSON(response)
 }
