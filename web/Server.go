@@ -58,7 +58,7 @@ func (w *WebServer) Start() {
 		URL:  "/favicon.ico",
 	}))
 	app.Use(requestid.New())
-	app.Use(logger.New(middlewares.LoggerConfig))
+	app.Use(logger.New(middlewares.NewFiberLogger()))
 	app.Use(limiter.New(middlewares.Limiter))
 	app.Use(cors.New(middlewares.CORSConfig))
 	app.Use(recover.New())

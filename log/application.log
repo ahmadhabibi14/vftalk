@@ -1,1 +1,1 @@
-[90m2024/02/03 02:27 AM[0m [1m[31mERR[0m[0m [1mmodels/databases/User.go:124[0m[36m >[0m Error: User FindByUsername [36mError=[0m"dial tcp [::1]:3306: connect: connection refused" [36mgo_version=[0mgo1.20.13
+{"level":"error","go_version":"go1.20.13","Error":"dial tcp [::1]:3306: connect: connection refused","time":"2024-02-03T03:00:55+08:00","caller":"/home/habi/Dev/githubRepos/chat-app/models/databases/User.go:124","message":"Error: User FindByUsername"}

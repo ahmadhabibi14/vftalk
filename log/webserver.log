@@ -1,0 +1,3 @@
+{"time": "2024/02/03 03:19 AM", "status": "200", "latency": "    121.105µs", "method": "GET", "path": "/login"}
+{"time": "2024/02/03 03:20 AM", "status": "200", "latency": "     63.416µs", "method": "GET", "path": "/login"}
+{"time": "2024/02/03 03:20 AM", "status": "200", "latency": "     80.597µs", "method": "GET", "path": "/login"}
