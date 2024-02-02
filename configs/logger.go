@@ -17,15 +17,14 @@ var (
 
 func InitLogger() *zerolog.Logger {
 	once.Do(func() {
-
 		logLevel, err := strconv.Atoi(os.Getenv("LOG_LEVEL"))
 		if err != nil {
 			logLevel = int(zerolog.InfoLevel)
 		}
 
 		var logOutput io.Writer
-		if os.Getenv("WEB_ENV") == `prod` {
-			file, _ := os.OpenFile("log/application.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0664)
+		if os.Getenv("WEB_ENV") == "prod" {
+			file, _ := os.OpenFile("log/application.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 			logOutput = file
 		} else {
 			logOutput = os.Stdout

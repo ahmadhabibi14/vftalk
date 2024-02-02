@@ -1,3 +1,8 @@
-{"time": "2024/02/03 03:19 AM", "status": "200", "latency": "    121.105µs", "method": "GET", "path": "/login"}
-{"time": "2024/02/03 03:20 AM", "status": "200", "latency": "     63.416µs", "method": "GET", "path": "/login"}
-{"time": "2024/02/03 03:20 AM", "status": "200", "latency": "     80.597µs", "method": "GET", "path": "/login"}
+{"time": "2024-02-03T03:00:2121+08:00", "status": "200", "latency": "     334.68µs", "method": "GET", "path": "/login"}
+{"time": "2024-02-03T03:00:4040+08:00", "status": "200", "latency": "    283.415µs", "method": "GET", "path": "/login"}
+{"time": "2024-02-03T03:00:11+08:00", "status": "404", "latency": "   1.014515ms", "method": "POST", "path": "/api/login"}
+{"time": "2024-02-03T03:00:5050+08:00", "status": "404", "latency": "   1.022127ms", "method": "POST", "path": "/api/login"}
+{"time": "2024-02-03T03:00:1717+08:00", "status": "404", "latency": "   1.443829ms", "method": "POST", "path": "/api/login"}
+{"time": "2024-02-03T03:00:4444+08:00", "status": "404", "latency": "   1.556692ms", "method": "POST", "path": "/api/login"}
+{"time": "2024-02-03T03:00:22+08:00", "status": "404", "latency": "   1.814825ms", "method": "POST", "path": "/api/login"}
+{"time": "2024-02-03T03:00:1616+08:00", "status": "404", "latency": "   1.811054ms", "method": "POST", "path": "/api/login"}
