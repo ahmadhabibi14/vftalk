@@ -190,3 +190,35 @@ func (u *userImpl) FindUsername(ctx context.Context, username string) string {
 	fmt.Println("Username: ", uname)
 	return uname
 }
+
+type FindAllOut struct {
+	Username string `db:"username" json:"username"`
+	FullName string `db:"full_name" json:"full_name"`
+	Avatar   string `db:"avatar" json:"avatar"`
+}
+
+func (u *userImpl) FindAll(ctx context.Context) ([]FindAllOut, error) {
+	query := `SELECT username, full_name, avatar FROM Users`
+	rows, err := u.DB.QueryContext(ctx, query)
+	defer rows.Close()
+
+	users := []FindAllOut{}
+
+	if err != nil {
+		u.Log.Error().Str("Error", err.Error()).Msg("Error: User FindByUsername")
+		return users, err
+	}
+
+	for rows.Next() {
+		user := FindAllOut{}
+		rows.Scan(
+			&user.Username,
+			&user.FullName,
+			&user.Avatar,
+		)
+
+		users = append(users, user)
+	}
+
+	return users, nil
+}

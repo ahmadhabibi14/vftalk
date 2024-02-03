@@ -259,6 +259,35 @@ func (u *userImpl) UpdateAvatar(ctx context.Context, in InUser_UpdateAvatar) err
 	return nil
 }
 
+type (
+	OutUserLists struct {
+		Username string `db:"username" json:"username"`
+		FullName string `db:"full_name" json:"full_name"`
+		Avatar   string `db:"avatar" json:"avatar"`
+	}
+)
+
+func (u *userImpl) UserLists(ctx context.Context) ([]OutUserLists, error) {
+	userrepo := databases.NewUser(u.DB, u.Log)
+	users, err := userrepo.FindAll(ctx)
+
+	outUsers := []OutUserLists{}
+	if err != nil {
+		return outUsers, err
+	}
+
+	for _, v := range users {
+		outUser := OutUserLists{}
+		outUser.Username = v.Username
+		outUser.FullName = v.FullName
+		outUser.Avatar = v.Avatar
+
+		outUsers = append(outUsers, outUser)
+	}
+
+	return outUsers, nil
+}
+
 func (u *userImpl) Debug(ctx context.Context, id string) bool {
 	userrepo := databases.NewUser(u.DB, u.Log)
 	if userrepo.FindId(ctx, id) == `` {

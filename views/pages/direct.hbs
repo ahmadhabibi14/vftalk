@@ -27,29 +27,53 @@
     </a>
   </header>
   <div class="flex-auto overflow-y-auto h-[0px] grow px-3 pt-48 md:pt-24 bg-[#0a0a0a]">
-    <div class="flex flex-col gap-2">
-      <div class="flex flex-row gap-5 py-4 px-6 hover:bg-[#131313] rounded-xl cursor-pointer">
-        <img class="w-[45px] h-[45px] rounded-[50%]" src="/public/img/img-001.jpg" alt="">
-        <div class="flex flex-col gap-1 justify-end">
-          <span class="font-bold text-2xl leading-none">Ahmad Habibi</span>
-          <div class="flex flex-row gap-1 items-center text-blue-500 text-sm">
-            <span class="font-bold text-xl">•</span>
-            <span>2 new messages</span>
-          </div>
-        </div>
-      </div>
-      <div class="flex flex-row gap-5 py-4 px-6 hover:bg-[#131313] rounded-xl cursor-pointer">
-        <img class="w-[45px] h-[45px] rounded-[50%]" src="/public/img/img-002.jpg" alt="">
-        <div class="flex flex-col gap-1 justify-end">
-          <span class="font-bold text-2xl leading-none">HBBIIIIII</span>
-          <div class="flex flex-row gap-1 items-center text-blue-500 text-sm">
-            <span class="font-bold text-xl">•</span>
-            <span>18 new messages</span>
-          </div>
-        </div>
-      </div>
+    <div class="flex flex-col gap-2" id="userLists">
     </div>
   </div>
 </div>
 
 <script src="/static/js/home.js"></script>
+<script>
+  let ELM_userLists = document.getElementById("userLists");
+
+  async function GetUserLists() {
+    try {
+      const resp = await fetch('/api/user-lists', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+      });
+      const respjson = await resp.json();
+      const userLists = respjson.data.users;
+      if (resp.ok) {
+        console.log(respjson);
+        if (userLists && userLists.length > 0) {
+          for (let i in userLists) {
+            let avatar = userLists[i].avatar;
+            let avatarUrl = `/files${userLists[i].avatar}` || "/files/img/avatars/default.png";
+            if (avatar.includes("https")) avatarUrl = avatar;
+
+            ELM_userLists.innerHTML += `<a href="/" class="flex flex-row items-center gap-5 py-4 px-6 hover:bg-[#131313] rounded-xl cursor-pointer">
+        <img class="w-[45px] h-[45px] rounded-[50%]" src="`+avatarUrl+`" alt="Avatar">
+        <div class="flex flex-col gap-1">
+          <span class="font-bold text-2xl leading-none">`+userLists[i].full_name+`</span>
+          <div class="flex flex-row gap-1 items-center text-blue-500 text-sm">
+            <span class="font-bold text-xl">•</span>
+            <span>`+userLists[i].username+`</span>
+          </div>
+        </div>
+      </a>`
+          }
+        }
+      } else {
+        notifier.showError(respjson.errors);
+        console.log(respjson);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    await GetUserLists();
+  })
+
+</script>

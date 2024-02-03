@@ -12,11 +12,6 @@
     </div>
   </div>
 
-  <div id="stats" class="w-full bg-[#0a0a0a] border border-[#333] rounded-2xl">
-    <div id="chart" class="w-full h-fit rounded-2xl">
-      {{!-- Charts will be render here --}}
-    </div>
-  </div>
   <script>
     function formatDatetime( dateData ) {
       if( !dateData ) return "";
@@ -40,54 +35,6 @@
 
     // Stats
     document.addEventListener("DOMContentLoaded", async function () {
-      var options = {
-        series: [
-          {
-            name: "User Active",
-            data: [31, 40, 28, 51]
-          }, {
-            name: "Chats Record",
-            data: [11, 32, 70, 32]
-          }
-        ],
-        grid: {
-          show: true,
-          borderColor: "#333",
-        },
-        chart: {
-          height: 350,
-          type: "area",
-          toolbar: {
-            show: false
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          show: true,
-          curve: "smooth",
-          lineCap: "butt",
-          width: 2,
-          dashArray: 0, 
-        },
-        xaxis: {
-          type: "datetime",
-          categories: ["2023-11-19T00:00:00.000Z", "2023-11-19T01:30:00.000Z", "2023-11-19T02:30:00.000Z", "2023-11-19T03:30:00.000Z"]
-        },
-        tooltip: {
-          x: {
-            format: "dddd, d MMMM yyyy HH:mm"
-          },
-          theme: "dark",
-        }
-      };
-
-      var chart;
-      setTimeout(() => {
-        chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
-      }, 500);
       if (userAvatar.includes("https")) {
         ELM_userAvatar.src = userAvatar;
       } else {
