@@ -36,7 +36,7 @@ func NewWebServer(cfg configs.WebConf, lg *zerolog.Logger) *WebServer {
 
 func (w *WebServer) Start() {
 	mlr := mailer.NewMailer(w.Log)
-	db := configs.ConnectMariaDB()
+	db := configs.ConnectMariaDB(w.Log)
 	oauth := configs.EnvOAuth()
 
 	engine := handlebars.New("./views/pages", ".hbs")
