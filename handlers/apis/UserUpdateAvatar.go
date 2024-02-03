@@ -27,7 +27,7 @@ func (a *ApisHandler) UpdateAvatar(c *fiber.Ctx) error {
 
 	imgFile, err := c.FormFile("avatar")
 	if err != nil {
-		a.Log.Error().Str("Error", err.Error()).Msg("Cannot get image file")
+		a.Log.Error().Str("Error", err.Error()).Msg("Cannot get image file when update user avatar")
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
 			Status: STATUS_BADREQUEST,

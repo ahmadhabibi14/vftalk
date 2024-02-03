@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"vftalk/configs"
+	"vftalk/handlers/apis"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -10,6 +11,7 @@ func AuthJWT(c *fiber.Ctx) error {
 	err := configs.TokenValid(c)
 	httpMethod := string(c.Request().Header.Method())
 	if err != nil {
+		c.ClearCookie(`auth`)
 		if string(httpMethod) == fiber.MethodGet {
 			if c.Route().Path == "/login" || c.Route().Path == "/register" {
 				return c.Next()
@@ -17,12 +19,13 @@ func AuthJWT(c *fiber.Ctx) error {
 				return c.Redirect("/login", fiber.StatusTemporaryRedirect)
 			}
 		} else {
-			c.ClearCookie(`auth`)
-			c.Status(fiber.StatusUnauthorized)
-			return c.Render("401", fiber.Map{
-				"Title":   "401 - Unauthorized",
-				"Message": "Unauthorized",
-			})
+			resp := apis.HTTPResponse{
+				Code:   fiber.StatusUnauthorized,
+				Status: apis.STATUS_UNAUTHORIZED,
+				Errors: "You are unauthorized to process this operation",
+				Data:   "",
+			}
+			return c.Status(fiber.StatusUnauthorized).JSON(resp)
 		}
 	}
 	return c.Next()
