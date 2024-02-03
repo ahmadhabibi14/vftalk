@@ -4,3 +4,6 @@ _tmpdb
 node_modules
 vftalk
 main
+
+log/application.log
+log/webserver.log
