@@ -37,16 +37,5 @@ func WebViews(app *fiber.App, page *page.PageHandler) {
 		})
 	})
 
-	// These route for prank hacker who tries to access these endpoints
 	app.Get("/.env", page.RickRoll)
-	app.Get("/.env.prod", page.RickRoll)
-	app.Get("/.env.production", page.RickRoll)
-	app.Get("/info.php", page.RickRoll)
-	app.Get("/phpinfo.php", page.RickRoll)
-	app.Get("/admin.php", page.RickRoll)
-	app.Get("/admin", page.RickRoll)
-	app.Get("/wp-login.php", page.RickRoll)
-	app.Get("/config.json", page.RickRoll)
-	app.Get("/backup", page.RickRoll)
-	app.Get("/shell.php", page.RickRoll)
 }
