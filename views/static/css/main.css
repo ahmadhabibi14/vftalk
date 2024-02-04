@@ -80,11 +80,6 @@ html {
   @apply rounded-2xl w-full bg-[#0a0a0a] border border-[#333] py-4 pl-4 pr-12 caret-[#ADDEBE];
 }
 
-:global(.apexcharts-tooltip) {
-  background: #333;
-  color: #ADDEBE;
-}
-
 .titled {
   position: relative;
   white-space: nowrap;

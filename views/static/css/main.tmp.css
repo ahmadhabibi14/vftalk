@@ -1689,11 +1689,6 @@ html {
   caret-color: #ADDEBE;
 }
 
-:global(.apexcharts-tooltip) {
-  background: #333;
-  color: #ADDEBE;
-}
-
 .titled {
   position: relative;
   white-space: nowrap;
