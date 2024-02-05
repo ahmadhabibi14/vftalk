@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/base.astro';
-import AuthLogin from '../components/auth/login.svelte';
+import AuthRegister from '../components/auth/register.svelte';
 ---
 
 <BaseLayout>
@@ -8,6 +8,6 @@ import AuthLogin from '../components/auth/login.svelte';
 		<div class="w-fit h-fit">
 			<img src="/icons/auth-desktop.svg" alt="Auth" class="w-[400px] h-auto" />
 		</div>
-		<AuthLogin client:load />
+		<AuthRegister client:load />
 	</div>
 </BaseLayout>

@@ -11,6 +11,7 @@ import (
 func (p *PageHandler) Index(c *fiber.Ctx) error {
 	err := configs.TokenValid(c)
 	if err != nil {
+		c.Set(fiber.HeaderContentType, fiber.MIMETextHTMLCharsetUTF8)
 		return c.Render("landingpage/index", fiber.Map{
 			"Title": "VFTalk | Chat App",
 		})
@@ -26,10 +27,11 @@ func (p *PageHandler) Index(c *fiber.Ctx) error {
 		user := services.NewUser(p.Db, p.Log)
 		userOut, err := user.FindById(c.UserContext(), in)
 
+		c.Set(fiber.HeaderContentType, fiber.MIMETextHTMLCharsetUTF8)
 		return c.Render("index", fiber.Map{
 			"Title":    "VFtalk | Home",
 			"UserData": userOut,
 			"JoinAt":   utils.FormatTime(userOut.JoinAt),
-		}, "layouts/main")
+		})
 	}
 }

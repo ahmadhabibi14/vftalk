@@ -35,7 +35,7 @@ services:
       MYSQL_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
       PMA_ARBITRARY: 1
     volumes:
-      - ./_tmpdb/phpmyadmin:/etc/phpmyadmin
+      - /_tmpdb/phpmyadmin
     networks:
       - vftalk-network
 

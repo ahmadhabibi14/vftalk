@@ -19,7 +19,8 @@ func (p *PageHandler) Profile(c *fiber.Ctx) error {
 	}
 	user := services.NewUser(p.Db, p.Log)
 	userOut, err := user.FindById(c.UserContext(), in)
-	c.Set(fiber.HeaderContentType, "text/html; charset=utf-8")
+
+	c.Set(fiber.HeaderContentType, fiber.MIMETextHTMLCharsetUTF8)
 	return c.Render("profile", fiber.Map{
 		"Title":    "VFtalk | Profile",
 		"UserData": userOut,

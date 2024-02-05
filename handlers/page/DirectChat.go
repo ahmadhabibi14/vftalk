@@ -19,7 +19,7 @@ func (p *PageHandler) DirectChat(c *fiber.Ctx) error {
 	userOut, err := user.FindById(c.UserContext(), in)
 	LogoutIfError(c, err)
 
-	c.Set(fiber.HeaderContentType, "text/html; charset=utf-8")
+	c.Set(fiber.HeaderContentType, fiber.MIMETextHTMLCharsetUTF8)
 	return c.Render("direct", fiber.Map{
 		"Title":    "VFtalk | Direct Chat",
 		"UserData": userOut,
