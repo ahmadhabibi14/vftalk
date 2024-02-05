@@ -20,9 +20,9 @@ func (p *PageHandler) DirectChat(c *fiber.Ctx) error {
 	LogoutIfError(c, err)
 
 	c.Set(fiber.HeaderContentType, fiber.MIMETextHTMLCharsetUTF8)
-	return c.Render("direct", fiber.Map{
+	return c.Render("direct/index", fiber.Map{
 		"Title":    "VFtalk | Direct Chat",
 		"UserData": userOut,
 		"JoinAt":   utils.FormatTime(userOut.JoinAt),
-	}, "layouts/main")
+	})
 }

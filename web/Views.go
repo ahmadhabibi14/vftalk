@@ -14,9 +14,8 @@ func WebViews(app *fiber.App, page *page.PageHandler) {
 	app.Get("/oauth/google", middlewares.IsLoggedIn, page.OAuthGoogle)
 	app.Get("/about", page.About)
 	app.Get("/contact", page.Contact)
-
-	// app.Get("/explore", middlewares.AuthJWT, page.Explore)
-	// app.Get("/profile", middlewares.AuthJWT, page.Profile)
-	// app.Get("/direct", middlewares.AuthJWT, page.DirectChat)
+	app.Get("/explore", middlewares.AuthJWT, page.Explore)
+	app.Get("/profile", middlewares.AuthJWT, page.Profile)
+	app.Get("/direct", middlewares.AuthJWT, page.DirectChat)
 	app.Get("/.env", page.RickRoll)
 }

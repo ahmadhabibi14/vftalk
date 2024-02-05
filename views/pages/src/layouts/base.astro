@@ -34,7 +34,17 @@ const title: string = `{{.Title}}`;
     <meta content="2023-12-03T19:02:52Z" property="article:updated_time" />
 	</head>
   <body class="w-full max-h-screen h-screen text-zinc-800 bg-zinc-50">
-    <Navbar />
+    <header class="w-full z-50 h-20">
+      <div class="container mx-auto px-1 md:px-4 lg:max-w-7xl flex h-full items-center justify-between">
+        <a href="/">
+          <img src="/icons/vftalk-logo.svg" alt="VFtalk logo" title="VFtalk" class="w-28 h-auto">
+        </a>
+        <nav class="flex flex-row items-center font-semibold gap-7 h-full">
+          <Navbar client:only/>
+          <a href="/register" class="text-sm py-1.5 px-5 border-[2px] bg-emerald-500/20 hover:bg-emerald-500/30 border-emerald-700 rounded-full">Try it free</a>
+        </nav>
+      </div>
+    </header>
     <main class="w-9/12 py-8 mx-auto min-h-[90dvh]">
       <slot />
     </main>

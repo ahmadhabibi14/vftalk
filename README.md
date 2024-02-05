@@ -1,13 +1,13 @@
 # VFtalk - Chat App
 
 ## Tech stack:
-- Programming Language: [Go-Lang](https://go.dev), CSS, [JavaScript](https://www.javascript.com/), SQL, Bash
+- Programming Language: [Go-Lang](https://go.dev), [JavaScript](https://www.javascript.com/)
 - Http Router: [Go Fiber](https://gofiber.io)
-- Template Engine: [Handlebars](https://handlebarsjs.com/)
-- UI Library: [TailwindCSS](https://tailwindcss.com/), [Iconsax](https://iconsax.io/)
+- Frontend Library: [Astro](https://astro.build/), [Svelte](https://svelte.dev)
+- UI Library: [TailwindCSS](https://tailwindcss.com/), [Svelte Icon Pack](https://leshak.github.io/svelte-icons-pack/)
 - DBMS: [MariaDB](https://mariadb.org/)
 - Container: [Docker](https://www.docker.com/)
-- CI/CD: Github Action
+- CI/CD: [Github Action](https://docs.github.com/en/actions)
 - Web Server: [NGINX](https://www.nginx.com/)
 - SMTP: [Docker-mailserver](https://github.com/docker-mailserver/docker-mailserver), [Mailhog](https://github.com/mailhog/MailHog)
 
@@ -26,10 +26,12 @@ docker network create vftalk-network
 
 ##### Start App
 go run main.go web
+# or
+air web
 
 ##### Start nodejs for build javascript or css stuff
 cd views/pages
-pnpm dev
+pnpm watch
 ```
 
 ### MariaDB
@@ -93,7 +95,7 @@ cd deploy
 - [x] Add MariaDB to docker-compose
 - [ ] Use docker-mailserver for SMTP in production
 - [x] User can edit profile picture
-- [ ] Image editor for update profile picture, specify for 1:1 ratio
+- [ ] Image editor when update profile picture, specify for 1:1 ratio
 - [ ] Compress image after user uploaded it
 - [ ] Direct message
 - [ ] Notification (server sent event)

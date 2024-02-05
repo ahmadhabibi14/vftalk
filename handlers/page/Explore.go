@@ -21,9 +21,9 @@ func (p *PageHandler) Explore(c *fiber.Ctx) error {
 	userOut, err := user.FindById(c.UserContext(), in)
 
 	c.Set(fiber.HeaderContentType, fiber.MIMETextHTMLCharsetUTF8)
-	return c.Render("explore", fiber.Map{
+	return c.Render("explore/index", fiber.Map{
 		"Title":    "VFtalk | Explore",
 		"UserData": userOut,
 		"JoinAt":   utils.FormatTime(userOut.JoinAt),
-	}, "layouts/main")
+	})
 }

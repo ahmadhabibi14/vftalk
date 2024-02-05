@@ -64,7 +64,7 @@ func (w *WebServer) Start() {
 	app.Use(recover.New())
 
 	app.Static("/", "./views/public")
-	app.Static("/media", "./uploads")
+	app.Static("/contents", "./contents")
 	app.Static("_astro", "./views/pages/dist/_astro")
 
 	apiHandler := &apis.ApisHandler{
