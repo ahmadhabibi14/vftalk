@@ -16,7 +16,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
-	"github.com/gofiber/template/handlebars/v2"
+	"github.com/gofiber/template/html/v2"
 	"github.com/rs/zerolog"
 )
 
@@ -39,7 +39,7 @@ func (w *WebServer) Start() {
 	db := configs.ConnectMariaDB(w.Log)
 	oauth := configs.EnvOAuth()
 
-	engine := handlebars.New("./views/pages", ".hbs")
+	engine := html.New("./views/pages/dist", ".html")
 	app := fiber.New(fiber.Config{
 		AppName: w.AppName,
 		Views:   engine,
@@ -63,9 +63,9 @@ func (w *WebServer) Start() {
 	app.Use(cors.New(middlewares.CORSConfig))
 	app.Use(recover.New())
 
-	app.Static("/static", "./views/static")
-	app.Static("/public", "./views/public")
-	app.Static("/files", "./uploads")
+	app.Static("/", "./views/public")
+	app.Static("/media", "./uploads")
+	app.Static("_astro", "./views/pages/dist/_astro")
 
 	apiHandler := &apis.ApisHandler{
 		Mailer: mlr,

@@ -36,5 +36,8 @@ jobs:
             cd /root/vftalk
             go mod tidy
             go build main.go
+            cd views/pages
+            pnpm i
+            pnpm build
             systemctl restart vftalk
             systemctl restart nginx

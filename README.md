@@ -16,6 +16,8 @@
 ```shell
 ##### Install dependencies
 go mod tidy
+
+cd views/pages
 pnpm install
 
 ##### Set up docker
@@ -26,6 +28,7 @@ docker network create vftalk-network
 go run main.go web
 
 ##### Start nodejs for build javascript or css stuff
+cd views/pages
 pnpm dev
 ```
 

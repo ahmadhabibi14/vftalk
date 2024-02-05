@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/base.astro';
+
+---
+
+<BaseLayout>
+  <div
+    class="text-center w-full md:w-8/12 mx-auto flex flex-col justify-center items-center gap-7 py-20 md:pb-24"
+  >
+    <h1 class="text-6xl font-bold !leading-[1.25]">Experience
+      the
+      <span class="titled"><span class="titled-content">Next</span></span>
+      level of communication</h1>
+    <p class="text-xl md:text-2xl text-white">VFTalk is an open-source Chat
+      App for your privacy needs and to feels another experience of
+      communications</p>
+    <a
+      href="/register"
+      class="group relative py-4 pl-16 pr-24 bg-[#115A2A] hover:bg-[#2B874A] rounded-full flex flex-row justify-center items-center text-xl font-bold"
+    >
+      <span>Try it free</span>
+      <svg
+        class="w-7 absolute right-12 group-hover:right-10 transition-all duration-150 top-0 bottom-0 h-full"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        <path
+          stroke="currentColor"
+          d="M14.4301 5.92993L20.5001 11.9999L14.4301 18.0699"
+          stroke-width="2"
+          stroke-miterlimit="10"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          stroke="currentColor"
+          d="M3.5 12H20.33"
+          stroke-width="2"
+          stroke-miterlimit="10"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </a>
+  </div>
+</BaseLayout>
+
+<style>
+  .titled {
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .titled-content {
+    position: relative;
+    padding: 5px 15px 5px 10px;
+    color: #ADDEBE;
+  }
+
+  .titled::before {
+    background-color: #115A2A;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    --tw-skew-y: -3deg;
+    transform: translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+</style>

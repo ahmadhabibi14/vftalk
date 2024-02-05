@@ -11,7 +11,7 @@ import (
 func (p *PageHandler) Index(c *fiber.Ctx) error {
 	err := configs.TokenValid(c)
 	if err != nil {
-		return c.Render("landingpage", fiber.Map{
+		return c.Render("landingpage/index", fiber.Map{
 			"Title": "VFTalk | Chat App",
 		})
 	} else {

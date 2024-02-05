@@ -1,0 +1,28 @@
+/* The integration's default injected base.css file */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, :after, :before {
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+}
+
+*::selection {
+  background: #2B874A;
+  color: #ADDEBE;
+}
+
+html {
+  font-size: 12px;
+}
+
+/* Turbo progress bar */
+.turbo-progress-bar {
+  @apply h-1 bg-gradient-to-r from-emerald-500 to-sky-500;
+}

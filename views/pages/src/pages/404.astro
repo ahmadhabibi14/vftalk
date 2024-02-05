@@ -1,0 +1,30 @@
+---
+const title: string = `{{.Title}}`;
+const message: string = `{{.Message}}`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <link rel="icon" type="image/svg+xml" href="/public/favicons/favicon.svg" />
+  <link rel="stylesheet" href="/static/css/main.tmp.css" />
+</head>
+<body>
+  <main class="w-full bg-black max-h-screen h-screen text-[#ADDEBE] flex flex-col justify-center items-center gap-8">
+    <div class="flex flex-col gap-3 justify-center items-center">
+      <h1 class="text-9xl font-bold">404</h1>
+      <p class="text-2xl">{message}</p>
+    </div>
+    <a href="/" class="hover:bg-blue-600 group relative py-4 pl-6 pr-16 bg-blue-500 rounded-full flex flex-row justify-center items-center text-xl font-bold text-white">
+      <span>Back to Home</span>
+      <svg class="w-7 absolute right-5 group-hover:right-3 transition-all duration-150 top-0 bottom-0 h-full" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" d="M14.4301 5.92993L20.5001 11.9999L14.4301 18.0699" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <path stroke="currentColor" d="M3.5 12H20.33" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+  </main>
+</body>
+</html>

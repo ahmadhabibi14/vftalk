@@ -50,7 +50,7 @@ func RunMigration() {
 				zlog.Fatal().Msg(`Error: ` + err.Error())
 			}
 		}
-		sqlSchemaFile := fmt.Sprintf("models/database/schema/%s.sql", table)
+		sqlSchemaFile := fmt.Sprintf("database/schema/%s.sql", table)
 		file, err := os.Create(sqlSchemaFile)
 		if err != nil {
 			zlog.Fatal().Msg(`Error: ` + err.Error())
