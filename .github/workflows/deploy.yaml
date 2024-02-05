@@ -34,3 +34,7 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             cd /root/vftalk
+            go mod tidy
+            go build main.go
+            systemctl restart vftalk
+            systemctl restart nginx
