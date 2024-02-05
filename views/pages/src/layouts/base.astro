@@ -1,5 +1,7 @@
 ---
-import Footer from '../components/partials/basefooter.astro';
+import Navbar from '../components/partials/navbar.svelte';
+import Footer from '../components/partials/footer.astro';
+
 const title: string = `{{.Title}}`;
 ---
 
@@ -31,42 +33,11 @@ const title: string = `{{.Title}}`;
     <meta content="2023-12-03T19:02:52Z" property="article:modified_time" />
     <meta content="2023-12-03T19:02:52Z" property="article:updated_time" />
 	</head>
-  <body class="w-full max-h-screen h-screen text-[#ADDEBE] bg-black">
-		<header
-      class="h-fit w-10/12 md:w-9/12 mx-auto flex flex-row justify-between items-center pt-6"
-    >
-      <a href="/" class="flex items-center">
-        <img src="/icons/vftalk_3.svg" alt="Logo" title="VFtalk" class="w-[120px] h-auto" />
-      </a>
-      <nav class="hidden md:flex flex-row gap-6 items-center text-base">
-        <a class="hover:text-[#2B874A] hover:underline" href="#about">About</a>
-        <a class="hover:text-[#2B874A] hover:underline" href="#contact">Contact</a>
-        <a class="hover:text-[#2B874A] hover:underline" href="https://github.com/ahmadhabibi14/chat-app">GitHub</a>
-        <a class="hover:text-[#2B874A] hover:underline" href="/login">Login</a>
-        <a href="/register" class="border border-[#ADDEBE] hover:border-[#2B874A] hover:text-[#2B874A] py-3 px-7 rounded-full font-bold text-xl hover:bg-emerald-900/10">
-          Try It Free
-        </a>
-      </nav>
-      <button class="text-[#ADDEBE] flex md:hidden">
-        <svg class="fill-none w-9 h-auto" viewBox="0 0 24 24">
-          <path d="M3 7H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M3 12H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M3 17H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </button>
-    </header>
-
-    <main class="w-9/12 mx-auto min-h-[90dvh]">
+  <body class="w-full max-h-screen h-screen text-zinc-800 bg-zinc-50">
+    <Navbar />
+    <main class="w-9/12 py-8 mx-auto min-h-[90dvh]">
       <slot />
     </main>
-
     <Footer />
 	</body>
 </html>
-
-<style>
-  *::selection {
-    background: #2B874A;
-    color: #ADDEBE;
-  }
-</style>

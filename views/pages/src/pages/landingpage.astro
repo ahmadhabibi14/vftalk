@@ -1,23 +1,16 @@
 ---
 import BaseLayout from '../layouts/base.astro';
-
 ---
 
 <BaseLayout>
-  <div
-    class="text-center w-full md:w-8/12 mx-auto flex flex-col justify-center items-center gap-7 py-20 md:pb-24"
-  >
-    <h1 class="text-6xl font-bold !leading-[1.25]">Experience
-      the
-      <span class="titled"><span class="titled-content">Next</span></span>
-      level of communication</h1>
-    <p class="text-xl md:text-2xl text-white">VFTalk is an open-source Chat
-      App for your privacy needs and to feels another experience of
-      communications</p>
-    <a
-      href="/register"
-      class="group relative py-4 pl-16 pr-24 bg-[#115A2A] hover:bg-[#2B874A] rounded-full flex flex-row justify-center items-center text-xl font-bold"
-    >
+  <div class="text-center w-full md:w-8/12 mx-auto flex flex-col justify-center items-center gap-7 py-14 md:pb-24">
+    <h1 class="text-6xl font-bold !leading-[1.25]">
+      Experience the <span class="titled"><span class="titled-content">Next</span></span> level of communication
+    </h1>
+    <p class="text-xl md:text-2xl font-light">
+      VFTalk is an open-source Chat App for your privacy needs and to feels another experience of communications
+    </p>
+    <a href="/register" class="text-white group relative py-3 pl-16 pr-24 bg-emerald-700 hover:bg-emerald-600 rounded-full flex flex-row justify-center items-center text-xl font-bold">
       <span>Try it free</span>
       <svg
         class="w-7 absolute right-12 group-hover:right-10 transition-all duration-150 top-0 bottom-0 h-full"
@@ -56,11 +49,11 @@ import BaseLayout from '../layouts/base.astro';
   .titled-content {
     position: relative;
     padding: 5px 15px 5px 10px;
-    color: #ADDEBE;
+    color: #FFF;
   }
 
   .titled::before {
-    background-color: #115A2A;
+    background-color: #047857;
     content: "";
     position: absolute;
     top: 0;

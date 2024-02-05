@@ -1,5 +1,5 @@
 ---
-import Navbar from '../components/partials/navbar.svelte';
+import Sidebar from '../components/partials/sidebar.svelte';
 const title: string = `{{.Title}}`;
 ---
 
@@ -14,7 +14,7 @@ const title: string = `{{.Title}}`;
 		<title>{title}</title>
 	</head>
 	<body>
-		<Navbar client:load/>
+		<Sidebar client:load/>
 		<slot />
 	</body>
 </html>

@@ -1,13 +1,13 @@
 ---
-import Layout from '../layouts/layout.astro';
+import BaseLayout from '../layouts/base.astro';
 import UserLists from '../components/userlists.svelte';
 
 const userlists = `{{.UserList}}`;
 ---
 
-<Layout>
+<BaseLayout>
 	<main>
 		<h1>About Page h</h1>
 		<UserLists client:load {userlists}/>
 	</main>
-</Layout>
+</BaseLayout>
