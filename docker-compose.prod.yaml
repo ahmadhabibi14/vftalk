@@ -1,0 +1,48 @@
+version: "3.2"
+
+services:
+
+  db:
+    image: mariadb
+    container_name: vftalk-db
+    environment:
+      MARIADB_DATABASE: "${MARIADB_NAME}"
+      MARIADB_USER: "${MARIADB_USER}"
+      MARIADB_PASSWORD: "${MARIADB_PASSWORD}"
+      MARIADB_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
+      MARIADB_TZ: "Asia/Makassar"
+    command: "--default-time-zone=+08:00"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./_tmpdb/mariadb:/var/lib/mysql
+    networks:
+      - vftalk-network
+  
+  mailserver:
+    image: docker.io/mailserver/docker-mailserver:latest
+    container_name: mailserver
+    hostname: mail.vftalk.my.id
+    ports:
+      - "25:25"
+      - "587:587"
+      - "465:465"
+    volumes:
+      - ./docker-data/dms/mail-data/:/var/mail/
+      - ./docker-data/dms/mail-state/:/var/mail-state/
+      - ./docker-data/dms/mail-logs/:/var/log/mail/
+      - ./docker-data/dms/config/:/tmp/docker-mailserver/
+      - ./docker-data/nginx-proxy/certs/:/etc/letsencrypt/
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - ENABLE_FAIL2BAN=1
+      - SSL_TYPE=letsencrypt
+      - PERMIT_DOCKER=network
+      - ONE_DIR=1
+      - ENABLE_POSTGREY=0
+      - ENABLE_CLAMAV=0
+      - ENABLE_SPAMASSASSIN=0
+      - SPOOF_PROTECTION=0
+    cap_add:
+      - NET_ADMIN
+      - SYS_PTRACE

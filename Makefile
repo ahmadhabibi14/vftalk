@@ -9,3 +9,6 @@ migrate-down:
 
 build:
 	go build -o vftalk
+
+docker-prod:
+	docker-compose -f docker-compose.prod.yml up -d
