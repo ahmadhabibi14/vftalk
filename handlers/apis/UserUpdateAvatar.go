@@ -48,7 +48,7 @@ func (a *ApisHandler) UpdateAvatar(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 
-	imgPath := fmt.Sprintf("uploads/img/avatars/%v.png", userId)
+	imgPath := fmt.Sprintf("contents/img/avatars/%v.png", userId)
 	imgSave := c.SaveFile(imgFile, imgPath)
 	if imgSave != nil {
 		response = HTTPResponse{

@@ -18,6 +18,8 @@ require (
 	golang.org/x/oauth2 v0.15.0
 )
 
+require github.com/eefret/gravatar v0.0.0-20181201135945-2163a437cdca // indirect
+
 require (
 	cloud.google.com/go/compute v1.20.1 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect

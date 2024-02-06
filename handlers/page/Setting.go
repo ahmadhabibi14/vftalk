@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (p *PageHandler) Explore(c *fiber.Ctx) error {
+func (p *PageHandler) Setting(c *fiber.Ctx) error {
 	userId, err := configs.GetUserIdFromJWTfunc(c)
 	LogoutIfError(c, err)
 
@@ -20,8 +20,8 @@ func (p *PageHandler) Explore(c *fiber.Ctx) error {
 	LogoutIfError(c, err)
 
 	c.Set(fiber.HeaderContentType, fiber.MIMETextHTMLCharsetUTF8)
-	return c.Render("explore/index", fiber.Map{
-		"Title":  "VFtalk | Explore",
+	return c.Render("setting/index", fiber.Map{
+		"Title":  "VFtalk | Setting",
 		"User":   userOut,
 		"JoinAt": utils.FormatTime(userOut.JoinAt),
 	})

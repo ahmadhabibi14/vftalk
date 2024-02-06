@@ -101,3 +101,4 @@ cd deploy
 - [ ] Notification (server sent event)
 - [ ] Active user list (for direct message)
 - [x] Database migration
+- [ ] Add column for Google ID (OAuth) in MySQL

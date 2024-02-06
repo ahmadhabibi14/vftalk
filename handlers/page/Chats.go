@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func (p *PageHandler) DirectChat(c *fiber.Ctx) error {
+func (p *PageHandler) Chats(c *fiber.Ctx) error {
 	userId, err := configs.GetUserIdFromJWTfunc(c)
 	LogoutIfError(c, err)
 
@@ -20,9 +20,9 @@ func (p *PageHandler) DirectChat(c *fiber.Ctx) error {
 	LogoutIfError(c, err)
 
 	c.Set(fiber.HeaderContentType, fiber.MIMETextHTMLCharsetUTF8)
-	return c.Render("direct/index", fiber.Map{
-		"Title":    "VFtalk | Direct Chat",
-		"UserData": userOut,
-		"JoinAt":   utils.FormatTime(userOut.JoinAt),
+	return c.Render("chats/index", fiber.Map{
+		"Title":  "VFtalk | Chats",
+		"User":   userOut,
+		"JoinAt": utils.FormatTime(userOut.JoinAt),
 	})
 }

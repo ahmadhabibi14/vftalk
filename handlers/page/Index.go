@@ -17,15 +17,14 @@ func (p *PageHandler) Index(c *fiber.Ctx) error {
 		})
 	} else {
 		userId, err := configs.GetUserIdFromJWTfunc(c)
-		if err != nil {
-			c.ClearCookie(`auth`)
-			return c.Redirect("/", fiber.StatusTemporaryRedirect)
-		}
+		LogoutIfError(c, err)
+
 		in := services.InUser_FindById{
 			UserID: userId.(string),
 		}
 		user := services.NewUser(p.Db, p.Log)
 		userOut, err := user.FindById(c.UserContext(), in)
+		LogoutIfError(c, err)
 
 		c.Set(fiber.HeaderContentType, fiber.MIMETextHTMLCharsetUTF8)
 		return c.Render("index", fiber.Map{

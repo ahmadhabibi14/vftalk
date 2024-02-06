@@ -11,7 +11,7 @@ func AuthJWT(c *fiber.Ctx) error {
 	err := configs.TokenValid(c)
 	httpMethod := string(c.Request().Header.Method())
 	if err != nil {
-		c.ClearCookie(`auth`)
+		c.ClearCookie(configs.AUTH_COOKIE)
 		if string(httpMethod) == fiber.MethodGet {
 			if c.Route().Path == "/login" || c.Route().Path == "/register" {
 				return c.Next()

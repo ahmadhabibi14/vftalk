@@ -1,6 +1,11 @@
 ---
 import Sidebar from '../components/partials/sidebar.svelte';
+import Rightbar from '../components/partials/rightbar.svelte';
+
 const title: string = `{{.Title}}`;
+const avatarUrl: string = `{{.User.Avatar }}`;
+const fullName: string = `{{.User.FullName }}`;
+const username: string = `{{.User.Username}}`;
 ---
 
 <!doctype html>
@@ -19,9 +24,9 @@ const title: string = `{{.Title}}`;
     <meta content="en_EN" property="og:locale:alternate" />
     <meta content="website" property="og:type" />
 	</head>
-	<body class="bg-white text-zinc-800 w-full max-h-screen h-screen top-0 bottom-0 right-0 left-0">
-		<div class="container mx-auto lg:max-w-7xl flex flex-row h-full gap-0">
-			<aside class="w-[310px] h-full flex flex-row justify-end p-6 border-r border-zinc-200 sticky top-0 bottom-0">
+	<body class="bg-white text-zinc-800 w-full min-h-screen h-screen top-0 bottom-0 right-0 left-0">
+		<div class="container mx-auto lg:max-w-7xl flex flex-row gap-0">
+			<aside class="w-[300px] h-screen flex flex-row justify-end p-6 sticky top-0">
 				<div class="w-3/4 h-full flex flex-col gap-7">
 					<div class="w-full h-fit flex">
 						<a href="/" class="ml-3">
@@ -31,9 +36,12 @@ const title: string = `{{.Title}}`;
 					<Sidebar client:only/>
 				</div>
 			</aside>
-			<div class="bg-zinc-50 grow p-6">
+			<div class="grow p-6 border-x-[2px] border-zinc-200">
 				<slot />
 			</div>
+			<aside class="w-[310px] h-screen flex p-6 sticky top-0 bottom-0">
+				<Rightbar client:only {avatarUrl} {username} {fullName} />
+			</aside>
 		</div>
 	</body>
 </html>

@@ -10,6 +10,7 @@ import (
 	"vftalk/models/databases"
 	"vftalk/utils"
 
+	"github.com/eefret/gravatar"
 	"github.com/google/uuid"
 	"github.com/rs/zerolog"
 	"golang.org/x/crypto/bcrypt"
@@ -97,12 +98,15 @@ func (u *userImpl) CreateUser(ctx context.Context, in InUser_Create) (token stri
 	}
 
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(in.Password), bcrypt.DefaultCost)
+	g, err := gravatar.New()
+	avatar := g.URLParse(in.Email)
 	user := databases.CreateUserIn{
 		UserID:   in.UserID,
 		Username: in.Username,
 		FullName: in.FullName,
 		Email:    in.Email,
 		Password: string(hashedPassword),
+		Avatar:   avatar,
 	}
 	err = userrepo.CreateUser(ctx, user)
 	if err != nil {

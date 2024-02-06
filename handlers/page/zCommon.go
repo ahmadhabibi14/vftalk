@@ -16,8 +16,8 @@ type PageHandler struct {
 
 func LogoutIfError(c *fiber.Ctx, err error) error {
 	if err != nil {
-		c.ClearCookie(`auth`)
-		return c.Redirect("/", fiber.StatusTemporaryRedirect)
+		c.ClearCookie(configs.AUTH_COOKIE)
+		return c.Redirect("/login", fiber.StatusTemporaryRedirect)
 	}
 
 	return nil

@@ -1,0 +1,30 @@
+---
+const title: string = `{{.Title}}`;
+const message: string = `{{.Message}}`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />
+	<meta name="generator" content={Astro.generator} />
+	<title>{title}</title>
+</head>
+<body>
+  <main class="w-full bg-zinc-50 -m-10 max-h-screen h-screen text-zinc-800 flex flex-col justify-center items-center gap-8">
+    <div class="flex flex-col gap-3 justify-center items-center">
+      <h1 class="text-9xl font-bold">404</h1>
+      <p class="text-2xl">{message}</p>
+    </div>
+    <a href="/" class="hover:bg-emerald-700 group relative py-2 pl-6 pr-16 bg-emerald-600 rounded-full flex flex-row justify-center items-center text-base font-bold text-white">
+      <span>Back to Home</span>
+      <svg class="w-5 absolute right-5 group-hover:right-3 transition-all duration-150 top-0 bottom-0 h-full" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path stroke="currentColor" d="M14.4301 5.92993L20.5001 11.9999L14.4301 18.0699" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+        <path stroke="currentColor" d="M3.5 12H20.33" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </main>
+</body>
+</html>

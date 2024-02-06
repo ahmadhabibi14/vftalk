@@ -41,16 +41,18 @@ type CreateUserIn struct {
 	FullName string `db:"full_name"`
 	Email    string `db:"email"`
 	Password string `db:"password"`
+	Avatar   string `db:"avatar"`
 }
 
 func (u *userImpl) CreateUser(ctx context.Context, user CreateUserIn) error {
-	query := `INSERT INTO Users (user_id, username, full_name, email, password) VALUES (?, ?, ?, ?, ?)`
+	query := `INSERT INTO Users (user_id, username, full_name, email, password, avatar) VALUES (?, ?, ?, ?, ?, ?)`
 	_, err := u.DB.ExecContext(ctx, query,
 		user.UserID,
 		user.Username,
 		user.FullName,
 		user.Email,
 		user.Password,
+		user.Avatar,
 	)
 	return err
 }
