@@ -29,9 +29,9 @@ func (p *PageHandler) Index(c *fiber.Ctx) error {
 
 		c.Set(fiber.HeaderContentType, fiber.MIMETextHTMLCharsetUTF8)
 		return c.Render("index", fiber.Map{
-			"Title":    "VFtalk | Home",
-			"UserData": userOut,
-			"JoinAt":   utils.FormatTime(userOut.JoinAt),
+			"Title":  "VFtalk | Home",
+			"User":   userOut,
+			"JoinAt": utils.FormatTime(userOut.JoinAt),
 		})
 	}
 }

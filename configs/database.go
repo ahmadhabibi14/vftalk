@@ -20,7 +20,7 @@ func ConnectMariaDB(l *zerolog.Logger) *sql.DB {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", DbUser, DbPassword, DbHost, DbPort, DbName)
 	db, err := sql.Open(DbDriver, dsn)
 	if err != nil {
-		l.Error().
+		l.Fatal().
 			Str("ERROR", err.Error()).
 			Msg("cannot connect to " + DbDriver)
 	}

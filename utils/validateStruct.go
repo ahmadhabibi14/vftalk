@@ -15,10 +15,9 @@ func ValidateStruct(s interface{}) (string, error) {
 		validationErrors := err.(validator.ValidationErrors)
 		for _, err := range validationErrors {
 			errMsgs = append(errMsgs, fmt.Sprintf(
-				"Error when validating [%s]: '%v', Field validation failed on the '%s' tag",
+				"Error when validating %s: %v",
 				err.Field(),
 				err.Value(),
-				err.Tag(),
 			))
 		}
 		return errMsgs[0], errors.New(`Error validate field`)

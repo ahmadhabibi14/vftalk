@@ -7,16 +7,33 @@ const title: string = `{{.Title}}`;
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<meta
+      content="VFTalk is an open-source Chat App for your privacy needs and to feels another experience of communications"
+      property="og:description"
+    />
+		<meta content="id_ID" property="og:locale" />
+    <meta content="en_EN" property="og:locale:alternate" />
+    <meta content="website" property="og:type" />
 	</head>
-	<body>
-		<Sidebar client:load/>
-		<slot />
+	<body class="bg-white text-zinc-800 w-full max-h-screen h-screen top-0 bottom-0 right-0 left-0">
+		<div class="container mx-auto lg:max-w-7xl flex flex-row h-full gap-0">
+			<aside class="w-[310px] h-full flex flex-row justify-end p-6 border-r border-zinc-200 sticky top-0 bottom-0">
+				<div class="w-3/4 h-full flex flex-col gap-7">
+					<div class="w-full h-fit flex">
+						<a href="/" class="ml-3">
+							<img src="/icons/vftalk-logo-dark.svg" alt="VFtalk logo" title="VFtalk" class="w-28 h-auto">
+						</a>
+					</div>
+					<Sidebar client:only/>
+				</div>
+			</aside>
+			<div class="bg-zinc-50 grow p-6">
+				<slot />
+			</div>
+		</div>
 	</body>
 </html>
-<style>
-</style>
