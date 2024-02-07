@@ -18,7 +18,7 @@
 
 <div class="w-full h-full flex flex-col justify-between">
   <nav class="flex flex-col gap-3">
-    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100'}`} href="/">
+    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/">
       {#if path !== '/'}
         <Icon className="fill-current" size="24" src={AiOutlineHome}/>
       {/if}
@@ -27,7 +27,7 @@
       {/if}
       <span>Home</span>
     </a>
-    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/profile' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100'}`} href="/profile">
+    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/profile' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/profile">
       {#if path !== '/profile'}
         <Icon className="fill-current" size="24" src={RiUserAccountCircleLine}/>
       {/if}
@@ -36,7 +36,7 @@
       {/if}
       <span>Profile</span>
     </a>
-    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/explore' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100'}`} href="/explore">
+    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/explore' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/explore">
       {#if path !== '/explore'}
         <Icon className="fill-current" size="24" src={RiSystemSearch2Line}/>
       {/if}
@@ -45,7 +45,7 @@
       {/if}
       <span>Explore</span>
     </a>
-    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/chats' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100'}`} href="/chats">
+    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/chats' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/chats">
       {#if path !== '/chats'}
         <Icon className="fill-current" size="23" src={RiCommunicationChatSmile2Line}/>
       {/if}
@@ -56,7 +56,7 @@
     </a>
   </nav>
   <div>
-    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/setting' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100'}`} href="/setting">
+    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/setting' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/setting">
       {#if path !== '/setting'}
         <Icon className="fill-current" size="24" src={RiSystemSettings3Line}/>
       {/if}

@@ -1,10 +1,9 @@
-package databases
+package repository
 
 import (
 	"context"
 	"database/sql"
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/rs/zerolog"
@@ -26,6 +25,7 @@ type User struct {
 	LastActive time.Time `db:"last_active" json:"last_active"`
 	Website    string    `db:"website" json:"website"`
 	Location   string    `db:"location" json:"location"`
+	GoogleID   string    `db:"google_id" json:"google_id"`
 }
 
 func NewUser(db *sql.DB, l *zerolog.Logger) *userImpl {
@@ -95,7 +95,7 @@ func (u *userImpl) FindById(ctx context.Context, id string) (User, error) {
 	defer rows.Close()
 	user := User{}
 	if err != nil {
-		u.Log.Error().Str("Error", err.Error()).Msg("Error: User FindById")
+		u.Log.Error().Str("error", err.Error()).Msg("User FindById")
 		return user, err
 	}
 	if rows.Next() {
@@ -123,7 +123,7 @@ func (u *userImpl) FindByUsername(ctx context.Context, username string) (User, e
 	defer rows.Close()
 	user := User{}
 	if err != nil {
-		u.Log.Error().Str("Error", err.Error()).Msg("Error: User FindByUsername")
+		u.Log.Error().Str("error", err.Error()).Msg("User FindByUsername")
 		return user, err
 	}
 	if rows.Next() {
@@ -145,17 +145,47 @@ func (u *userImpl) FindByUsername(ctx context.Context, username string) (User, e
 	return user, nil
 }
 
-type OAuthCreateUserIn struct {
+func (u *userImpl) FindByGoogleID(ctx context.Context, gooogle_id string) (User, error) {
+	query := `SELECT user_id, username, full_name, email, password, avatar, join_at, last_active, website, location, google_id FROM Users WHERE google_id = ? LIMIT 1`
+	rows, err := u.DB.QueryContext(ctx, query, gooogle_id)
+	defer rows.Close()
+	user := User{}
+	if err != nil {
+		u.Log.Error().Str("error", err.Error()).Msg("User FindByUsername")
+		return user, err
+	}
+	if rows.Next() {
+		rows.Scan(
+			&user.UserID,
+			&user.Username,
+			&user.FullName,
+			&user.Email,
+			&user.Password,
+			&user.Avatar,
+			&user.JoinAt,
+			&user.LastActive,
+			&user.Website,
+			&user.Location,
+			&user.GoogleID,
+		)
+	} else {
+		return user, errors.New("User not found")
+	}
+	return user, nil
+}
+
+type OAuthGoogleIn struct {
 	UserID   string `db:"user_id"`
 	Username string `db:"username"`
 	FullName string `db:"full_name"`
 	Email    string `db:"email"`
 	Password string `db:"password"`
 	Avatar   string `db:"avatar"`
+	GoogleID string `db:"google_id"`
 }
 
-func (u *userImpl) OAuthCreateUser(ctx context.Context, user OAuthCreateUserIn) error {
-	query := `INSERT INTO Users (user_id, username, full_name, email, password, avatar) VALUES (?, ?, ?, ?, ?, ?)`
+func (u *userImpl) OAuthGoogle(ctx context.Context, user OAuthGoogleIn) error {
+	query := `INSERT INTO Users (user_id, username, full_name, email, password, avatar, google_id) VALUES (?, ?, ?, ?, ?, ?, ?)`
 	_, err := u.DB.ExecContext(ctx, query,
 		user.UserID,
 		user.Username,
@@ -163,8 +193,11 @@ func (u *userImpl) OAuthCreateUser(ctx context.Context, user OAuthCreateUserIn) 
 		user.Email,
 		user.Password,
 		user.Avatar,
+		user.GoogleID,
 	)
-	fmt.Println(err)
+	if err != nil {
+		u.Log.Error().Str("error", err.Error()).Msg("User OAuthCreateUser")
+	}
 	return err
 }
 
@@ -189,7 +222,6 @@ func (u *userImpl) FindUsername(ctx context.Context, username string) string {
 		return ``
 	}
 
-	fmt.Println("Username: ", uname)
 	return uname
 }
 
@@ -207,7 +239,7 @@ func (u *userImpl) FindAll(ctx context.Context) ([]FindAllOut, error) {
 	users := []FindAllOut{}
 
 	if err != nil {
-		u.Log.Error().Str("Error", err.Error()).Msg("Error: User FindByUsername")
+		u.Log.Error().Str("Error", err.Error()).Msg("User FindByUsername")
 		return users, err
 	}
 

@@ -1,5 +1,5 @@
 .env
-tmp/main
+tmp/*
 _tmpdb
 node_modules
 vftalk

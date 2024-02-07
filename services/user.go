@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"time"
 	"vftalk/configs"
-	"vftalk/models/databases"
+	"vftalk/models/repository"
 	"vftalk/utils"
 
 	"github.com/eefret/gravatar"
@@ -33,23 +33,23 @@ type (
 		UserID string `json:"id" form:"id" validate:"required,min=21,max=36"`
 	}
 	OutUser_FindById struct {
-		UserID     string    `db:"user_id" json:"user_id"`
-		Username   string    `db:"username" json:"username"`
-		FullName   string    `db:"full_name" json:"full_name"`
-		Email      string    `db:"email" json:"email"`
-		Password   string    `db:"password" json:"password"`
-		Avatar     string    `db:"avatar" json:"avatar"`
-		JoinAt     time.Time `db:"join_at" json:"join_at"`
-		LastActive time.Time `db:"last_active" json:"last_active"`
-		Website    string    `db:"website" json:"website"`
-		Location   string    `db:"location" json:"location"`
+		UserID     string    `json:"user_id"`
+		Username   string    `json:"username"`
+		FullName   string    `json:"full_name"`
+		Email      string    `json:"email"`
+		Password   string    `json:"password"`
+		Avatar     string    `json:"avatar"`
+		JoinAt     time.Time `json:"join_at"`
+		LastActive time.Time `json:"last_active"`
+		Website    string    `json:"website"`
+		Location   string    `json:"location"`
 	}
 )
 
 func (u *userImpl) FindById(ctx context.Context, in InUser_FindById) (OutUser_FindById, error) {
 	outUser := OutUser_FindById{}
 
-	userrepo := databases.NewUser(u.DB, u.Log)
+	userrepo := repository.NewUser(u.DB, u.Log)
 	user, err := userrepo.FindById(ctx, in.UserID)
 	if err != nil {
 		return outUser, err
@@ -83,7 +83,7 @@ func (u *userImpl) CreateUser(ctx context.Context, in InUser_Create) (token stri
 	uid := fmt.Sprintf("%v", uuid.New())
 	in.UserID = uid
 
-	userrepo := databases.NewUser(u.DB, u.Log)
+	userrepo := repository.NewUser(u.DB, u.Log)
 	if userrepo.FindUsername(ctx, in.Username) != "" {
 		return "", fmt.Errorf("Username already exist")
 	}
@@ -91,7 +91,7 @@ func (u *userImpl) CreateUser(ctx context.Context, in InUser_Create) (token stri
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(in.Password), bcrypt.DefaultCost)
 	g, err := gravatar.New()
 	avatar := g.URLParse(in.Email)
-	user := databases.CreateUserIn{
+	user := repository.CreateUserIn{
 		UserID:   in.UserID,
 		Username: in.Username,
 		FullName: in.FullName,
@@ -112,44 +112,41 @@ func (u *userImpl) CreateUser(ctx context.Context, in InUser_Create) (token stri
 }
 
 type (
-	InUser_OAuthCreate struct {
-		UserID   string `json:"id" form:"id" validate:"required,min=21,max=36"`
+	InUser_OAuthGoogle struct {
 		Username string `json:"username" form:"username" validate:"required,omitempty,min=4"`
 		FullName string `json:"full_name" form:"full_name" validate:"required,omitempty,min=4"`
 		Email    string `json:"email" form:"email" validate:"required,email"`
 		Avatar   string `json:"avatar" form:"avatar" validate:"required"`
+		GoogleID string `json:"google_id" form:"google_id" validate:"required"`
 	}
 )
 
-func (u *userImpl) OAuthCreateUser(ctx context.Context, in InUser_OAuthCreate) (token string, err error) {
-	t, err := configs.GenerateJWT(in.Username, in.UserID, time.Now().AddDate(0, 2, 0))
-	if err != nil {
-		return "", fmt.Errorf("Error generate session token")
-	}
+func (u *userImpl) OAuthGoogle(ctx context.Context, in InUser_OAuthGoogle) (token string, err error) {
+	var userId string = fmt.Sprintf("%v", uuid.New())
 
-	userrepo := databases.NewUser(u.DB, u.Log)
-	if userrepo.FindUsername(ctx, in.Username) != `` {
-		return t, nil
-	}
-
-	if userrepo.FindId(ctx, in.UserID) != `` {
+	userrepo := repository.NewUser(u.DB, u.Log)
+	user, err := userrepo.FindByGoogleID(ctx, in.GoogleID)
+	if err == nil {
+		t, _ := configs.GenerateJWT(user.Username, user.UserID, time.Now().AddDate(0, 2, 0))
 		return t, nil
 	}
 
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(in.Username), bcrypt.DefaultCost)
-	user := databases.OAuthCreateUserIn{
-		UserID:   in.UserID,
+	userIn := repository.OAuthGoogleIn{
+		UserID:   userId,
 		Username: in.Username,
 		FullName: in.FullName,
 		Email:    in.Email,
 		Password: string(hashedPassword),
 		Avatar:   in.Avatar,
+		GoogleID: in.GoogleID,
 	}
-	err = userrepo.OAuthCreateUser(ctx, user)
+	err = userrepo.OAuthGoogle(ctx, userIn)
 	if err != nil {
 		return "", fmt.Errorf("Something went wrong")
 	}
 
+	t, _ := configs.GenerateJWT(in.Username, userId, time.Now().AddDate(0, 2, 0))
 	return t, nil
 }
 
@@ -161,7 +158,7 @@ type (
 )
 
 func (u *userImpl) AuthLogin(ctx context.Context, in InUser_AuthLogin) (token, username string, err error) {
-	userrepo := databases.NewUser(u.DB, u.Log)
+	userrepo := repository.NewUser(u.DB, u.Log)
 	user, err := userrepo.FindByUsername(ctx, in.Username)
 	if err != nil {
 		return "", "", fmt.Errorf("Username not found")
@@ -190,12 +187,12 @@ type (
 )
 
 func (u *userImpl) UpdateProfile(ctx context.Context, in InUser_UpdateProfile) error {
-	userrepo := databases.NewUser(u.DB, u.Log)
+	userrepo := repository.NewUser(u.DB, u.Log)
 	if userrepo.FindId(ctx, in.UserID) == `` {
 		return errors.New("User not found")
 	}
 
-	user := databases.UpdateUserProfileIn{
+	user := repository.UpdateUserProfileIn{
 		UserID:   in.UserID,
 		FullName: in.FullName,
 		Location: in.Location,
@@ -218,12 +215,12 @@ type (
 )
 
 func (u *userImpl) UpdateAvatar(ctx context.Context, in InUser_UpdateAvatar) error {
-	userrepo := databases.NewUser(u.DB, u.Log)
+	userrepo := repository.NewUser(u.DB, u.Log)
 	if userrepo.FindId(ctx, in.UserID) == `` {
 		return errors.New("User not found")
 	}
 
-	user := databases.UpdateUserAvatarIn{
+	user := repository.UpdateUserAvatarIn{
 		UserID: in.UserID,
 		Avatar: in.Avatar,
 	}
@@ -238,14 +235,14 @@ func (u *userImpl) UpdateAvatar(ctx context.Context, in InUser_UpdateAvatar) err
 
 type (
 	OutUserLists struct {
-		Username string `db:"username" json:"username"`
-		FullName string `db:"full_name" json:"full_name"`
-		Avatar   string `db:"avatar" json:"avatar"`
+		Username string `json:"username"`
+		FullName string `json:"full_name"`
+		Avatar   string `json:"avatar"`
 	}
 )
 
 func (u *userImpl) UserLists(ctx context.Context) ([]OutUserLists, error) {
-	userrepo := databases.NewUser(u.DB, u.Log)
+	userrepo := repository.NewUser(u.DB, u.Log)
 	users, err := userrepo.FindAll(ctx)
 
 	outUsers := []OutUserLists{}
@@ -266,7 +263,7 @@ func (u *userImpl) UserLists(ctx context.Context) ([]OutUserLists, error) {
 }
 
 func (u *userImpl) Debug(ctx context.Context, id string) bool {
-	userrepo := databases.NewUser(u.DB, u.Log)
+	userrepo := repository.NewUser(u.DB, u.Log)
 	if userrepo.FindId(ctx, id) == `` {
 		return false
 	}

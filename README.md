@@ -46,14 +46,16 @@ go install -tags "postgres,mysql" github.com/golang-migrate/migrate/v4/cmd/migra
 
 ### Create Migration
 migrate create -ext sql -dir database/migration migration_state
-
-### migrate up
-make migrate-up
 ## or
-go run main.go migrate
+make migrate state=migration_state
 
-### migrate down
+### Run migration
+make migrate-up
 make migrate-down
+## or
+go run main.go migrate-up
+go run main.go migrate-down
+
 ```
 
 ### Docker

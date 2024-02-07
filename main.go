@@ -11,7 +11,7 @@ import (
 func main() {
 	configs.LoadEnv()
 	zlog := configs.InitLogger()
-	validArgs := `web, migrate`
+	validArgs := `web, migrate-up, migrate-down`
 
 	var mode string
 	if len(os.Args) < 2 {
@@ -24,8 +24,10 @@ func main() {
 	case `web`:
 		ws := web.NewWebServer(configs.EnvWebConf(), zlog)
 		ws.Start()
-	case `migrate`:
-		models.RunMigration()
+	case `migrate-up`:
+		models.RunMigrationUp()
+	case `migrate-down`:
+		models.RunMigrationDown()
 	default:
 		zlog.Fatal().Msg(`Must start with: ` + validArgs)
 	}

@@ -13,7 +13,7 @@
 
 <div class="flex flex-col gap-5 w-full h-fit">
 <div class="flex flex-row justify-start items-center gap-4">
-  <div class="relative flex h-12 w-12 shrink-0 overflow-hidden rounded-full">
+  <div class="relative flex h-12 w-12 shrink-0 overflow-hidden rounded-full shadow-md">
     <img src={url} class="aspect-square h-full w-full" alt="Avatar">
   </div>
   <div class="flex flex-col gap-1 shrink truncate">

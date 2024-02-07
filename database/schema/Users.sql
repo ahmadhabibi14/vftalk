@@ -9,6 +9,7 @@ CREATE TABLE `Users` (
   `last_active` timestamp NOT NULL DEFAULT current_timestamp(),
   `website` varchar(255) NOT NULL DEFAULT 'https://example.com',
   `location` varchar(255) NOT NULL DEFAULT 'Earth',
+  `google_id` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
