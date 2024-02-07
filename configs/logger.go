@@ -8,6 +8,7 @@ import (
 	"sync"
 
 	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/pkgerrors"
 )
 
 var (
@@ -27,7 +28,13 @@ func InitLogger() *zerolog.Logger {
 			file, _ := os.OpenFile("log/application.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 			logOutput = file
 		} else {
-			logOutput = os.Stdout
+			zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
+			zerolog.TimeFieldFormat = `2006/01/02 03:04 PM`
+			var output io.Writer = zerolog.ConsoleWriter{
+				Out:        os.Stdout,
+				TimeFormat: `2006/01/02 03:04 PM`,
+			}
+			logOutput = output
 		}
 
 		buildInfo, _ := debug.ReadBuildInfo()
