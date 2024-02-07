@@ -113,17 +113,16 @@ func (u *userImpl) CreateUser(ctx context.Context, in InUser_Create) (token stri
 
 type (
 	InUser_OAuthGoogle struct {
-		Username string `json:"username" form:"username" validate:"required,omitempty,min=4"`
-		FullName string `json:"full_name" form:"full_name" validate:"required,omitempty,min=4"`
-		Email    string `json:"email" form:"email" validate:"required,email"`
-		Avatar   string `json:"avatar" form:"avatar" validate:"required"`
-		GoogleID string `json:"google_id" form:"google_id" validate:"required"`
+		UserID   string
+		Username string
+		FullName string
+		Email    string
+		Avatar   string
+		GoogleID string
 	}
 )
 
 func (u *userImpl) OAuthGoogle(ctx context.Context, in InUser_OAuthGoogle) (token string, err error) {
-	var userId string = fmt.Sprintf("%v", uuid.New())
-
 	userrepo := repository.NewUser(u.DB, u.Log)
 	user, err := userrepo.FindByGoogleID(ctx, in.GoogleID)
 	if err == nil {
@@ -133,7 +132,7 @@ func (u *userImpl) OAuthGoogle(ctx context.Context, in InUser_OAuthGoogle) (toke
 
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(in.Username), bcrypt.DefaultCost)
 	userIn := repository.OAuthGoogleIn{
-		UserID:   userId,
+		UserID:   in.UserID,
 		Username: in.Username,
 		FullName: in.FullName,
 		Email:    in.Email,
@@ -146,7 +145,7 @@ func (u *userImpl) OAuthGoogle(ctx context.Context, in InUser_OAuthGoogle) (toke
 		return "", fmt.Errorf("Something went wrong")
 	}
 
-	t, _ := configs.GenerateJWT(in.Username, userId, time.Now().AddDate(0, 2, 0))
+	t, _ := configs.GenerateJWT(in.Username, in.UserID, time.Now().AddDate(0, 2, 0))
 	return t, nil
 }
 

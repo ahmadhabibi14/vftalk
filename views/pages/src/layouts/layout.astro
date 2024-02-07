@@ -1,6 +1,6 @@
 ---
 import Sidebar from '../components/partials/sidebar.svelte';
-import Rightbar from '../components/partials/rightbar.svelte';
+import Rightbar from '../components/partials/rightbar.astro';
 
 const title: string = `{{.Title}}`;
 const avatarUrl: string = `{{.User.Avatar }}`;
@@ -39,9 +39,7 @@ const username: string = `{{.User.Username}}`;
 			<div class="grow p-6 border-x-[2px] border-zinc-200">
 				<slot />
 			</div>
-			<aside class="w-[310px] h-screen flex p-6 sticky top-0 bottom-0">
-				<Rightbar client:only {avatarUrl} {username} {fullName} />
-			</aside>
+			<Rightbar avatarUrl={avatarUrl} username={username} fullName={fullName} />
 		</div>
 	</body>
 </html>

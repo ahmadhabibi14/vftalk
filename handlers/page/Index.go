@@ -1,7 +1,6 @@
 package page
 
 import (
-	"log"
 	"vftalk/configs"
 	"vftalk/services"
 	"vftalk/utils"
@@ -26,10 +25,7 @@ func (p *PageHandler) Index(c *fiber.Ctx) error {
 		}
 		user := services.NewUser(p.Db, p.Log)
 		userOut, err := user.FindById(c.UserContext(), in)
-		if err != nil {
-			log.Println(`This is him`)
-			return fiber.ErrServiceUnavailable
-		}
+		LogoutIfError(c, err)
 
 		c.Set(fiber.HeaderContentType, fiber.MIMETextHTMLCharsetUTF8)
 		return c.Render("index", fiber.Map{

@@ -62,7 +62,7 @@ func (w *WebServer) Start() {
 				"Title":   fmt.Sprintf("%d - %s", code, http.StatusText(code)),
 				"Code":    code,
 				"Status":  http.StatusText(code),
-				"Message": "Page not found",
+				"Message": http.StatusText(code),
 			})
 		},
 	})
@@ -78,7 +78,7 @@ func (w *WebServer) Start() {
 	app.Use(recover.New())
 
 	app.Static("/", "./views/public")
-	app.Static("/contents", "./contents")
+	app.Static("/", "./contents")
 	app.Static("_astro", "./views/pages/dist/_astro")
 
 	apiHandler := &apis.ApisHandler{

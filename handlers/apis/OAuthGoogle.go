@@ -11,6 +11,7 @@ import (
 	"vftalk/services"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 )
 
 func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
@@ -45,6 +46,7 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 	GOOGLE_username := strings.Split(GOOGLE_email, "@")[0]
 	GOOGLE_fullname := userInfo["name"].(string)
 	GOOGLE_avatar := userInfo["picture"].(string)
+	userId := fmt.Sprintf("%v", uuid.New())
 
 	resp, err := http.Get(GOOGLE_avatar)
 	if err != nil || resp.StatusCode != fiber.StatusOK {
@@ -53,7 +55,7 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 	}
 	defer resp.Body.Close()
 
-	imgPath := fmt.Sprintf("contents/img/avatars/%v.png", GOOGLE_id)
+	imgPath := fmt.Sprintf("contents/img/avatars/%v.png", userId)
 	file, _ := os.Create(imgPath)
 	_, err = io.Copy(file, resp.Body)
 	if err != nil {
@@ -61,8 +63,9 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(response)
 	}
 
-	GOOGLE_avatar = fmt.Sprintf("/img/avatars/%v.png", GOOGLE_id)
+	GOOGLE_avatar = fmt.Sprintf("/img/avatars/%v.png", userId)
 	in := services.InUser_OAuthGoogle{
+		UserID:   userId,
 		Username: GOOGLE_username,
 		FullName: GOOGLE_fullname,
 		Email:    GOOGLE_email,
