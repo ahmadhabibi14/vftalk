@@ -1,6 +1,7 @@
 package apis
 
 import (
+	"net/http"
 	"vftalk/services"
 
 	"github.com/gofiber/fiber/v2"
@@ -15,7 +16,7 @@ func (a *ApisHandler) UserLists(c *fiber.Ctx) error {
 	if err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusInternalServerError,
-			Status: STATUS_INTERNALSERVERERROR,
+			Status: http.StatusText(fiber.StatusInternalServerError),
 			Errors: "Something went wrong",
 			Data:   "",
 		}
@@ -24,7 +25,7 @@ func (a *ApisHandler) UserLists(c *fiber.Ctx) error {
 
 	response = HTTPResponse{
 		Code:   fiber.StatusOK,
-		Status: STATUS_OK,
+		Status: http.StatusText(fiber.StatusOK),
 		Errors: "",
 		Data: struct {
 			Msg   string                  `json:"message"`

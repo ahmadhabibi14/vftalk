@@ -21,7 +21,7 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 	if state == "" {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
-			Status: STATUS_BADREQUEST,
+			Status: http.StatusText(fiber.StatusBadRequest),
 			Errors: "Invalid csrf state",
 			Data:   "",
 		}
@@ -32,7 +32,7 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 	if err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
-			Status: STATUS_BADREQUEST,
+			Status: http.StatusText(fiber.StatusBadRequest),
 			Errors: "Code exchange failed",
 			Data:   "",
 		}
@@ -42,7 +42,7 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 	if err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
-			Status: STATUS_BADREQUEST,
+			Status: http.StatusText(fiber.StatusBadRequest),
 			Errors: "Failed to get user info",
 			Data:   "",
 		}
@@ -53,7 +53,7 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 	if err := json.NewDecoder(r.Body).Decode(&userInfo); err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
-			Status: STATUS_BADREQUEST,
+			Status: http.StatusText(fiber.StatusBadRequest),
 			Errors: "Failed to decode user info",
 			Data:   "",
 		}
@@ -70,7 +70,7 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 	if err != nil || resp.StatusCode != fiber.StatusOK {
 		response = HTTPResponse{
 			Code:   fiber.StatusInternalServerError,
-			Status: STATUS_INTERNALSERVERERROR,
+			Status: http.StatusText(fiber.StatusInternalServerError),
 			Errors: "Failed to save user info",
 			Data:   "",
 		}
@@ -84,7 +84,7 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 	if err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusInternalServerError,
-			Status: STATUS_INTERNALSERVERERROR,
+			Status: http.StatusText(fiber.StatusInternalServerError),
 			Errors: "Failed to save user avatar",
 			Data:   "",
 		}
@@ -105,7 +105,7 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 	if err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
-			Status: STATUS_BADREQUEST,
+			Status: http.StatusText(fiber.StatusBadRequest),
 			Errors: err.Error(),
 			Data:   "",
 		}

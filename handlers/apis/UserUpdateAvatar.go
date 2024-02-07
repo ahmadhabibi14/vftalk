@@ -2,6 +2,7 @@ package apis
 
 import (
 	"fmt"
+	"net/http"
 	"vftalk/configs"
 	"vftalk/services"
 	"vftalk/utils"
@@ -18,7 +19,7 @@ func (a *ApisHandler) UpdateAvatar(c *fiber.Ctx) error {
 	if err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusUnauthorized,
-			Status: STATUS_UNAUTHORIZED,
+			Status: http.StatusText(fiber.StatusUnauthorized),
 			Errors: ERROR_UNAUTHORIZED,
 			Data:   "",
 		}
@@ -30,7 +31,7 @@ func (a *ApisHandler) UpdateAvatar(c *fiber.Ctx) error {
 		a.Log.Error().Str("Error", err.Error()).Msg("Cannot get image file when update user avatar")
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
-			Status: STATUS_BADREQUEST,
+			Status: http.StatusText(fiber.StatusBadRequest),
 			Errors: ERROR_INVALIDPAYLOAD,
 			Data:   "",
 		}
@@ -41,7 +42,7 @@ func (a *ApisHandler) UpdateAvatar(c *fiber.Ctx) error {
 	if imgValid != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
-			Status: STATUS_BADREQUEST,
+			Status: http.StatusText(fiber.StatusBadRequest),
 			Errors: imgValid.Error(),
 			Data:   "",
 		}
@@ -53,7 +54,7 @@ func (a *ApisHandler) UpdateAvatar(c *fiber.Ctx) error {
 	if imgSave != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusInternalServerError,
-			Status: STATUS_INTERNALSERVERERROR,
+			Status: http.StatusText(fiber.StatusInternalServerError),
 			Errors: "Something went wrong",
 			Data:   "",
 		}
@@ -70,7 +71,7 @@ func (a *ApisHandler) UpdateAvatar(c *fiber.Ctx) error {
 	if updateAvatar != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusInternalServerError,
-			Status: STATUS_INTERNALSERVERERROR,
+			Status: http.StatusText(fiber.StatusInternalServerError),
 			Errors: updateAvatar.Error(),
 			Data:   "",
 		}
@@ -79,7 +80,7 @@ func (a *ApisHandler) UpdateAvatar(c *fiber.Ctx) error {
 
 	response = HTTPResponse{
 		Code:   fiber.StatusOK,
-		Status: STATUS_OK,
+		Status: http.StatusText(fiber.StatusOK),
 		Errors: "",
 		Data: struct {
 			Msg    string `json:"message"`

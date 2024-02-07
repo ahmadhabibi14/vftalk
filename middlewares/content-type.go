@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"net/http"
 	"strings"
 	"vftalk/handlers/apis"
 
@@ -12,7 +13,7 @@ func ContentJSON(c *fiber.Ctx) error {
 	if ctype != fiber.MIMEApplicationJSON {
 		resp := apis.HTTPResponse{
 			Code:   fiber.StatusBadRequest,
-			Status: apis.STATUS_BADREQUEST,
+			Status: http.StatusText(fiber.StatusBadRequest),
 			Errors: "Invalid Content-Type",
 			Data:   "Try to use " + fiber.MIMEApplicationJSON + " for valid Content-Type",
 		}
@@ -27,7 +28,7 @@ func ContentMultipartForm(c *fiber.Ctx) error {
 	if !strings.Contains(ctype, fiber.MIMEMultipartForm) {
 		resp := apis.HTTPResponse{
 			Code:   fiber.StatusBadRequest,
-			Status: apis.STATUS_BADREQUEST,
+			Status: http.StatusText(fiber.StatusBadRequest),
 			Errors: "Invalid Content-Type",
 			Data:   "Try to use " + fiber.MIMEMultipartForm + " for valid Content-Type",
 		}

@@ -1,6 +1,7 @@
 package apis
 
 import (
+	"net/http"
 	"vftalk/services"
 
 	"github.com/gofiber/fiber/v2"
@@ -20,7 +21,7 @@ func (a *ApisHandler) Debug(c *fiber.Ctx) error {
 	// if err != nil {
 	// 	response = HTTPResponse{
 	// 		Code:   fiber.StatusBadRequest,
-	// 		Status: STATUS_BADREQUEST,
+	// 		Status: http.StatusText(fiber.StatusBadRequest),
 	// 		Errors: err.Error(),
 	// 		Data:   "",
 	// 	}
@@ -36,7 +37,7 @@ func (a *ApisHandler) Debug(c *fiber.Ctx) error {
 	if !user.Debug(ctx, UserID) {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
-			Status: STATUS_BADREQUEST,
+			Status: http.StatusText(fiber.StatusBadRequest),
 			Errors: "User ID not found",
 			Data:   "",
 		}
@@ -44,7 +45,7 @@ func (a *ApisHandler) Debug(c *fiber.Ctx) error {
 	}
 	response = HTTPResponse{
 		Code:   fiber.StatusOK,
-		Status: STATUS_OK,
+		Status: http.StatusText(fiber.StatusOK),
 		Errors: "",
 		Data:   "User ID found",
 	}

@@ -1,6 +1,7 @@
 package apis
 
 import (
+	"net/http"
 	"vftalk/configs"
 	"vftalk/services"
 
@@ -15,7 +16,7 @@ func (a *ApisHandler) UpdateProfile(c *fiber.Ctx) error {
 	if err := c.BodyParser(&in); err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
-			Status: STATUS_BADREQUEST,
+			Status: http.StatusText(fiber.StatusBadRequest),
 			Errors: ERROR_INVALIDPAYLOAD,
 			Data:   "",
 		}
@@ -26,7 +27,7 @@ func (a *ApisHandler) UpdateProfile(c *fiber.Ctx) error {
 	if err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusUnauthorized,
-			Status: STATUS_UNAUTHORIZED,
+			Status: http.StatusText(fiber.StatusUnauthorized),
 			Errors: ERROR_UNAUTHORIZED,
 			Data:   "",
 		}
@@ -40,7 +41,7 @@ func (a *ApisHandler) UpdateProfile(c *fiber.Ctx) error {
 	if updateProfile != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
-			Status: STATUS_BADREQUEST,
+			Status: http.StatusText(fiber.StatusBadRequest),
 			Errors: updateProfile.Error(),
 			Data:   "",
 		}
@@ -49,7 +50,7 @@ func (a *ApisHandler) UpdateProfile(c *fiber.Ctx) error {
 
 	response = HTTPResponse{
 		Code:   fiber.StatusOK,
-		Status: STATUS_OK,
+		Status: http.StatusText(fiber.StatusOK),
 		Errors: "",
 		Data:   "Profile updated !!",
 	}

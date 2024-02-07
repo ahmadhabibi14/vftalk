@@ -1,7 +1,9 @@
 package web
 
 import (
+	"fmt"
 	"log"
+	"net/http"
 	"os"
 
 	"vftalk/configs"
@@ -48,7 +50,9 @@ func (w *WebServer) Start() {
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
 			c.Status(fiber.StatusNotFound)
 			return c.Render("404", fiber.Map{
-				"Title":   "404 - Page not found",
+				"Title":   fmt.Sprintf("%d - %s", fiber.StatusNotFound, http.StatusText(fiber.StatusNotFound)),
+				"Code":    fiber.StatusNotFound,
+				"Status":  http.StatusText(fiber.StatusNotFound),
 				"Message": "Page not found",
 			})
 		},

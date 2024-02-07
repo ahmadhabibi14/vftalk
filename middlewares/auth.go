@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"net/http"
 	"vftalk/configs"
 	"vftalk/handlers/apis"
 
@@ -21,7 +22,7 @@ func AuthJWT(c *fiber.Ctx) error {
 		} else {
 			resp := apis.HTTPResponse{
 				Code:   fiber.StatusUnauthorized,
-				Status: apis.STATUS_UNAUTHORIZED,
+				Status: http.StatusText(fiber.StatusUnauthorized),
 				Errors: "You are unauthorized to process this operation",
 				Data:   "",
 			}

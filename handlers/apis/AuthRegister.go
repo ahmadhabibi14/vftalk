@@ -1,6 +1,7 @@
 package apis
 
 import (
+	"net/http"
 	"vftalk/configs"
 	"vftalk/services"
 
@@ -15,7 +16,7 @@ func (a *ApisHandler) AuthRegister(c *fiber.Ctx) error {
 	if err := c.BodyParser(&in); err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
-			Status: STATUS_BADREQUEST,
+			Status: http.StatusText(fiber.StatusBadRequest),
 			Errors: ERROR_INVALIDPAYLOAD,
 			Data:   "",
 		}
@@ -27,7 +28,7 @@ func (a *ApisHandler) AuthRegister(c *fiber.Ctx) error {
 	if err != nil {
 		response = HTTPResponse{
 			Code:   fiber.StatusBadRequest,
-			Status: STATUS_BADREQUEST,
+			Status: http.StatusText(fiber.StatusBadRequest),
 			Errors: err.Error(),
 			Data:   "",
 		}
@@ -37,7 +38,7 @@ func (a *ApisHandler) AuthRegister(c *fiber.Ctx) error {
 	configs.SetJWTasCookie(c, token)
 	response = HTTPResponse{
 		Code:   fiber.StatusOK,
-		Status: STATUS_OK,
+		Status: http.StatusText(fiber.StatusOK),
 		Errors: "",
 		Data: struct {
 			Msg      string `json:"message"`
