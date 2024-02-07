@@ -11,3 +11,8 @@ Disallow: /
 # Block Common Crawl
 User-agent: CCbot
 Disallow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://vftalk.my.id/sitemap-index.xml
