@@ -3,6 +3,7 @@ import Navbar from '../components/partials/navbar.svelte';
 import Footer from '../components/partials/footer.astro';
 
 const title: string = `{{.Title}}`;
+const description: string = 'VFTalk is an open-source Chat App for your privacy needs and to feels another experience of communications VFTalk is an open-source Chat App for your privacy needs and to feels another experience of communications'
 ---
 
 <!doctype html>
@@ -14,13 +15,11 @@ const title: string = `{{.Title}}`;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 
-    <meta content="https://vftalk.my.id/" property="og:url" />
+    <meta content="https://vftalk.my.id" property="og:url" />
     <meta content="VFTalk" property="og:site_name" />
     <meta content="{{.Title}}" property="og:title" />
-    <meta
-      content="VFTalk is an open-source Chat App for your privacy needs and to feels another experience of communications"
-      property="og:description"
-    />
+    <meta content={description} name="description" />
+    <meta content={description} property="og:description" />
     <meta content="id_ID" property="og:locale" />
     <meta content="en_EN" property="og:locale:alternate" />
     <meta content="website" property="og:type" />
@@ -33,6 +32,7 @@ const title: string = `{{.Title}}`;
     <meta content="2023-12-03T19:02:52Z" property="article:modified_time" />
     <meta content="2023-12-03T19:02:52Z" property="article:updated_time" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="canonical" href="https://vftalk.my.id"/>
 	</head>
   <body class="w-full max-h-screen h-screen text-zinc-800 bg-zinc-50">
     <header class="w-full z-50 h-20">
