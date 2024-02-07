@@ -1,6 +1,7 @@
 package configs
 
 import (
+	"os"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -15,6 +16,7 @@ func SetJWTasCookie(c *fiber.Ctx, tokenString string) {
 		Value:    tokenString,
 		Expires:  expiration,
 		SameSite: "Lax",
+		Secure:   os.Getenv("WEB_ENV") == "prod",
 		HTTPOnly: false,
 	})
 	return

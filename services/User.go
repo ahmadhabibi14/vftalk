@@ -49,11 +49,6 @@ type (
 func (u *userImpl) FindById(ctx context.Context, in InUser_FindById) (OutUser_FindById, error) {
 	outUser := OutUser_FindById{}
 
-	msg, err := utils.ValidateStruct(in)
-	if err != nil {
-		return outUser, fmt.Errorf(msg)
-	}
-
 	userrepo := databases.NewUser(u.DB, u.Log)
 	user, err := userrepo.FindById(ctx, in.UserID)
 	if err != nil {
@@ -87,10 +82,6 @@ type (
 func (u *userImpl) CreateUser(ctx context.Context, in InUser_Create) (token string, err error) {
 	uid := fmt.Sprintf("%v", uuid.New())
 	in.UserID = uid
-	msg, err := utils.ValidateStruct(in)
-	if err != nil {
-		return "", fmt.Errorf(msg)
-	}
 
 	userrepo := databases.NewUser(u.DB, u.Log)
 	if userrepo.FindUsername(ctx, in.Username) != "" {
@@ -131,11 +122,6 @@ type (
 )
 
 func (u *userImpl) OAuthCreateUser(ctx context.Context, in InUser_OAuthCreate) (token string, err error) {
-	msg, err := utils.ValidateStruct(in)
-	if err != nil {
-		return "", fmt.Errorf(msg)
-	}
-
 	t, err := configs.GenerateJWT(in.Username, in.UserID, time.Now().AddDate(0, 2, 0))
 	if err != nil {
 		return "", fmt.Errorf("Error generate session token")
@@ -175,11 +161,6 @@ type (
 )
 
 func (u *userImpl) AuthLogin(ctx context.Context, in InUser_AuthLogin) (token, username string, err error) {
-	msg, err := utils.ValidateStruct(in)
-	if err != nil {
-		return "", "", fmt.Errorf(msg)
-	}
-
 	userrepo := databases.NewUser(u.DB, u.Log)
 	user, err := userrepo.FindByUsername(ctx, in.Username)
 	if err != nil {
@@ -209,10 +190,6 @@ type (
 )
 
 func (u *userImpl) UpdateProfile(ctx context.Context, in InUser_UpdateProfile) error {
-	msg, err := utils.ValidateStruct(in)
-	if err != nil {
-		return fmt.Errorf(msg)
-	}
 	userrepo := databases.NewUser(u.DB, u.Log)
 	if userrepo.FindId(ctx, in.UserID) == `` {
 		return errors.New("User not found")
@@ -241,10 +218,6 @@ type (
 )
 
 func (u *userImpl) UpdateAvatar(ctx context.Context, in InUser_UpdateAvatar) error {
-	msg, err := utils.ValidateStruct(in)
-	if err != nil {
-		return fmt.Errorf(msg)
-	}
 	userrepo := databases.NewUser(u.DB, u.Log)
 	if userrepo.FindId(ctx, in.UserID) == `` {
 		return errors.New("User not found")

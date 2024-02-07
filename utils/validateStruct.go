@@ -7,7 +7,7 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-func ValidateStruct(s interface{}) (string, error) {
+func ValidateStruct(s interface{}) error {
 	validate := validator.New()
 	err := validate.Struct(s)
 	errMsgs := make([]string, 0)
@@ -20,7 +20,7 @@ func ValidateStruct(s interface{}) (string, error) {
 				err.Value(),
 			))
 		}
-		return errMsgs[0], errors.New(`Error validate field`)
+		return errors.New(errMsgs[0])
 	}
-	return ``, nil
+	return nil
 }

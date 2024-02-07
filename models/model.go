@@ -21,7 +21,12 @@ var (
 func RunMigration() {
 	configs.LoadEnv()
 	zlog := configs.InitLogger()
-	db := configs.ConnectMariaDB(zlog)
+	db, err := configs.ConnectMariaDB()
+	if err != nil {
+		zlog.Fatal().
+			Str("ERROR", err.Error()).
+			Msg("cannot connect to database")
+	}
 	defer db.Close()
 
 	driver, _ := mysql.WithInstance(db, &mysql.Config{})

@@ -7,10 +7,9 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/rs/zerolog"
 )
 
-func ConnectMariaDB(l *zerolog.Logger) *sql.DB {
+func ConnectMariaDB() (*sql.DB, error) {
 	DbDriver := "mysql"
 	DbHost := os.Getenv("MARIADB_HOST")
 	DbPort := os.Getenv("MARIADB_PORT")
@@ -20,14 +19,12 @@ func ConnectMariaDB(l *zerolog.Logger) *sql.DB {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", DbUser, DbPassword, DbHost, DbPort, DbName)
 	db, err := sql.Open(DbDriver, dsn)
 	if err != nil {
-		l.Fatal().
-			Str("ERROR", err.Error()).
-			Msg("cannot connect to " + DbDriver)
+		return nil, err
 	}
 
 	db.SetMaxIdleConns(10)
 	db.SetMaxOpenConns(100)
 	db.SetConnMaxIdleTime(5 * time.Minute)
 	db.SetConnMaxLifetime(60 * time.Minute)
-	return db
+	return db, nil
 }

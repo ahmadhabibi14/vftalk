@@ -1,6 +1,7 @@
 package web
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -39,7 +40,10 @@ func NewWebServer(cfg configs.WebConf, lg *zerolog.Logger) *WebServer {
 
 func (w *WebServer) Start() {
 	mlr := mailer.NewMailer(w.Log)
-	db := configs.ConnectMariaDB(w.Log)
+	db, err := configs.ConnectMariaDB()
+	if err != nil {
+		w.Log.Error().Str("ERROR", err.Error()).Msg("cannot connect to database")
+	}
 	oauth := configs.EnvOAuth()
 
 	engine := html.New("./views/pages/dist", ".html")
@@ -48,11 +52,16 @@ func (w *WebServer) Start() {
 		Views:   engine,
 		Prefork: false,
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
+			var code int = fiber.StatusNotFound
+			var e *fiber.Error
+			if errors.As(err, &e) {
+				code = e.Code
+			}
 			c.Status(fiber.StatusNotFound)
 			return c.Render("404", fiber.Map{
-				"Title":   fmt.Sprintf("%d - %s", fiber.StatusNotFound, http.StatusText(fiber.StatusNotFound)),
-				"Code":    fiber.StatusNotFound,
-				"Status":  http.StatusText(fiber.StatusNotFound),
+				"Title":   fmt.Sprintf("%d - %s", code, http.StatusText(code)),
+				"Code":    code,
+				"Status":  http.StatusText(code),
 				"Message": "Page not found",
 			})
 		},

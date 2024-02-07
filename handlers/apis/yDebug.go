@@ -1,7 +1,6 @@
 package apis
 
 import (
-	"net/http"
 	"vftalk/services"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,44 +9,14 @@ import (
 func (a *ApisHandler) Debug(c *fiber.Ctx) error {
 	ctx := c.Context()
 	response := HTTPResponse{}
-	// in := services.InUser_FindById{
-	// 	UserID: "6f935d5c-1f55-4e6c-bd24-13e6ef6fb129",
-	// }
-
-	// a.Log.Info().Str("Host: ", c.Hostname()).Msg("Hostname for this request")
-
-	// user := services.NewUser(a.Db, a.Log)
-	// userOut, err := user.FindById(ctx, in)
-	// if err != nil {
-	// 	response = HTTPResponse{
-	// 		Code:   fiber.StatusBadRequest,
-	// 		Status: http.StatusText(fiber.StatusBadRequest),
-	// 		Errors: err.Error(),
-	// 		Data:   "",
-	// 	}
-	// 	return c.Status(fiber.StatusBadRequest).JSON(response)
-	// }
-
-	// if mailErr := a.Mailer.SendUserRegisterEmail(userOut.Email); mailErr != nil {
-	// 	a.Log.Error().Str("Error", mailErr.Error()).Msg("Cannot send email")
-	// }
 
 	UserID := "6f935d5c-1f55-4e6c-bd24-13e6ef6fb129"
 	user := services.NewUser(a.Db, a.Log)
 	if !user.Debug(ctx, UserID) {
-		response = HTTPResponse{
-			Code:   fiber.StatusBadRequest,
-			Status: http.StatusText(fiber.StatusBadRequest),
-			Errors: "User ID not found",
-			Data:   "",
-		}
+		response = JSONResponse(fiber.StatusBadRequest, "User ID not found", "")
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
-	response = HTTPResponse{
-		Code:   fiber.StatusOK,
-		Status: http.StatusText(fiber.StatusOK),
-		Errors: "",
-		Data:   "User ID found",
-	}
+
+	response = JSONResponse(fiber.StatusOK, "", "User ID found")
 	return c.Status(fiber.StatusOK).JSON(response)
 }

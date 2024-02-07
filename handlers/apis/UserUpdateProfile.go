@@ -11,15 +11,10 @@ import (
 func (a *ApisHandler) UpdateProfile(c *fiber.Ctx) error {
 	ctx := c.Context()
 	response := HTTPResponse{}
-	in := services.InUser_UpdateProfile{}
 
-	if err := c.BodyParser(&in); err != nil {
-		response = HTTPResponse{
-			Code:   fiber.StatusBadRequest,
-			Status: http.StatusText(fiber.StatusBadRequest),
-			Errors: ERROR_INVALIDPAYLOAD,
-			Data:   "",
-		}
+	in, err := ReadJSON[services.InUser_UpdateProfile](c, c.Body())
+	if err != nil {
+		response = JSONResponse(fiber.StatusBadRequest, err.Error(), "")
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 
