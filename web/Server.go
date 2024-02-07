@@ -2,6 +2,7 @@ package web
 
 import (
 	"log"
+	"os"
 
 	"vftalk/configs"
 	"vftalk/handlers/apis"
@@ -74,9 +75,10 @@ func (w *WebServer) Start() {
 		OAuth:  oauth,
 	}
 	pageHandler := &page.PageHandler{
-		Log:   w.Log,
-		Db:    db,
-		OAuth: oauth,
+		Log:    w.Log,
+		Db:     db,
+		OAuth:  oauth,
+		Domain: os.Getenv("WEB_DOMAIN"),
 	}
 
 	WebViews(app, pageHandler)

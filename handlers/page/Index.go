@@ -13,7 +13,8 @@ func (p *PageHandler) Index(c *fiber.Ctx) error {
 	if err != nil {
 		c.Set(fiber.HeaderContentType, fiber.MIMETextHTMLCharsetUTF8)
 		return c.Render("landingpage/index", fiber.Map{
-			"Title": "VFTalk | Chat App",
+			"Title":     "VFTalk | Chat App",
+			"Permalink": p.Domain,
 		})
 	} else {
 		userId, err := configs.GetUserIdFromJWTfunc(c)

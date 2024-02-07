@@ -2,6 +2,8 @@ package configs
 
 import "os"
 
+const WEB_DOMAIN = `https://vftalk.my.id`
+
 type WebConf struct {
 	Port           string
 	WebProtoDomain string

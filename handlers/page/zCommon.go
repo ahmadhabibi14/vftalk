@@ -9,9 +9,10 @@ import (
 )
 
 type PageHandler struct {
-	Log   *zerolog.Logger
-	Db    *sql.DB
-	OAuth configs.OAuthConf
+	Log    *zerolog.Logger
+	Db     *sql.DB
+	OAuth  configs.OAuthConf
+	Domain string
 }
 
 func LogoutIfError(c *fiber.Ctx, err error) error {
