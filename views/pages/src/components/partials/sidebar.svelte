@@ -16,52 +16,52 @@
   onMount(() => path = window.location.pathname);
 </script>
 
-<div class="w-full h-full flex flex-col justify-between">
+<div class="w-full h-full flex flex-col justify-between text-lg">
   <nav class="flex flex-col gap-3">
-    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/">
+    <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/">
       {#if path !== '/'}
-        <Icon className="fill-current" size="24" src={AiOutlineHome}/>
+        <Icon className="fill-current" size="26" src={AiOutlineHome}/>
       {/if}
       {#if path === '/'}
-        <Icon className="fill-current" size="24" src={AiFillHome}/>
+        <Icon className="fill-current" size="26" src={AiFillHome}/>
       {/if}
       <span>Home</span>
     </a>
-    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/profile' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/profile">
+    <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/profile' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/profile">
       {#if path !== '/profile'}
-        <Icon className="fill-current" size="24" src={RiUserAccountCircleLine}/>
+        <Icon className="fill-current" size="26" src={RiUserAccountCircleLine}/>
       {/if}
       {#if path === '/profile'}
-        <Icon className="fill-current" size="24" src={RiUserAccountCircleFill}/>
+        <Icon className="fill-current" size="26" src={RiUserAccountCircleFill}/>
       {/if}
       <span>Profile</span>
     </a>
-    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/explore' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/explore">
+    <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/explore' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/explore">
       {#if path !== '/explore'}
-        <Icon className="fill-current" size="24" src={RiSystemSearch2Line}/>
+        <Icon className="fill-current" size="26" src={RiSystemSearch2Line}/>
       {/if}
       {#if path === '/explore'}
-        <Icon className="fill-current" size="24" src={RiSystemSearch2Fill}/>
+        <Icon className="fill-current" size="26" src={RiSystemSearch2Fill}/>
       {/if}
       <span>Explore</span>
     </a>
-    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/chats' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/chats">
+    <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/chats' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/chats">
       {#if path !== '/chats'}
-        <Icon className="fill-current" size="23" src={RiCommunicationChatSmile2Line}/>
+        <Icon className="fill-current" size="26" src={RiCommunicationChatSmile2Line}/>
       {/if}
       {#if path === '/chats'}
-        <Icon className="fill-current" size="23" src={RiCommunicationChatSmile2Fill}/>
+        <Icon className="fill-current" size="26" src={RiCommunicationChatSmile2Fill}/>
       {/if}
       <span>Chats</span>
     </a>
   </nav>
   <div>
-    <a class={`flex flex-row gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/setting' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/setting">
+    <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/setting' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/setting">
       {#if path !== '/setting'}
-        <Icon className="fill-current" size="24" src={RiSystemSettings3Line}/>
+        <Icon className="fill-current" size="26" src={RiSystemSettings3Line}/>
       {/if}
       {#if path === '/setting'}
-        <Icon className="fill-current" size="24" src={RiSystemSettings3Fill}/>
+        <Icon className="fill-current" size="26" src={RiSystemSettings3Fill}/>
       {/if}
       <span>Setting</span>
     </a>

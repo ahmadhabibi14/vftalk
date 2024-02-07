@@ -26,8 +26,8 @@ const username: string = `{{.User.Username}}`;
 	</head>
 	<body class="bg-white text-zinc-800 w-full min-h-screen h-screen top-0 bottom-0 right-0 left-0">
 		<div class="container mx-auto lg:max-w-7xl flex flex-row gap-0">
-			<aside class="w-[300px] h-screen flex flex-row justify-end p-6 sticky top-0">
-				<div class="w-3/4 h-full flex flex-col gap-7">
+			<aside class="w-fit h-screen flex flex-row justify-end p-6 sticky top-0">
+				<div class="w-fit h-full flex flex-col gap-7 pr-8">
 					<div class="w-full h-fit flex">
 						<a href="/" class="ml-3">
 							<img src="/icons/vftalk-logo-dark.svg" alt="VFtalk logo" title="VFtalk" class="w-28 h-auto">
@@ -36,7 +36,7 @@ const username: string = `{{.User.Username}}`;
 					<Sidebar client:only/>
 				</div>
 			</aside>
-			<div class="grow p-6 border-x-[2px] border-zinc-200">
+			<div class="grow p-6 border-x-[2px] border-zinc-100">
 				<slot />
 			</div>
 			<Rightbar avatarUrl={avatarUrl} username={username} fullName={fullName} />

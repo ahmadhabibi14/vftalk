@@ -2,9 +2,9 @@
 const { avatarUrl, fullName, username } = Astro.props;
 ---
 
-<aside class="w-[310px] h-screen flex p-6 sticky top-0 bottom-0">
+<aside class="w-[350px] h-screen flex p-6 sticky top-0 bottom-0">
   <div class="flex flex-col gap-5 w-full h-fit">
-    <div class="flex flex-row justify-start items-center gap-4">
+    <div class="flex flex-row justify-start items-center gap-4 bg-zinc-100 p-4 rounded-md">
       <div class="relative flex h-12 w-12 shrink-0 overflow-hidden rounded-full shadow-md">
         <img src={avatarUrl} class="aspect-square h-full w-full" alt="Avatar" />
       </div>
