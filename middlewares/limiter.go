@@ -17,7 +17,7 @@ var Limiter = limiter.Config{
 		return c.IP()
 	},
 	LimitReached: func(c *fiber.Ctx) error {
-		httpMethod := string(c.Request().Header.Method())
+		var httpMethod string = string(c.Request().Header.Method())
 		var message string = "You have exceeded your rate limit. Please try again a few minutes later."
 
 		if httpMethod == fiber.MethodGet {
