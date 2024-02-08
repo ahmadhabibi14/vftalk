@@ -1,27 +1,21 @@
 <script lang="ts" type="module">
   import axios from 'axios';
-  import Icon from 'svelte-icons-pack';
-  import RiSystemLoader4Fill from 'svelte-icons-pack/ri/RiSystemLoader4Fill';
   import { NEWS_API_KEY } from 'constants/keys';
-  import { formatDate, getOneMonthPastDate } from 'utils/formatter';
+  import { formatDate} from 'utils/formatter';
   import { onMount } from 'svelte';
+  import type { NewsItem } from 'types/news';
   
-  let News: any[] = [], OffsetNews: number = 1;
-  let isLoadNews: boolean = false, noMoreNews: boolean = false;
+  let News: NewsItem[] = [];
 
   async function GetNews() {
-    isLoadNews = true;
-    const oneMonthPastDate: string = getOneMonthPastDate();
-    const newsUrl: string = `https://newsapi.org/v2/everything?q=tech&language=en&from=${oneMonthPastDate}&sortBy=popularity&page=${OffsetNews}&pageSize=70&apiKey=${NEWS_API_KEY}`
+    const excludeDomains: string = 'yahoo.com'
+    const newsUrl: string = `https://newsapi.org/v2/everything?q=tech&language=en&sortBy=popularity&excludeDomains=${excludeDomains}&pageSize=100&apiKey=${NEWS_API_KEY}`
     await axios({
       method: 'GET',
       url: newsUrl,
     }).then((response) => {
-      isLoadNews = false;
-      OffsetNews += 1;
       News = [...News, ...response.data.articles]
     }).catch((err) => {
-      isLoadNews = false;
       console.log(err);
     })
   }
@@ -57,21 +51,6 @@
         </div>
       </a>
     {/each}
-  </div>
-  <div class="flex justify-center text-sm">
-    {#if noMoreNews}
-      <div class="text-emerald-600 bg-white shadow py-2 px-5 rounded cursor-default">Tidak ada buku lagi</div>
-    {:else}
-      {#if isLoadNews}
-        <div class="flex flex-row items-center gap-2 cursor-progress">
-          <Icon size="14" src={RiSystemLoader4Fill} className="fill-emerald-600 -mt-1 animate-spin" />
-          <span>Loading more</span>
-        </div>
-      {/if}
-      {#if !isLoadNews}
-        <button on:click={GetNews} class="text-emerald-600 bg-white shadow py-2 px-5 rounded hover:bg-zinc-50">Load more</button>
-      {/if}
-    {/if}
   </div>
 {/if}
 </div>

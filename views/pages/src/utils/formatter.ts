@@ -37,3 +37,14 @@ export function getOneMonthPastDate(): string {
   const formattedDate: string = pastDate.toISOString().slice(0, 10);
   return formattedDate;
 }
+
+// Format YYYY-MM-DD
+export function getTwoWeeksPastDate(): string {
+  const dt: Date = new Date();
+  const pastDate: Date = new Date(dt.getTime() - (14 * 24 * 60 * 60 * 1000));
+  const year: number = pastDate.getFullYear();
+  const month: string = String(pastDate.getMonth() + 1).padStart(2, '0');
+  const day: string = String(pastDate.getDate()).padStart(2, '0');
+  const formattedDate: string = `${year}-${month}-${day}`;
+  return formattedDate;
+}
