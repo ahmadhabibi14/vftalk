@@ -36,8 +36,10 @@ const year: number = new Date().getFullYear()
 						</a>
 					</div>
 					<div class="w-full h-full flex flex-col justify-between text-lg">
-						<Sidebar client:only/>
-  					<div>
+						<div class="grow">
+							<Sidebar client:only/>
+						</div>
+  					<div class="h-fit">
     					<footer class="pl-2 text-xs flex flex-col text-zinc-500 gap-3">
       					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       					<p class="border-t border-zinc-200 pt-3">Copyright © {year} | VFtalk</p>
@@ -46,7 +48,7 @@ const year: number = new Date().getFullYear()
 					</div>
 				</div>
 			</aside>
-			<div class="grow p-6 border-x-[2px] border-zinc-100">
+			<div class="w-7/12 p-6 border-x-[2px] border-zinc-100">
 				<slot />
 			</div>
 			<Rightbar avatarUrl={avatarUrl} username={username} fullName={fullName} />

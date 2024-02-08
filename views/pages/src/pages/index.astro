@@ -9,48 +9,45 @@ import RiHealthHeartPulseFill from 'svelte-icons-pack/ri/RiHealthHeartPulseFill'
 import FaSolidUsers from 'svelte-icons-pack/fa/FaSolidUsers';
 import FaSolidGamepad from 'svelte-icons-pack/fa/FaSolidGamepad';
 import FaSolidCoffee from 'svelte-icons-pack/fa/FaSolidCoffee';
+import News from '@components/news.svelte';
 ---
 
 <Layout>
 	<div class="flex flex-col gap-4">
 		<div class="grid grid-cols-3 gap-3 font-semibold">
-			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-purple-500 hover:bg-purple-500/95 text-purple-100 group" href="/">
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-purple-500 hover:bg-purple-500/85 text-purple-100 group" href="/">
 				<span>Sport</span>
-				<Icon className="fill-purple-700 group-hover:fill-purple-700/95" size="40" src={FaSolidFootballBall}/>
+				<Icon className="fill-purple-700 group-hover:fill-purple-700/85" size="40" src={FaSolidFootballBall}/>
 			</a>
-			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-green-500 hover:bg-green-500/95 text-green-100 group" href="/">
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-green-500 hover:bg-green-500/85 text-green-100 group" href="/">
 				<span>Music</span>
-				<Icon className="fill-green-700 group-hover:fill-green-700/95" size="40" src={FaSolidMusic}/>
+				<Icon className="fill-green-700 group-hover:fill-green-700/85" size="40" src={FaSolidMusic}/>
 			</a>
-			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-pink-500 hover:bg-pink-500/95 text-pink-100 group" href="/">
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-pink-500 hover:bg-pink-500/85 text-pink-100 group" href="/">
 				<span>Healthcare</span>
-				<Icon className="fill-pink-700 group-hover:fill-pink-700/95" size="40" src={RiHealthHeartPulseFill}/>
+				<Icon className="fill-pink-700 group-hover:fill-pink-700/85" size="40" src={RiHealthHeartPulseFill}/>
 			</a>
-			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-zinc-500 hover:bg-zinc-500/95 text-zinc-100 group" href="/">
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-zinc-500 hover:bg-zinc-500/85 text-zinc-100 group" href="/">
 				<span>Social</span>
-				<Icon className="fill-zinc-700 group-hover:fill-zinc-700/95" size="40" src={FaSolidUsers}/>
+				<Icon className="fill-zinc-700 group-hover:fill-zinc-700/85" size="40" src={FaSolidUsers}/>
 			</a>
-			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-sky-500 hover:bg-sky-500/95 text-sky-100 group" href="/">
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-sky-500 hover:bg-sky-500/85 text-sky-100 group" href="/">
 				<span>Tech</span>
-				<Icon className="fill-sky-700 group-hover:fill-sky-700/95" size="40" src={FaSolidLaptopCode}/>
+				<Icon className="fill-sky-700 group-hover:fill-sky-700/85" size="40" src={FaSolidLaptopCode}/>
 			</a>
-			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-amber-500 hover:bg-amber-500/95 text-amber-100 group" href="/">
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-amber-500 hover:bg-amber-500/85 text-amber-100 group" href="/">
 				<span>Movie</span>
-				<Icon className="fill-amber-700 group-hover:fill-amber-700/95" size="40" src={FaSolidVideo}/>
+				<Icon className="fill-amber-700 group-hover:fill-amber-700/85" size="40" src={FaSolidVideo}/>
 			</a>
-			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-red-500 hover:bg-red-500/95 text-red-100 group" href="/">
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-red-500 hover:bg-red-500/85 text-red-100 group" href="/">
 				<span>Game</span>
-				<Icon className="fill-red-700 group-hover:fill-red-700/95" size="40" src={FaSolidGamepad}/>
+				<Icon className="fill-red-700 group-hover:fill-red-700/85" size="40" src={FaSolidGamepad}/>
 			</a>
-			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-teal-500 hover:bg-teal-500/95 text-teal-100 group" href="/">
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-teal-500 hover:bg-teal-500/85 text-teal-100 group" href="/">
 				<span>Food</span>
-				<Icon className="fill-teal-700 group-hover:fill-teal-700/95" size="40" src={FaSolidCoffee}/>
+				<Icon className="fill-teal-700 group-hover:fill-teal-700/85" size="40" src={FaSolidCoffee}/>
 			</a>
 		</div>
-		<div class="flex flex-row items-center gap-2">
-			<span class="w-4 h-px bg-zinc-200"></span>
-			<p class="font-semibold">News</p>
-			<span class="grow h-px bg-zinc-200"></span>
-		</div>
+		<News client:only />
 	</div>
 </Layout>
