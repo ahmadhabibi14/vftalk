@@ -14,7 +14,7 @@ func (a *ApisHandler) UpdateProfile(c *fiber.Ctx) error {
 
 	in, err := ReadJSON[services.InUser_UpdateProfile](c, c.Body())
 	if err != nil {
-		response = JSONResponse(fiber.StatusBadRequest, err.Error(), "")
+		response = NewHTTPResponse(fiber.StatusBadRequest, err.Error(), "")
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 

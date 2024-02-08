@@ -19,6 +19,12 @@ type ApisHandler struct {
 	OAuth  configs.OAuthConf
 }
 
+const (
+	ERROR_INVALIDPAYLOAD = "The payload or input provided is invalid. Please check your request and try again."
+	ERROR_GENERATETOKEN  = "Error generate session token"
+	ERROR_UNAUTHORIZED   = "You are unauthorized to do this operation"
+)
+
 type HTTPResponse struct {
 	Code   int         `json:"code"`
 	Status string      `json:"status"`
@@ -26,13 +32,7 @@ type HTTPResponse struct {
 	Data   interface{} `json:"data"`
 }
 
-const (
-	ERROR_INVALIDPAYLOAD = "The payload or input provided is invalid. Please check your request and try again."
-	ERROR_GENERATETOKEN  = "Error generate session token"
-	ERROR_UNAUTHORIZED   = "You are unauthorized to do this operation"
-)
-
-func JSONResponse(code int, errors string, data any) HTTPResponse {
+func NewHTTPResponse(code int, errors string, data any) HTTPResponse {
 	return HTTPResponse{
 		Code:   code,
 		Status: http.StatusText(code),
@@ -45,7 +45,7 @@ func ReadJSON[T any](c *fiber.Ctx, b []byte) (T, error) {
 	var body T
 	err := c.BodyParser(&body)
 	if err != nil {
-		err = errors.New(ERROR_INVALIDPAYLOAD)
+		return body, errors.New(ERROR_INVALIDPAYLOAD)
 	}
 
 	errvalid := utils.ValidateStruct(body)
@@ -53,5 +53,5 @@ func ReadJSON[T any](c *fiber.Ctx, b []byte) (T, error) {
 		return body, errvalid
 	}
 
-	return body, err
+	return body, nil
 }

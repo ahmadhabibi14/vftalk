@@ -20,24 +20,24 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 
 	state := c.FormValue("state")
 	if state == "" {
-		response = JSONResponse(fiber.StatusBadRequest, "Invalid csrf state", "")
+		response = NewHTTPResponse(fiber.StatusBadRequest, "Invalid csrf state", "")
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 	code := c.FormValue("code")
 	oAuthToken, err := a.OAuth.Google.Exchange(ctx, code)
 	if err != nil {
-		response = JSONResponse(fiber.StatusBadRequest, "Code exchange failed", "")
+		response = NewHTTPResponse(fiber.StatusBadRequest, "Code exchange failed", "")
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 	r, err := http.Get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + oAuthToken.AccessToken)
 	if err != nil {
-		response = JSONResponse(fiber.StatusBadRequest, "Failed to get user info", "")
+		response = NewHTTPResponse(fiber.StatusBadRequest, "Failed to get user info", "")
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 	defer r.Body.Close()
 	var userInfo map[string]interface{}
 	if err := json.NewDecoder(r.Body).Decode(&userInfo); err != nil {
-		response = JSONResponse(fiber.StatusBadRequest, "Failed to decode user info", "")
+		response = NewHTTPResponse(fiber.StatusBadRequest, "Failed to decode user info", "")
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 
@@ -50,7 +50,7 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 
 	resp, err := http.Get(GOOGLE_avatar)
 	if err != nil || resp.StatusCode != fiber.StatusOK {
-		response = JSONResponse(fiber.StatusInternalServerError, "Failed to save user info", "")
+		response = NewHTTPResponse(fiber.StatusInternalServerError, "Failed to save user info", "")
 		return c.Status(fiber.StatusInternalServerError).JSON(response)
 	}
 	defer resp.Body.Close()
@@ -59,7 +59,7 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 	file, _ := os.Create(imgPath)
 	_, err = io.Copy(file, resp.Body)
 	if err != nil {
-		response = JSONResponse(fiber.StatusInternalServerError, "Failed to save user avatar", "")
+		response = NewHTTPResponse(fiber.StatusInternalServerError, "Failed to save user avatar", "")
 		return c.Status(fiber.StatusInternalServerError).JSON(response)
 	}
 
@@ -76,7 +76,7 @@ func (a *ApisHandler) OAuthGoogle(c *fiber.Ctx) error {
 	user := services.NewUser(a.Db, a.Log)
 	token, err := user.OAuthGoogle(ctx, in)
 	if err != nil {
-		response = JSONResponse(fiber.StatusBadRequest, err.Error(), "")
+		response = NewHTTPResponse(fiber.StatusBadRequest, err.Error(), "")
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 

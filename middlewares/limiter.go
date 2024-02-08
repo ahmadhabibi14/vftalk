@@ -18,7 +18,7 @@ var Limiter = limiter.Config{
 	},
 	LimitReached: func(c *fiber.Ctx) error {
 		var httpMethod string = string(c.Request().Header.Method())
-		var message string = "You have exceeded your rate limit. Please try again a few minutes later."
+		var errMessage string = "You have exceeded your rate limit. Please try again a few minutes later."
 
 		if httpMethod == fiber.MethodGet {
 			c.Status(fiber.StatusTooManyRequests)
@@ -26,15 +26,10 @@ var Limiter = limiter.Config{
 				"Title":   fmt.Sprintf("%d - %s", fiber.StatusTooManyRequests, http.StatusText(fiber.StatusTooManyRequests)),
 				"Code":    fiber.StatusTooManyRequests,
 				"Status":  http.StatusText(fiber.StatusTooManyRequests),
-				"Message": message,
+				"Message": errMessage,
 			})
 		}
-		response := apis.HTTPResponse{
-			Code:   fiber.StatusTooManyRequests,
-			Status: http.StatusText(fiber.StatusTooManyRequests),
-			Errors: message,
-			Data:   "",
-		}
+		response := apis.NewHTTPResponse(fiber.StatusTooManyRequests, errMessage, "")
 		return c.Status(fiber.StatusTooManyRequests).JSON(response)
 	},
 }

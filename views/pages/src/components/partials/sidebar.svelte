@@ -1,69 +1,37 @@
 <script lang="ts" type="module">
   import Icon from 'svelte-icons-pack/Icon.svelte';
-  import AiOutlineHome from 'svelte-icons-pack/ai/AiOutlineHome';
   import AiFillHome from 'svelte-icons-pack/ai/AiFillHome';
-  import RiUserAccountCircleLine from 'svelte-icons-pack/ri/RiUserAccountCircleLine';
   import RiUserAccountCircleFill from 'svelte-icons-pack/ri/RiUserAccountCircleFill';
-  import RiSystemSearch2Line from 'svelte-icons-pack/ri/RiSystemSearch2Line';
   import RiSystemSearch2Fill from 'svelte-icons-pack/ri/RiSystemSearch2Fill';
-  import RiCommunicationChatSmile2Line from 'svelte-icons-pack/ri/RiCommunicationChatSmile2Line';
   import RiCommunicationChatSmile2Fill from 'svelte-icons-pack/ri/RiCommunicationChatSmile2Fill';
-  import RiSystemSettings3Line from 'svelte-icons-pack/ri/RiSystemSettings3Line';
   import RiSystemSettings3Fill from 'svelte-icons-pack/ri/RiSystemSettings3Fill';
   import { onMount } from 'svelte';
 
   let path: string = window.location.pathname;
   onMount(() => path = window.location.pathname);
+
+  const year: number = new Date().getFullYear();
 </script>
 
-<div class="w-full h-full flex flex-col justify-between text-lg">
-  <nav class="flex flex-col gap-3">
-    <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/">
-      {#if path !== '/'}
-        <Icon className="fill-current" size="26" src={AiOutlineHome}/>
-      {/if}
-      {#if path === '/'}
-        <Icon className="fill-current" size="26" src={AiFillHome}/>
-      {/if}
-      <span>Home</span>
-    </a>
-    <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/profile' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/profile">
-      {#if path !== '/profile'}
-        <Icon className="fill-current" size="26" src={RiUserAccountCircleLine}/>
-      {/if}
-      {#if path === '/profile'}
-        <Icon className="fill-current" size="26" src={RiUserAccountCircleFill}/>
-      {/if}
-      <span>Profile</span>
-    </a>
-    <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/explore' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/explore">
-      {#if path !== '/explore'}
-        <Icon className="fill-current" size="26" src={RiSystemSearch2Line}/>
-      {/if}
-      {#if path === '/explore'}
-        <Icon className="fill-current" size="26" src={RiSystemSearch2Fill}/>
-      {/if}
-      <span>Explore</span>
-    </a>
-    <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/chats' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/chats">
-      {#if path !== '/chats'}
-        <Icon className="fill-current" size="26" src={RiCommunicationChatSmile2Line}/>
-      {/if}
-      {#if path === '/chats'}
-        <Icon className="fill-current" size="26" src={RiCommunicationChatSmile2Fill}/>
-      {/if}
-      <span>Chats</span>
-    </a>
-  </nav>
-  <div>
-    <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-full w-fit ${path === '/setting' ? 'bg-emerald-500/20 text-emerald-800 hover:bg-emerald-500/20 font-semibold' : 'hover:bg-zinc-100 active:bg-emerald-400/20'}`} href="/setting">
-      {#if path !== '/setting'}
-        <Icon className="fill-current" size="26" src={RiSystemSettings3Line}/>
-      {/if}
-      {#if path === '/setting'}
-        <Icon className="fill-current" size="26" src={RiSystemSettings3Fill}/>
-      {/if}
-      <span>Setting</span>
-    </a>
-  </div>
-</div>
+<nav class="flex flex-col gap-3 font-semibold">
+  <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-md w-full ${path === '/' ? 'bg-zinc-100 hover:bg-zinc-100' : 'hover:bg-zinc-100 active:bg-zinc-200'}`} href="/">
+    <Icon className="fill-blue-500" size="26" src={AiFillHome}/>
+    <span>Home</span>
+  </a>
+  <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-md w-full ${path === '/profile' ? 'bg-zinc-100 hover:bg-zinc-100' : 'hover:bg-zinc-100 active:bg-zinc-200'}`} href="/profile">
+    <Icon className="fill-emerald-500" size="26" src={RiUserAccountCircleFill}/>
+    <span>Profile</span>
+  </a>
+  <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-md w-full ${path === '/explore' ? 'bg-zinc-100 hover:bg-zinc-100' : 'hover:bg-zinc-100 active:bg-zinc-200'}`} href="/explore">
+    <Icon className="fill-amber-500" size="26" src={RiSystemSearch2Fill}/>
+    <span>Explore</span>
+  </a>
+  <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-md w-full ${path === '/chats' ? 'bg-zinc-100 hover:bg-zinc-100' : 'hover:bg-zinc-100 active:bg-zinc-200'}`} href="/chats">
+    <Icon className="fill-purple-500" size="26" src={RiCommunicationChatSmile2Fill}/>
+    <span>Chats</span>
+  </a>
+  <a class={`flex flex-row items-center gap-3 py-2 pl-4 pr-5 rounded-md w-full ${path === '/setting' ? 'bg-zinc-100 hover:bg-zinc-100' : 'hover:bg-zinc-100 active:bg-zinc-200'}`} href="/setting">
+    <Icon className="fill-zinc-700" size="26" src={RiSystemSettings3Fill}/>
+    <span>Setting</span>
+  </a>
+</nav>

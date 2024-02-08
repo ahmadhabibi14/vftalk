@@ -42,7 +42,7 @@ func (w *WebServer) Start() {
 	mlr := mailer.NewMailer(w.Log)
 	db, err := configs.ConnectMariaDB()
 	if err != nil {
-		w.Log.Error().Str("ERROR", err.Error()).Msg("cannot connect to database")
+		w.Log.Error().Str("error", err.Error()).Msg("failed when try to connect database")
 	}
 	oauth := configs.EnvOAuth()
 

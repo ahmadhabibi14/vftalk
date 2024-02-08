@@ -13,14 +13,14 @@ func (a *ApisHandler) AuthRegister(c *fiber.Ctx) error {
 
 	in, err := ReadJSON[services.InUser_Create](c, c.Body())
 	if err != nil {
-		response = JSONResponse(fiber.StatusBadRequest, err.Error(), "")
+		response = NewHTTPResponse(fiber.StatusBadRequest, err.Error(), "")
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 
 	user := services.NewUser(a.Db, a.Log)
 	token, err := user.CreateUser(ctx, in)
 	if err != nil {
-		response = JSONResponse(fiber.StatusBadRequest, err.Error(), "")
+		response = NewHTTPResponse(fiber.StatusBadRequest, err.Error(), "")
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 
@@ -39,6 +39,6 @@ func (a *ApisHandler) AuthRegister(c *fiber.Ctx) error {
 		Msg:      "Register successful !",
 		Username: in.Username,
 	}
-	response = JSONResponse(fiber.StatusOK, "", data)
+	response = NewHTTPResponse(fiber.StatusOK, "", data)
 	return c.Status(fiber.StatusOK).JSON(response)
 }

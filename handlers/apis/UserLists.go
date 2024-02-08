@@ -13,7 +13,7 @@ func (a *ApisHandler) UserLists(c *fiber.Ctx) error {
 
 	_, err := configs.GetUserIdFromJWTfunc(c)
 	if err != nil {
-		response = JSONResponse(fiber.StatusUnauthorized, ERROR_UNAUTHORIZED, "")
+		response = NewHTTPResponse(fiber.StatusUnauthorized, ERROR_UNAUTHORIZED, "")
 		c.ClearCookie(configs.AUTH_COOKIE)
 		return c.Status(fiber.StatusUnauthorized).JSON(response)
 	}
@@ -21,7 +21,7 @@ func (a *ApisHandler) UserLists(c *fiber.Ctx) error {
 	user := services.NewUser(a.Db, a.Log)
 	userLists, err := user.UserLists(ctx)
 	if err != nil {
-		response = JSONResponse(fiber.StatusInternalServerError, "Something went wrong", "")
+		response = NewHTTPResponse(fiber.StatusInternalServerError, "Something went wrong", "")
 		return c.Status(fiber.StatusInternalServerError).JSON(response)
 	}
 
@@ -32,6 +32,6 @@ func (a *ApisHandler) UserLists(c *fiber.Ctx) error {
 		Msg:   "User lists fetched !",
 		Users: userLists,
 	}
-	response = JSONResponse(fiber.StatusOK, "", data)
+	response = NewHTTPResponse(fiber.StatusOK, "", data)
 	return c.Status(fiber.StatusOK).JSON(response)
 }

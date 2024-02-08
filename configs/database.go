@@ -2,6 +2,7 @@ package configs
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"os"
 	"time"
@@ -19,7 +20,7 @@ func ConnectMariaDB() (*sql.DB, error) {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", DbUser, DbPassword, DbHost, DbPort, DbName)
 	db, err := sql.Open(DbDriver, dsn)
 	if err != nil {
-		return nil, err
+		return nil, errors.New("Cannot connect to Database " + DbDriver)
 	}
 
 	db.SetMaxIdleConns(10)

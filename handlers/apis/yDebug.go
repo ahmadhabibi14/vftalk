@@ -13,10 +13,10 @@ func (a *ApisHandler) Debug(c *fiber.Ctx) error {
 	UserID := "6f935d5c-1f55-4e6c-bd24-13e6ef6fb129"
 	user := services.NewUser(a.Db, a.Log)
 	if !user.Debug(ctx, UserID) {
-		response = JSONResponse(fiber.StatusBadRequest, "User ID not found", "")
+		response = NewHTTPResponse(fiber.StatusBadRequest, "User ID not found", "")
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 
-	response = JSONResponse(fiber.StatusOK, "", "User ID found")
+	response = NewHTTPResponse(fiber.StatusOK, "", "User ID found")
 	return c.Status(fiber.StatusOK).JSON(response)
 }

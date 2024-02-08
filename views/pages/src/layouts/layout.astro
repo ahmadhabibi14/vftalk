@@ -6,6 +6,8 @@ const title: string = `{{.Title}}`;
 const avatarUrl: string = `{{.User.Avatar }}`;
 const fullName: string = `{{.User.FullName }}`;
 const username: string = `{{.User.Username}}`;
+
+const year: number = new Date().getFullYear()
 ---
 
 <!doctype html>
@@ -27,13 +29,21 @@ const username: string = `{{.User.Username}}`;
 	<body class="bg-white text-zinc-800 w-full min-h-screen h-screen top-0 bottom-0 right-0 left-0">
 		<div class="container mx-auto lg:max-w-7xl flex flex-row gap-0">
 			<aside class="w-fit h-screen flex flex-row justify-end p-6 sticky top-0">
-				<div class="w-fit h-full flex flex-col gap-7 pr-8">
+				<div class="w-[210px] h-full flex flex-col gap-8">
 					<div class="w-full h-fit flex">
 						<a href="/" class="ml-3">
 							<img src="/icons/vftalk-logo-dark.svg" alt="VFtalk logo" title="VFtalk" class="w-28 h-auto">
 						</a>
 					</div>
-					<Sidebar client:only/>
+					<div class="w-full h-full flex flex-col justify-between text-lg">
+						<Sidebar client:only/>
+  					<div>
+    					<footer class="pl-2 text-xs flex flex-col text-zinc-500 gap-3">
+      					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      					<p class="border-t border-zinc-200 pt-3">Copyright © {year} | VFtalk</p>
+    					</footer>
+  					</div>
+					</div>
 				</div>
 			</aside>
 			<div class="grow p-6 border-x-[2px] border-zinc-100">

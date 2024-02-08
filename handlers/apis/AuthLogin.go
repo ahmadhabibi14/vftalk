@@ -13,14 +13,14 @@ func (a *ApisHandler) AuthLogin(c *fiber.Ctx) error {
 
 	in, err := ReadJSON[services.InUser_AuthLogin](c, c.Body())
 	if err != nil {
-		response = JSONResponse(fiber.StatusBadRequest, err.Error(), "")
+		response = NewHTTPResponse(fiber.StatusBadRequest, err.Error(), "")
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 
 	user := services.NewUser(a.Db, a.Log)
 	token, username, err := user.AuthLogin(ctx, in)
 	if err != nil {
-		response = JSONResponse(fiber.StatusBadRequest, err.Error(), "")
+		response = NewHTTPResponse(fiber.StatusBadRequest, err.Error(), "")
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 
@@ -33,6 +33,6 @@ func (a *ApisHandler) AuthLogin(c *fiber.Ctx) error {
 		Msg:      "Login successful !",
 		Username: username,
 	}
-	response = JSONResponse(fiber.StatusOK, "", data)
+	response = NewHTTPResponse(fiber.StatusOK, "", data)
 	return c.Status(fiber.StatusOK).JSON(response)
 }

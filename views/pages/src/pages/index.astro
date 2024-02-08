@@ -1,30 +1,56 @@
 ---
 import Layout from '../layouts/layout.astro';
-
-const fullName:string = `{{.User.FullName}}`;
+import Icon from 'svelte-icons-pack/Icon.svelte';
+import FaSolidFootballBall from 'svelte-icons-pack/fa/FaSolidFootballBall';
+import FaSolidLaptopCode from 'svelte-icons-pack/fa/FaSolidLaptopCode';
+import FaSolidMusic from 'svelte-icons-pack/fa/FaSolidMusic';
+import FaSolidVideo from 'svelte-icons-pack/fa/FaSolidVideo';
+import RiHealthHeartPulseFill from 'svelte-icons-pack/ri/RiHealthHeartPulseFill';
+import FaSolidUsers from 'svelte-icons-pack/fa/FaSolidUsers';
+import FaSolidGamepad from 'svelte-icons-pack/fa/FaSolidGamepad';
+import FaSolidCoffee from 'svelte-icons-pack/fa/FaSolidCoffee';
 ---
 
 <Layout>
-	<div>
-		<h1>Welcome to VFtalk {fullName}</h1>
-		<h3>Home page</h3>
-		<div class="h-[600px] w-full">
-			<p>halo</p>
+	<div class="flex flex-col gap-4">
+		<div class="grid grid-cols-3 gap-3 font-semibold">
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-purple-500 hover:bg-purple-500/95 text-purple-100 group" href="/">
+				<span>Sport</span>
+				<Icon className="fill-purple-700 group-hover:fill-purple-700/95" size="40" src={FaSolidFootballBall}/>
+			</a>
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-green-500 hover:bg-green-500/95 text-green-100 group" href="/">
+				<span>Music</span>
+				<Icon className="fill-green-700 group-hover:fill-green-700/95" size="40" src={FaSolidMusic}/>
+			</a>
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-pink-500 hover:bg-pink-500/95 text-pink-100 group" href="/">
+				<span>Healthcare</span>
+				<Icon className="fill-pink-700 group-hover:fill-pink-700/95" size="40" src={RiHealthHeartPulseFill}/>
+			</a>
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-zinc-500 hover:bg-zinc-500/95 text-zinc-100 group" href="/">
+				<span>Social</span>
+				<Icon className="fill-zinc-700 group-hover:fill-zinc-700/95" size="40" src={FaSolidUsers}/>
+			</a>
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-sky-500 hover:bg-sky-500/95 text-sky-100 group" href="/">
+				<span>Tech</span>
+				<Icon className="fill-sky-700 group-hover:fill-sky-700/95" size="40" src={FaSolidLaptopCode}/>
+			</a>
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-amber-500 hover:bg-amber-500/95 text-amber-100 group" href="/">
+				<span>Movie</span>
+				<Icon className="fill-amber-700 group-hover:fill-amber-700/95" size="40" src={FaSolidVideo}/>
+			</a>
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-red-500 hover:bg-red-500/95 text-red-100 group" href="/">
+				<span>Game</span>
+				<Icon className="fill-red-700 group-hover:fill-red-700/95" size="40" src={FaSolidGamepad}/>
+			</a>
+			<a class="w-full px-4 py-2.5 flex flex-row justify-between items-center rounded-md bg-teal-500 hover:bg-teal-500/95 text-teal-100 group" href="/">
+				<span>Food</span>
+				<Icon className="fill-teal-700 group-hover:fill-teal-700/95" size="40" src={FaSolidCoffee}/>
+			</a>
 		</div>
-		<div class="h-[600px] w-full">
-			<p>halo</p>
-		</div>
-		<div class="h-[600px] w-full">
-			<p>halo</p>
-		</div>
-		<div class="h-[600px] w-full">
-			<p>halo</p>
-		</div>
-		<div class="h-[600px] w-full">
-			<p>halo</p>
-		</div>
-		<div class="h-[600px] w-full">
-			<p>halo</p>
+		<div class="flex flex-row items-center gap-2">
+			<span class="w-4 h-px bg-zinc-200"></span>
+			<p class="font-semibold">News</p>
+			<span class="grow h-px bg-zinc-200"></span>
 		</div>
 	</div>
 </Layout>
