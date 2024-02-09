@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"vftalk/configs"
 	"vftalk/handlers/apis"
@@ -13,6 +14,7 @@ import (
 	"vftalk/middlewares"
 	"vftalk/models/mailer"
 
+	"github.com/gofiber/contrib/swagger"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/favicon"
@@ -76,6 +78,13 @@ func (w *WebServer) Start() {
 	app.Use(limiter.New(middlewares.Limiter))
 	app.Use(cors.New(middlewares.CORSConfig))
 	app.Use(recover.New())
+	app.Use(swagger.New(swagger.Config{
+		BasePath: "/api/",
+		FilePath: "./apidocs.json",
+		Path:     "docs",
+		Title:    "VFtalk | API Docs",
+		CacheAge: int(30 * time.Minute),
+	}))
 
 	app.Static("/", "./views/public")
 	app.Static("/", "./contents")
