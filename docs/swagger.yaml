@@ -1,0 +1,68 @@
+basePath: /
+definitions:
+  apis.HTTPResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      errors:
+        type: string
+      status:
+        type: string
+    type: object
+  apis.LoginOut:
+    properties:
+      code:
+        type: integer
+      data: {}
+      datas:
+        properties:
+          message:
+            type: string
+          username:
+            type: string
+        type: object
+      errors:
+        type: string
+      status:
+        type: string
+    type: object
+host: vftalk.my.id
+info:
+  contact:
+    email: habi@ternaklinux.com
+    name: API Support
+  description: Restful API Specification of VFtlak
+  license:
+    name: MIT License
+    url: https://www.mit.edu/~amini/LICENSE.md
+  termsOfService: https://vftalk.my.id
+  title: VFtalk API Docs
+  version: "1.0"
+paths:
+  /api/login:
+    post:
+      consumes:
+      - application/json
+      description: Login to VFtalk
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apis.LoginOut'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apis.HTTPResponse'
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Auth
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

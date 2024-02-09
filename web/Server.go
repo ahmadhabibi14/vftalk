@@ -79,8 +79,8 @@ func (w *WebServer) Start() {
 	app.Use(cors.New(middlewares.CORSConfig))
 	app.Use(recover.New())
 	app.Use(swagger.New(swagger.Config{
-		BasePath: "/api/",
-		FilePath: "./apidocs.json",
+		BasePath: "/api",
+		FilePath: "./docs/swagger.json",
 		Path:     "docs",
 		Title:    "VFtalk | API Docs",
 		CacheAge: int(30 * time.Minute),

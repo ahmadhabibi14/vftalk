@@ -7,6 +7,22 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+type LoginOut struct {
+	HTTPResponse
+	Datas struct {
+		Msg      string `json:"message"`
+		Username string `json:"username"`
+	}
+}
+
+// @Description Login to VFtalk
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Success 200 {object} LoginOut
+// @Failure 400 {object} HTTPResponse
+// @Router /api/login [post]
+// @Security ApiKeyAuth
 func (a *ApisHandler) AuthLogin(c *fiber.Ctx) error {
 	ctx := c.Context()
 	response := HTTPResponse{}

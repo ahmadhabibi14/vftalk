@@ -4,10 +4,24 @@ import (
 	"os"
 	"strings"
 	"vftalk/configs"
+	_ "vftalk/docs"
 	"vftalk/models"
 	"vftalk/web"
 )
 
+// @title VFtalk API Docs
+// @version 1.0
+// @description Restful API Specification of VFtlak
+// @termsOfService https://vftalk.my.id
+// @contact.name API Support
+// @contact.email habi@ternaklinux.com
+// @license.name MIT License
+// @license.url https://www.mit.edu/~amini/LICENSE.md
+// @host vftalk.my.id
+// @BasePath /
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 func main() {
 	configs.LoadEnv()
 	zlog := configs.InitLogger()
