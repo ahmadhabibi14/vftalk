@@ -72,8 +72,8 @@ func (u *userImpl) FindById(ctx context.Context, in InUser_FindById) (OutUser_Fi
 type (
 	InUser_Create struct {
 		UserID   string `json:"id" form:"id" validate:"required,min=21,max=36"`
-		Username string `json:"username" form:"username" validate:"required,omitempty,min=4"`
-		FullName string `json:"full_name" form:"full_name" validate:"required,omitempty,min=4"`
+		Username string `json:"username" form:"username" validate:"required,omitempty,min=5"`
+		FullName string `json:"full_name" form:"full_name" validate:"required,omitempty,min=5"`
 		Email    string `json:"email" form:"email" validate:"required,email"`
 		Password string `json:"password" form:"password" validate:"required,min=8"`
 	}
@@ -151,7 +151,7 @@ func (u *userImpl) OAuthGoogle(ctx context.Context, in InUser_OAuthGoogle) (toke
 
 type (
 	InUser_AuthLogin struct {
-		Username string `json:"username" form:"username" validate:"required,omitempty,min=4"`
+		Username string `json:"username" form:"username" validate:"required,omitempty,min=5"`
 		Password string `json:"password" form:"password" validate:"required,min=8"`
 	}
 )
@@ -178,10 +178,11 @@ func (u *userImpl) AuthLogin(ctx context.Context, in InUser_AuthLogin) (token, u
 
 type (
 	InUser_UpdateProfile struct {
-		UserID   string `json:"user_id" validate:"required"`
-		FullName string `json:"full_name" validate:"required"`
+		UserID   string
+		Username string `json:"username" validate:"required,min=5"`
+		FullName string `json:"full_name" validate:"required,min=5"`
 		Location string `json:"location" validate:"required"`
-		Website  string `json:"website" validate:"required"`
+		Website  string `json:"website" validate:"required,http_url"`
 	}
 )
 
@@ -193,6 +194,7 @@ func (u *userImpl) UpdateProfile(ctx context.Context, in InUser_UpdateProfile) e
 
 	user := repository.UpdateUserProfileIn{
 		UserID:   in.UserID,
+		Username: in.Username,
 		FullName: in.FullName,
 		Location: in.Location,
 		Website:  in.Website,
@@ -208,7 +210,7 @@ func (u *userImpl) UpdateProfile(ctx context.Context, in InUser_UpdateProfile) e
 
 type (
 	InUser_UpdateAvatar struct {
-		UserID string `form:"user_id" validate:"required"`
+		UserID string `form:"user_id"`
 		Avatar string `form:"avatar" validate:"required"`
 	}
 )

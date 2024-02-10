@@ -1,7 +1,6 @@
 package apis
 
 import (
-	"net/http"
 	"vftalk/configs"
 	"vftalk/services"
 
@@ -20,34 +19,19 @@ func (a *ApisHandler) UpdateProfile(c *fiber.Ctx) error {
 
 	userId, err := configs.GetUserIdFromJWTfunc(c)
 	if err != nil {
-		response = HTTPResponse{
-			Code:   fiber.StatusUnauthorized,
-			Status: http.StatusText(fiber.StatusUnauthorized),
-			Errors: ERROR_UNAUTHORIZED,
-			Data:   "",
-		}
+		response = NewHTTPResponse(fiber.StatusUnauthorized, ERROR_UNAUTHORIZED, "")
+		c.ClearCookie(configs.AUTH_COOKIE)
 		return c.Status(fiber.StatusUnauthorized).JSON(response)
 	}
 
-	user := services.NewUser(a.Db, a.Log)
-
 	in.UserID = userId.(string)
+	user := services.NewUser(a.Db, a.Log)
 	updateProfile := user.UpdateProfile(ctx, in)
 	if updateProfile != nil {
-		response = HTTPResponse{
-			Code:   fiber.StatusBadRequest,
-			Status: http.StatusText(fiber.StatusBadRequest),
-			Errors: updateProfile.Error(),
-			Data:   "",
-		}
+		response = NewHTTPResponse(fiber.StatusBadRequest, updateProfile.Error(), "")
 		return c.Status(fiber.StatusBadRequest).JSON(response)
 	}
 
-	response = HTTPResponse{
-		Code:   fiber.StatusOK,
-		Status: http.StatusText(fiber.StatusOK),
-		Errors: "",
-		Data:   "Profile updated !!",
-	}
+	response = NewHTTPResponse(fiber.StatusOK, "", "Profile updated !!")
 	return c.Status(fiber.StatusOK).JSON(response)
 }

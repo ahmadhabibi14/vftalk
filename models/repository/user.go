@@ -59,14 +59,16 @@ func (u *userImpl) CreateUser(ctx context.Context, user CreateUserIn) error {
 
 type UpdateUserProfileIn struct {
 	UserID   string `db:"user_id"`
+	Username string `db:"username"`
 	FullName string `db:"full_name"`
 	Location string `db:"location"`
 	Website  string `db:"website"`
 }
 
 func (u *userImpl) UpdateUserProfile(ctx context.Context, user UpdateUserProfileIn) error {
-	query := `UPDATE Users SET full_name = ?, location = ?, website = ? WHERE user_id = ?`
+	query := `UPDATE Users SET username = ?, full_name = ?, location = ?, website = ? WHERE user_id = ?`
 	_, err := u.DB.ExecContext(ctx, query,
+		user.Username,
 		user.FullName,
 		user.Location,
 		user.Website,

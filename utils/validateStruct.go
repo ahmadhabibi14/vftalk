@@ -15,7 +15,7 @@ func ValidateStruct(s interface{}) error {
 		validationErrors := err.(validator.ValidationErrors)
 		for _, err := range validationErrors {
 			errMsgs = append(errMsgs, fmt.Sprintf(
-				"Error when validating %s: %v",
+				"Error when validating %s: '%v'",
 				err.Field(),
 				err.Value(),
 			))

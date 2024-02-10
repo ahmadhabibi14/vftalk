@@ -80,7 +80,7 @@ func (w *WebServer) Start() {
 	app.Use(recover.New())
 	app.Use(swagger.New(swagger.Config{
 		BasePath: "/api",
-		FilePath: "./docs/swagger.json",
+		FilePath: "./docs/apidocs.json",
 		Path:     "docs",
 		Title:    "VFtalk | API Docs",
 		CacheAge: int(30 * time.Minute),

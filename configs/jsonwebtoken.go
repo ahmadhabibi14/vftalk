@@ -46,19 +46,26 @@ func TokenValid(c *fiber.Ctx) error {
 }
 
 func ExtractToken(c *fiber.Ctx) string {
-	bearerToken := c.Cookies(AUTH_COOKIE)
-	if bearerToken == "" {
-		return ""
+	jwtToken := c.Cookies(AUTH_COOKIE, "")
+	if jwtToken == "" {
+		jwtToken = c.Get("X-API-KEY", "")
+
+		if jwtToken == "" {
+			return ""
+		}
 	}
-	return bearerToken
+	return jwtToken
 }
 
 func WsExtractToken(c *websocket.Conn) string {
-	bearerToken := c.Cookies(AUTH_COOKIE)
-	if bearerToken == "" {
-		return ""
+	jwtToken := c.Cookies(AUTH_COOKIE, "")
+	if jwtToken == "" {
+		jwtToken = c.Headers("X-API-KEY", "")
+		if jwtToken == "" {
+			return ""
+		}
 	}
-	return bearerToken
+	return jwtToken
 }
 
 func GetUsernameFromJWT(c *fiber.Ctx) (interface{}, error) {

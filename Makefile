@@ -17,4 +17,4 @@ docker-prod:
 	docker-compose -f docker-compose.prod.yml up -d
 
 swagger:
-	swag init
+	go-swagger3 --module-path . --output docs/swagger.json --schema-without-pkg=true
