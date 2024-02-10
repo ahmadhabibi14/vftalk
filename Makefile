@@ -13,6 +13,12 @@ migrate-down:
 build:
 	go build -o vftalk
 
+docker-build:
+	docker build --tag vftalk .
+
+docker-run:
+	docker run --publish 8000:8000 vftalk
+
 docker-prod:
 	docker-compose -f docker-compose.prod.yml up -d
 

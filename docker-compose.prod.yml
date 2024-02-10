@@ -1,4 +1,4 @@
-version: "3.2"
+version: "3.8"
 
 services:
 
@@ -16,8 +16,6 @@ services:
       - "3306:3306"
     volumes:
       - ./_tmpdb/mariadb:/var/lib/mysql
-    networks:
-      - vftalk-network
   
   mailserver:
     image: docker.io/mailserver/docker-mailserver:latest

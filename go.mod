@@ -1,6 +1,6 @@
 module vftalk
 
-go 1.20
+go 1.21
 
 require (
 	github.com/eefret/gravatar v0.0.0-20181201135945-2163a437cdca

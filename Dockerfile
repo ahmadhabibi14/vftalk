@@ -1,17 +1,18 @@
-# Use the official Go image as a base image
-FROM golang:latest
+FROM golang:1.21-alpine
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the local code to the container
+# Copy go mod and sum files
+COPY go.mod go.sum ./
+RUN go mod download
+
 COPY . .
 
 # Build the Go application
-RUN go build main.go -o myapp
+RUN go build main.go
 
 # Expose the port the app runs on
-EXPOSE 8080
+EXPOSE 8000
 
 # Command to run the executable
-CMD ["./myapp"]
+CMD ["./main"]
