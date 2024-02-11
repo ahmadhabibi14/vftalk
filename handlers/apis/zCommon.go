@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"net/http"
+	"time"
 	"vftalk/configs"
 	"vftalk/models/mailer"
 	"vftalk/utils"
@@ -23,6 +24,24 @@ const (
 	ERROR_INVALIDPAYLOAD = "The payload or input provided is invalid. Please check your request and try again."
 	ERROR_GENERATETOKEN  = "Error generate session token"
 	ERROR_UNAUTHORIZED   = "You are unauthorized to do this operation"
+)
+
+const (
+	CHAT_INFO = "info"
+	CHAT_TEXT = "text"
+)
+
+type (
+	ChatIn struct {
+		Type    string `json:"type" validate:"required"`
+		Content string `json:"content" validate:"required,max=200"`
+	}
+	ChatOut struct {
+		Username  string    `json:"username"`
+		Type      string    `json:"type"`
+		Content   string    `json:"content"`
+		Timestamp time.Time `json:"datetime"`
+	}
 )
 
 type HTTPResponse struct {

@@ -304,12 +304,12 @@
         }
       }
     },
-    "/api/room": {
+    "/api/room-general": {
       "get": {
         "servers": [
           {
             "url": "wss://vftalk.my.id",
-            "description": "Chat room API"
+            "description": "Chat room General API"
           }
         ],
         "security": [{
