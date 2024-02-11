@@ -71,7 +71,7 @@ func (u *userImpl) FindById(ctx context.Context, in InUser_FindById) (OutUser_Fi
 
 type (
 	InUser_Create struct {
-		UserID   string `json:"id" form:"id" validate:"required,min=21,max=36"`
+		UserID   string
 		Username string `json:"username" form:"username" validate:"required,omitempty,min=5"`
 		FullName string `json:"full_name" form:"full_name" validate:"required,omitempty,min=5"`
 		Email    string `json:"email" form:"email" validate:"required,email"`
@@ -85,11 +85,11 @@ func (u *userImpl) CreateUser(ctx context.Context, in InUser_Create) (token stri
 
 	userrepo := repository.NewUser(u.DB, u.Log)
 	if userrepo.FindUsername(ctx, in.Username) != "" {
-		return "", fmt.Errorf("Username already exist")
+		return "", fmt.Errorf("username already exist")
 	}
 
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(in.Password), bcrypt.DefaultCost)
-	g, err := gravatar.New()
+	g, _ := gravatar.New()
 	avatar := g.URLParse(in.Email)
 	user := repository.CreateUserIn{
 		UserID:   in.UserID,
@@ -101,12 +101,12 @@ func (u *userImpl) CreateUser(ctx context.Context, in InUser_Create) (token stri
 	}
 	err = userrepo.CreateUser(ctx, user)
 	if err != nil {
-		return "", fmt.Errorf("Something went wrong")
+		return "", fmt.Errorf("something went wrong")
 	}
 
 	t, err := configs.GenerateJWT(in.Username, uid, time.Now().AddDate(0, 2, 0))
 	if err != nil {
-		return "", fmt.Errorf("Error generate session token")
+		return "", fmt.Errorf("error generate session token")
 	}
 	return t, nil
 }
@@ -142,7 +142,7 @@ func (u *userImpl) OAuthGoogle(ctx context.Context, in InUser_OAuthGoogle) (toke
 	}
 	err = userrepo.OAuthGoogle(ctx, userIn)
 	if err != nil {
-		return "", fmt.Errorf("Something went wrong")
+		return "", fmt.Errorf("something went wrong")
 	}
 
 	t, _ := configs.GenerateJWT(in.Username, in.UserID, time.Now().AddDate(0, 2, 0))
@@ -160,17 +160,17 @@ func (u *userImpl) AuthLogin(ctx context.Context, in InUser_AuthLogin) (token, u
 	userrepo := repository.NewUser(u.DB, u.Log)
 	user, err := userrepo.FindByUsername(ctx, in.Username)
 	if err != nil {
-		return "", "", fmt.Errorf("Username not found")
+		return "", "", fmt.Errorf("username not found")
 	}
 
 	passwordMatch := utils.VerifyPassword(in.Password, user.Password)
 	if passwordMatch != nil {
-		return "", "", fmt.Errorf("Password does not match the user's password")
+		return "", "", fmt.Errorf("password does not match the user's password")
 	}
 
 	t, err := configs.GenerateJWT(user.Username, user.UserID, time.Now().AddDate(0, 2, 0))
 	if err != nil {
-		return "", "", fmt.Errorf("Error generate session token")
+		return "", "", fmt.Errorf("error generate session token")
 	}
 
 	return t, user.Username, nil
@@ -189,7 +189,7 @@ type (
 func (u *userImpl) UpdateProfile(ctx context.Context, in InUser_UpdateProfile) error {
 	userrepo := repository.NewUser(u.DB, u.Log)
 	if userrepo.FindId(ctx, in.UserID) == `` {
-		return errors.New("User not found")
+		return errors.New("user not found")
 	}
 
 	user := repository.UpdateUserProfileIn{
@@ -218,7 +218,7 @@ type (
 func (u *userImpl) UpdateAvatar(ctx context.Context, in InUser_UpdateAvatar) error {
 	userrepo := repository.NewUser(u.DB, u.Log)
 	if userrepo.FindId(ctx, in.UserID) == `` {
-		return errors.New("User not found")
+		return errors.New("user not found")
 	}
 
 	user := repository.UpdateUserAvatarIn{
@@ -265,9 +265,5 @@ func (u *userImpl) UserLists(ctx context.Context) ([]OutUserLists, error) {
 
 func (u *userImpl) Debug(ctx context.Context, id string) bool {
 	userrepo := repository.NewUser(u.DB, u.Log)
-	if userrepo.FindId(ctx, id) == `` {
-		return false
-	}
-
-	return true
+	return userrepo.FindId(ctx, id) != ``
 }
