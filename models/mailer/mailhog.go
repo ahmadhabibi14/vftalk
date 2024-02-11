@@ -12,9 +12,9 @@ type Mailhog struct {
 	client *mail.Client
 }
 
-func NewMailhog(cfg configs.MailhogConf) (*Mailhog, error) {
+func NewMailhog() (*Mailhog, error) {
 	res := &Mailhog{
-		MailhogConf: cfg,
+		MailhogConf: configs.EnvMailhog(),
 	}
 	err := res.Connect()
 	return res, err

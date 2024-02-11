@@ -1,7 +1,6 @@
 version: "3.8"
 
 services:
-
   db:
     image: mariadb
     container_name: vftalk-db
@@ -15,10 +14,9 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./_tmpdb/mariadb:/var/lib/mysql
-  
+      - ./_docker-data/mariadb:/var/lib/mysql
   mailserver:
-    image: docker.io/mailserver/docker-mailserver:latest
+    image: ghcr.io/docker-mailserver/docker-mailserver:latest
     container_name: mailserver
     hostname: mail.vftalk.my.id
     ports:
@@ -26,12 +24,13 @@ services:
       - "587:587"
       - "465:465"
     volumes:
-      - ./docker-data/dms/mail-data/:/var/mail/
-      - ./docker-data/dms/mail-state/:/var/mail-state/
-      - ./docker-data/dms/mail-logs/:/var/log/mail/
-      - ./docker-data/dms/config/:/tmp/docker-mailserver/
-      - ./docker-data/nginx-proxy/certs/:/etc/letsencrypt/
+      - ./_docker-data/dms/mail-data/:/var/mail/
+      - ./_docker-data/dms/mail-state/:/var/mail-state/
+      - ./_docker-data/dms/mail-logs/:/var/log/mail/
+      - ./_docker-data/dms/config/:/tmp/docker-mailserver/
+      - ./_docker-data/nginx-proxy/certs/:/etc/letsencrypt/
       - /etc/localtime:/etc/localtime:ro
+      - /etc/letsencrypt:/etc/letsencrypt
     environment:
       - ENABLE_FAIL2BAN=1
       - SSL_TYPE=letsencrypt

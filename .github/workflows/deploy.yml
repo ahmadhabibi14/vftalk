@@ -24,7 +24,7 @@ jobs:
       - name: Upload with rsync 🔁 
         run: rsync -avz --exclude=".git" --exclude=".github" ./ root@${{ secrets.SERVER_IP }}:/root/vftalk
       
-      # Execute command ke VPS
+      # Execute command to server
       - name: Execute Command ☣️
         uses: appleboy/ssh-action@master
         with:

@@ -1,6 +1,7 @@
 .env
 tmp/*
 _tmpdb
+_docker-data
 node_modules
 vftalk
 main

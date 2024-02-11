@@ -1,7 +1,6 @@
 version: "3.8"
 
 services:
-
   db:
     image: mariadb
     container_name: vftalk-db
@@ -18,7 +17,6 @@ services:
       - ./_tmpdb/mariadb:/var/lib/mysql
     networks:
       - vftalk-network
-  
   phpmyadmin:
     depends_on:
       - db
@@ -38,7 +36,6 @@ services:
       - /_tmpdb/phpmyadmin
     networks:
       - vftalk-network
-
   mailhog:
     image: mailhog/mailhog
     container_name: mailhog-vftalk
