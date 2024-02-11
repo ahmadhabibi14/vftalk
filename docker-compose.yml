@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.7"
 
 services:
   db:
@@ -14,7 +14,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./_tmpdb/mariadb:/var/lib/mysql
+      - ./_docker-data/mariadb:/var/lib/mysql
     networks:
       - vftalk-network
   phpmyadmin:
@@ -33,7 +33,7 @@ services:
       MYSQL_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
       PMA_ARBITRARY: 1
     volumes:
-      - /_tmpdb/phpmyadmin
+      - /_docker-data/phpmyadmin
     networks:
       - vftalk-network
   mailhog:
