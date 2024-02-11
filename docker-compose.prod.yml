@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.7"
 
 services:
   db:
@@ -30,7 +30,6 @@ services:
       - ./_docker-data/dms/config/:/tmp/docker-mailserver/
       - ./_docker-data/nginx-proxy/certs/:/etc/letsencrypt/
       - /etc/localtime:/etc/localtime:ro
-      - /etc/letsencrypt:/etc/letsencrypt
     environment:
       - ENABLE_FAIL2BAN=1
       - SSL_TYPE=letsencrypt
