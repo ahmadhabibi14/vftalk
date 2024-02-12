@@ -27,8 +27,11 @@ const (
 )
 
 const (
-	CHAT_INFO = "info"
-	CHAT_TEXT = "text"
+	CHAT_SENDER_SYSTEM = "system"
+
+	CHAT_TYPE_TEXT  = "text"
+	CHAT_TYPE_INFO  = "info"
+	CHAT_TYPE_ERROR = "error"
 )
 
 type (
@@ -37,7 +40,7 @@ type (
 		Content string `json:"content" validate:"required,max=200"`
 	}
 	ChatOut struct {
-		Username  string    `json:"username"`
+		Sender    string    `json:"sender"`
 		Type      string    `json:"type"`
 		Content   string    `json:"content"`
 		Timestamp time.Time `json:"datetime"`

@@ -1,17 +1,18 @@
 package apis
 
 import (
+	"fmt"
+	"log"
 	"sync"
 	"time"
 	"vftalk/configs"
 
 	"github.com/gofiber/contrib/websocket"
-	"github.com/gofiber/fiber/v2/log"
 )
 
 type GeneralClient struct {
-	isClosing bool
 	mu        sync.Mutex
+	isClosing bool
 }
 
 var (
@@ -21,34 +22,36 @@ var (
 	GENERAL_BROADCAST  = make(chan ChatOut)
 )
 
-func (a *ApisHandler) ChatRoomGeneral(conn *websocket.Conn) {
-	go func() {
-		for {
-			select {
-			case connection := <-GENERAL_REGISTER:
-				GENERAL_CLIENTS[connection] = &GeneralClient{}
-			case message := <-GENERAL_BROADCAST:
-				for connection, c := range GENERAL_CLIENTS {
-					go func(connection *websocket.Conn, c *GeneralClient) {
-						c.mu.Lock()
-						defer c.mu.Unlock()
-						if c.isClosing {
-							return
-						}
-						if err := connection.WriteJSON(message); err != nil {
-							c.isClosing = true
-							connection.WriteMessage(websocket.CloseMessage, []byte{})
-							connection.Close()
-							GENERAL_UNREGISTER <- connection
-						}
-					}(connection, c)
-				}
-			case connection := <-GENERAL_UNREGISTER:
-				delete(GENERAL_CLIENTS, connection)
-			}
-		}
-	}()
+func GeneralBroadcaster() {
+	for {
+		select {
+		case reg := <-GENERAL_REGISTER:
+			GENERAL_CLIENTS[reg] = &GeneralClient{}
+		case message := <-GENERAL_BROADCAST:
+			for connection, c := range GENERAL_CLIENTS {
+				go func(connection *websocket.Conn, c *GeneralClient) {
+					c.mu.Lock()
+					defer c.mu.Unlock()
+					if c.isClosing {
+						return
+					}
 
+					if err := connection.WriteJSON(message); err != nil {
+						c.isClosing = true
+						connection.WriteMessage(websocket.CloseMessage, []byte{})
+						connection.Close()
+						GENERAL_UNREGISTER <- connection
+					}
+				}(connection, c)
+			}
+		case unreg := <-GENERAL_UNREGISTER:
+			delete(GENERAL_CLIENTS, unreg)
+		}
+	}
+}
+
+func (a *ApisHandler) ChatRoomGeneral(conn *websocket.Conn) {
+	go GeneralBroadcaster()
 	defer func() {
 		GENERAL_UNREGISTER <- conn
 		conn.Close()
@@ -56,21 +59,41 @@ func (a *ApisHandler) ChatRoomGeneral(conn *websocket.Conn) {
 
 	GENERAL_REGISTER <- conn
 	username, _ := configs.WsGetUsernameFromJWT(conn)
+
+	msg := fmt.Sprintf("%v join room", username)
+	info := ChatOut{
+		Type:      CHAT_TYPE_INFO,
+		Content:   msg,
+		Sender:    CHAT_SENDER_SYSTEM,
+		Timestamp: time.Now(),
+	}
+	GENERAL_BROADCAST <- info
+
 	for {
 		var in ChatIn
-		err := conn.ReadJSON(&in)
-		if err != nil {
+		if err := conn.ReadJSON(&in); err != nil {
+			msg := fmt.Sprintf("%v sends an invalid message, this incident will be reported", username)
+			info := ChatOut{
+				Type:      CHAT_TYPE_ERROR,
+				Content:   msg,
+				Sender:    CHAT_SENDER_SYSTEM,
+				Timestamp: time.Now(),
+			}
+			GENERAL_BROADCAST <- info
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-				log.Error("Read error:", err)
+				log.Println(err)
 			}
 			return
 		}
-		out := ChatOut{
-			Username:  username.(string),
+
+		chat := ChatOut{
+			Sender:    username.(string),
 			Type:      in.Type,
 			Content:   in.Content,
 			Timestamp: time.Now(),
 		}
-		GENERAL_BROADCAST <- out
+
+		log.Println(in)
+		GENERAL_BROADCAST <- chat
 	}
 }

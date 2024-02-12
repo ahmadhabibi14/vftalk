@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/layout.astro';
+import Icon from 'svelte-icons-pack/Icon.svelte';
+import FaSolidArrowLeft from 'svelte-icons-pack/fa/FaSolidArrowLeft';
+import General from '../components/chats/general.svelte';
+
+const username: string = `{{.User.Username}}`;
+---
+
+<Layout>
+	<div class="w-full min-h-full relative flex flex-col">
+    <header class="top-0 z-50 w-full sticky bg-white border-b-[2px] border-zinc-100 h-16 px-6 flex flex-row gap-4 items-center text-lg font-semibold">
+      <a href="/rooms" class="flex justify-center items-center w-fit h-fit p-2 rounded-full hover:bg-zinc-100 active:bg-zinc-200">
+        <Icon className="fill-zinc-800" size="18" src={FaSolidArrowLeft}/>
+      </a>
+      <h2>General</h2>
+    </header>
+    <div class="min-h-full h-full w-full flex grow">
+      <General {username} client:only />
+    </div>
+	</div>
+</Layout>

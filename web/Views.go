@@ -18,6 +18,8 @@ func WebViews(app *fiber.App, page *page.PageHandler) {
 	app.Get("/profile", middlewares.AuthJWT, page.Profile)
 	app.Get("/chats", middlewares.AuthJWT, page.Chats)
 	app.Get("/setting", middlewares.AuthJWT, page.Setting)
+	app.Get("/rooms", middlewares.AuthJWT, page.Rooms)
+	app.Get("/rooms/general", middlewares.AuthJWT, page.ChatRoomGeneral)
 
 	app.Get("/sitemap-index.xml", page.SitemapIndex)
 	app.Get("/sitemap-0.xml", page.Sitemap0)
