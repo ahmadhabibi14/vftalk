@@ -1,7 +1,7 @@
 <script lang="ts" type="module">
   import axios from 'axios';
   import { NEWS_API_KEY } from 'constants/keys';
-  import { formatDate} from 'utils/formatter';
+  import { formatDate} from 'utils/date_formatter';
   import { onMount } from 'svelte';
   import type { NewsItem } from 'types/news';
   

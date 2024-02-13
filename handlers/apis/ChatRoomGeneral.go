@@ -93,7 +93,6 @@ func (a *ApisHandler) ChatRoomGeneral(conn *websocket.Conn) {
 			Timestamp: time.Now().UTC().UTC(),
 		}
 
-		log.Println(in)
 		GENERAL_BROADCAST <- chat
 	}
 }
