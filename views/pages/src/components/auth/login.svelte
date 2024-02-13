@@ -70,11 +70,11 @@
   <div class="flex flex-col gap-3">
     <a class="flex flex-row gap-3 justify-center items-center font-semibold py-2 rounded-md border-zinc-200 border hover:bg-zinc-100" href="/oauth/google" >
       <img src="/icons/oauth/google.svg" class="w-5 h-auto" alt="Google" />
-      <span>Login with Google</span>
+      <span>Continue with Google</span>
     </a>
     <a class="flex flex-row gap-3 justify-center items-center font-semibold py-2 rounded-md border-zinc-200 border hover:bg-zinc-100"  href="/oauth/facebook">
       <img src="/icons/oauth/facebook.svg" class="w-5 h-auto" alt="facebook" />
-      <span>Login with Facebook</span>
+      <span>Continue with Facebook</span>
     </a>
   </div>
 
