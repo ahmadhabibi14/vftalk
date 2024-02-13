@@ -65,7 +65,7 @@ func (a *ApisHandler) ChatRoomGeneral(conn *websocket.Conn) {
 		Type:      CHAT_TYPE_INFO,
 		Content:   msg,
 		Sender:    CHAT_SENDER_SYSTEM,
-		Timestamp: time.Now(),
+		Timestamp: time.Now().UTC(),
 	}
 	GENERAL_BROADCAST <- info
 
@@ -77,7 +77,7 @@ func (a *ApisHandler) ChatRoomGeneral(conn *websocket.Conn) {
 				Type:      CHAT_TYPE_ERROR,
 				Content:   msg,
 				Sender:    CHAT_SENDER_SYSTEM,
-				Timestamp: time.Now(),
+				Timestamp: time.Now().UTC(),
 			}
 			GENERAL_BROADCAST <- info
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
@@ -90,7 +90,7 @@ func (a *ApisHandler) ChatRoomGeneral(conn *websocket.Conn) {
 			Sender:    username.(string),
 			Type:      in.Type,
 			Content:   in.Content,
-			Timestamp: time.Now(),
+			Timestamp: time.Now().UTC().UTC(),
 		}
 
 		log.Println(in)

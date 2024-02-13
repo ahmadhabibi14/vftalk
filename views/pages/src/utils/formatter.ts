@@ -1,3 +1,4 @@
+
 // Format DDDD, DD MMMM YYYY
 export function formatDate(inputDate: Date): string {
   const dt: Date = new Date(inputDate);
@@ -46,5 +47,19 @@ export function getTwoWeeksPastDate(): string {
   const month: string = String(pastDate.getMonth() + 1).padStart(2, '0');
   const day: string = String(pastDate.getDate()).padStart(2, '0');
   const formattedDate: string = `${year}-${month}-${day}`;
+  return formattedDate;
+}
+
+export function timeFormat(inputDate: Date): string {
+  const dt: Date = new Date(inputDate);
+  const date: number = dt.getDate();
+  const month: string = dt.toLocaleDateString( 'default', {month: 'short'} );
+  const year: number = dt.getFullYear();
+  let hh: number|string = dt.getHours();
+  if( hh<10 ) hh = '0' + hh;
+  let mm: number|string = dt.getMinutes();
+  if( mm<10 ) mm = '0' + mm;
+  const formattedDate = `${date} ${month} ${year} • ${hh}:${mm}`;
+
   return formattedDate;
 }
