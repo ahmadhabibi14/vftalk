@@ -22,7 +22,6 @@ services:
       - db
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin-vftalk
-    restart: always
     ports:
       - 8080:80
     links:

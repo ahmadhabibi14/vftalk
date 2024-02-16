@@ -5,6 +5,7 @@
   import RiSystemCheckDoubleLine from 'svelte-icons-pack/ri/RiSystemCheckDoubleLine';
   import RiSystemErrorWarningFill from 'svelte-icons-pack/ri/RiSystemErrorWarningFill';
   import RiSystemLoader2Line from 'svelte-icons-pack/ri/RiSystemLoader2Line';
+  import RiDeviceSignalWifiOffLine from 'svelte-icons-pack/ri/RiDeviceSignalWifiOffLine';
   import { onMount } from 'svelte';
   import type { Chat, ChatIn, ChatSendState } from 'types/chats';
   import { ChatState } from 'constants/chats';
@@ -22,6 +23,8 @@
   let socketURL = `ws://${window.location.host}/api/room-general`;
   if ((url.protocol).includes('s')) socketURL = `wss://${window.location.host}/api/room-general`;
   let socket: WebSocket = new WebSocket(socketURL);
+  let isOnline: boolean = navigator.onLine;
+  $: if (!navigator.onLine) isOnline = false;
 
   onMount( () => localStorage.setItem('username', username) );
 
@@ -33,7 +36,8 @@
     const data: any = JSON.parse(e.data);
     const jsonObj: Chat = data as Chat;
     if (jsonObj.sender !== username) {
-      if (jsonObj.type === 'text') jsonObj.content = (jsonObj.content).replace(/\r\n|\n|\r/gm, '<br />');
+      const contentSplit: string[] = (jsonObj.content).split(/\r\n|\n|\r/gm);
+      if (jsonObj.type === 'text') jsonObj.content = contentSplit;
       Chats = [...Chats, jsonObj];
       setTimeout(() => {
         const ELM: HTMLElement = document.getElementById(`CH_${ChatsCount}`);
@@ -44,7 +48,7 @@
   }
 
   socket.onclose = (e) => {
-    // TODO: use growl, and popup for reconnecting
+    isOnline = false;
     console.log('Closed:', e);
   }
 
@@ -62,10 +66,11 @@
       type: 'text',
       content: message
     }
+    const contentSplit: string[] = message.split(/\r\n|\n|\r/gm);
     const chatOut: Chat = {
       sender: username,
       type: 'text',
-      content: message.replace(/\r\n|\n|\r/gm, '<br />'),
+      content: contentSplit,
       datetime: new Date(),
     }
     Chats = [...Chats, chatOut];
@@ -92,16 +97,42 @@
       isSending = false;
     }
   }
+
+  const Retry = () => {
+    Chats = [], ChatsCount = 0;
+    socket = new WebSocket(socketURL);
+  }
 </script>
 
 <div class="min-h-full h-full relative w-full">
   <div class="flex flex-col gap-2 min-h-full h-full w-full px-5 pt-5 pb-0 mb-20">
+    {#if !isOnline}
+      <div class="flex w-full">
+        <div class="flex w-full flex-row gap-6 bg-zinc-100 p-3 rounded-md">
+          <Icon size="70" src={RiDeviceSignalWifiOffLine} className="fill-purple-500"/>
+          <div class="grow flex flex-col gap-2">
+            <div class="flex flex-col gap-1">
+              <h4 class="text-xl font-bold">Offline</h4>
+              <p>Your network is not available. Check your data or wifi connection.</p>
+            </div>
+            <div class="flex w-full justify-end items-center gap-3 text-purple-500 font-semibold">
+              <button class="w-fit h-fit py-1 px-3 rounded-full hover:bg-purple-500/10" on:click={Retry}>Retry</button>
+              <button class="w-fit h-fit py-1 px-3 rounded-full hover:bg-purple-500/10" on:click={() => window.location.href = '/'}>Feedback</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {/if}
     {#if Chats && Chats.length}
       {#each Chats as c, idx}
         {#if c.sender === username}
           <div class="flex w-full justify-end text-sm" id={`CH_${idx}`}>
             <div class="w-fit max-w-[70%] rounded-tr-md rounded-s-md bg-emerald-700 text-white p-2 gap-1 flex flex-col">
-              <p class="text-ellipsis break-all">{@html c.content}</p>
+              <p class="text-ellipsis break-all">
+                {#each c.content as line}
+                  <p>{line}</p>
+                {/each}
+              </p>
               <div class="flex flex-row gap-1 justify-end items-center text-xs font-light text-emerald-100">
                 {#if ChatSendState.state === ChatState.Load && ChatSendState.index === idx}
                   <Icon size="12" src={RiSystemTimeLine} className="fill-emerald-200"/>
@@ -124,7 +155,11 @@
           <div class="flex w-full justify-start text-sm" id={`CH_${idx}`}>
             <div class="w-fit max-w-[70%] rounded-e-md rounded-tl-md bg-zinc-100 p-2 gap-1 flex flex-col">
               <span class="text-[10px] text-sky-600 font-semibold w-fit">@{c.sender}</span>
-              <p class="text-ellipsis break-all">{@html c.content}</p>              
+              <p class="text-ellipsis break-all">
+                {#each c.content as line}
+                  <p>{line}</p>
+                {/each}
+              </p>              
               <span class="text-start text-[10px] font-light text-zinc-700">{timeFormat(c.datetime)}</span>
             </div>
           </div>

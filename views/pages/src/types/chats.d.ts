@@ -1,9 +1,9 @@
 import { ChatState } from '../constants/chats';
 
-export type Chat = {
+interface Chat {
   sender: string;
   type: string;
-  content: string;
+  content: any | string | string [];
   datetime: Date;
 }
 
