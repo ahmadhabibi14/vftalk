@@ -130,7 +130,7 @@ func (u *userImpl) OAuthGoogle(ctx context.Context, in InUser_OAuthGoogle) (toke
 		return t, nil
 	}
 
-	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(in.Username), bcrypt.DefaultCost)
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(in.GoogleID), bcrypt.DefaultCost)
 	userIn := repository.OAuthGoogleIn{
 		UserID:   in.UserID,
 		Username: in.Username,

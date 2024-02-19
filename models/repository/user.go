@@ -94,12 +94,12 @@ func (u *userImpl) UpdateUserAvatar(ctx context.Context, user UpdateUserAvatarIn
 func (u *userImpl) FindById(ctx context.Context, id string) (User, error) {
 	query := `SELECT user_id, username, full_name, email, password, avatar, join_at, last_active, website, location FROM Users WHERE user_id = ? LIMIT 1`
 	rows, err := u.DB.QueryContext(ctx, query, id)
-	defer rows.Close()
-	user := User{}
 	if err != nil {
 		u.Log.Error().Str("error", err.Error()).Msg("User FindById")
-		return user, err
+		return User{}, err
 	}
+	defer rows.Close()
+	user := User{}
 	if rows.Next() {
 		rows.Scan(
 			&user.UserID,
@@ -122,12 +122,12 @@ func (u *userImpl) FindById(ctx context.Context, id string) (User, error) {
 func (u *userImpl) FindByUsername(ctx context.Context, username string) (User, error) {
 	query := `SELECT user_id, username, full_name, email, password, avatar, join_at, last_active, website, location FROM Users WHERE username = ? LIMIT 1`
 	rows, err := u.DB.QueryContext(ctx, query, username)
-	defer rows.Close()
-	user := User{}
 	if err != nil {
 		u.Log.Error().Str("error", err.Error()).Msg("User FindByUsername")
-		return user, err
+		return User{}, err
 	}
+	defer rows.Close()
+	user := User{}
 	if rows.Next() {
 		rows.Scan(
 			&user.UserID,
@@ -150,12 +150,13 @@ func (u *userImpl) FindByUsername(ctx context.Context, username string) (User, e
 func (u *userImpl) FindByGoogleID(ctx context.Context, gooogle_id string) (User, error) {
 	query := `SELECT user_id, username, full_name, email, password, avatar, join_at, last_active, website, location, google_id FROM Users WHERE google_id = ? LIMIT 1`
 	rows, err := u.DB.QueryContext(ctx, query, gooogle_id)
-	defer rows.Close()
-	user := User{}
 	if err != nil {
 		u.Log.Error().Str("error", err.Error()).Msg("User FindByUsername")
-		return user, err
+		return User{}, err
 	}
+	defer rows.Close()
+	user := User{}
+
 	if rows.Next() {
 		rows.Scan(
 			&user.UserID,
@@ -236,15 +237,12 @@ type FindAllOut struct {
 func (u *userImpl) FindAll(ctx context.Context) ([]FindAllOut, error) {
 	query := `SELECT username, full_name, avatar FROM Users`
 	rows, err := u.DB.QueryContext(ctx, query)
-	defer rows.Close()
-
-	users := []FindAllOut{}
-
 	if err != nil {
 		u.Log.Error().Str("Error", err.Error()).Msg("User FindByUsername")
-		return users, err
+		return []FindAllOut{}, err
 	}
-
+	defer rows.Close()
+	users := []FindAllOut{}
 	for rows.Next() {
 		user := FindAllOut{}
 		rows.Scan(
@@ -252,9 +250,7 @@ func (u *userImpl) FindAll(ctx context.Context) ([]FindAllOut, error) {
 			&user.FullName,
 			&user.Avatar,
 		)
-
 		users = append(users, user)
 	}
-
 	return users, nil
 }
