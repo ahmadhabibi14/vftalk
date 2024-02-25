@@ -17,7 +17,7 @@ func SetJWTasCookie(c *fiber.Ctx, tokenString string) {
 		Expires:  expiration,
 		SameSite: "Lax",
 		Secure:   os.Getenv("WEB_ENV") == "prod",
-		HTTPOnly: true,
+		HTTPOnly: false,
 	})
 	return
 }
