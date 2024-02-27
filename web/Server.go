@@ -20,6 +20,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/favicon"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/monitor"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/gofiber/template/html/v2"
@@ -85,6 +86,14 @@ func (w *WebServer) Start() {
 		Title:    "VFtalk | API Docs",
 		CacheAge: int(30 * time.Minute),
 	}))
+	app.Get("/metrics", monitor.New(
+		monitor.Config{
+			Title:      "VFtalk | Metrics",
+			ChartJsURL: "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js",
+			FontURL:    "https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap",
+			APIOnly:    false,
+		},
+	))
 
 	app.Static("/", "./views/public")
 	app.Static("/", "./contents")
