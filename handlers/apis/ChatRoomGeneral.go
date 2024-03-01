@@ -6,8 +6,10 @@ import (
 	"sync"
 	"time"
 	"vftalk/configs"
+	"vftalk/utils"
 
 	"github.com/gofiber/contrib/websocket"
+	"github.com/rs/zerolog"
 )
 
 type GeneralClient struct {
@@ -22,7 +24,8 @@ var (
 	GENERAL_BROADCAST  = make(chan ChatOut)
 )
 
-func GeneralBroadcaster() {
+func GeneralBroadcaster(zlog *zerolog.Logger) {
+	defer utils.Recover(zlog)
 	for {
 		select {
 		case reg := <-GENERAL_REGISTER:
@@ -51,7 +54,7 @@ func GeneralBroadcaster() {
 }
 
 func (a *ApisHandler) ChatRoomGeneral(conn *websocket.Conn) {
-	go GeneralBroadcaster()
+	go GeneralBroadcaster(a.Log)
 	defer func() {
 		GENERAL_UNREGISTER <- conn
 		conn.Close()
